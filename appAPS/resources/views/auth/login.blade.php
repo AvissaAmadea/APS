@@ -12,7 +12,7 @@
                         <div class="mb-2">
                             <div class="row">
                                 <div class="col">
-                                    <img src="https://bakolkopi.jepara.go.id/wp-content/uploads/sites/93/2022/09/logo-jepara.png" class="img-fluid profile-image-pic me-1" width="40px" alt="profile">
+                                    <img src="{{ asset('assets/img/logojpr.png') }}" class="img-fluid profile-image-pic me-1" width="40px" alt="profile">
                                     <span class="fs-2 fw-bold">{{ __('APS') }}</span>
                                 </div>
                             </div>
