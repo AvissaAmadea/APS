@@ -6,7 +6,7 @@
             <div class="col-md-5 mt-4">
                 <div class="card" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
                     <div class="card-body">
-                        <form action="POST" action="{{ route('login')}}">
+                        <form method="POST" action="{{ route('login')}}">
                         @csrf
 
                         <div class="mb-2">

@@ -59,10 +59,10 @@
                         </div>
 
                         <div class="mb-2">
-                            <label for="asal_dinas" class="form-label">{{ __('Asal Dinas') }}</label>
-                            <input id="asal_dinas" type="text" class="form-control @error('asal_dinas') is-invalid @enderror" name="asal_dinas" placeholder="Dinas Sosial" value="{{ old('asal_dinas') }}" required autocomplete="asal_dinas" autofocus>
+                            <label for="nama_dinas" class="form-label">{{ __('Asal Dinas') }}</label>
+                            <input id="nama_dinas" type="text" class="form-control @error('asal_dinas') is-invalid @enderror" name="nama_dinas" placeholder="Dinas Sosial" value="{{ old('nama_dinas') }}" required autocomplete="nama_dinas" autofocus>
                         
-                            @error('asal_dinas')
+                            @error('nama_dinas')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

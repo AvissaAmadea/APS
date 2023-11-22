@@ -12,4 +12,9 @@ class Dinas extends Model
         'nama_dinas',
         'alamat'
     ];
+
+    protected $guarded = [
+        'id',
+    ];
+
 }
