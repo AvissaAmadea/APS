@@ -24,3 +24,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/sidebarAdmin', function () { return view('sidebarAdmin'); });
+Route::get('/dashboardAdmin', function () { return view('dashboardAdmin'); });

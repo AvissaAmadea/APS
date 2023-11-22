@@ -14,7 +14,7 @@
         <script src="https://kit.fontawesome.com/d0c04e8934.js" crossorigin="anonymous"></script>
         
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-
+        <link rel="stylesheet" href="{{ asset('js/script.js') }}" />
     </head>
     <body>
         <div id="nvAdmin">
@@ -104,9 +104,30 @@
                     </div>
                 </aside>
 
-                <main class="py-4">
-                    @yield('content')
-                </main>
+                <div class="main">
+                    <nav class="navbar navbar-expand px-3 border-bottom">
+                        <button class="navbar-btn" id="sidebar-toggle" type="button">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse navbar">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                                        <img src="{{ asset('img/person.png') }}" class="avatar img-fluid rounded-circle" alt="">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a href="#" class="dropdown-item">{{ __('Profil') }}</a>
+                                        <a href="#" class="dropdown-item">{{ __('Pengaturan') }}</a>
+                                        <a href="#" class="dropdown-item">{{ __('Logout') }}</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <main class="content px-3 py-2">
+                        @yield('content')
+                    </main>
+                </div>
             </div>
         </div>
         <script src="{{ asset('js/script.js') }}"></script>

@@ -11,8 +11,7 @@
                     <div class="mb-2">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('assets/img/logojpr.png') }}" class="img-fluid profile-image-pic me-1" width="37px" alt="profile">
-                                <span class="fs-2 fw-bold">{{ __('APS') }}</span>
+                                <span class="fs-2 fw-bold"><img src="{{ asset('img/logojpr.png') }}" class="img-fluid profile-image-pic me-2" style="width: 27px;" alt="profile">{{ __('APS') }}</span>
                             </div>
                         </div>
                         <div class="row">

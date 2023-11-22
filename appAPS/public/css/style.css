@@ -65,7 +65,7 @@ li {
 /* Sidebar Elements Style */
 
 .sidebar-logo {
-    padding: 1.15rem;
+    padding: 1.5rem;
 }
 
 .sidebar-logo a {
@@ -85,8 +85,8 @@ li {
 
 .sidebar-header {
     color: palegreen;
-    font-size: 1rem;
-    padding: 1rem 1rem .375rem;
+    font-size: 1.2rem;
+    padding: 1rem 1.55rem .375rem;
     font-weight: bold;
 }
 
@@ -114,6 +114,24 @@ a.sidebar-link {
 .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
     transition: all .2s ease-out;
+}
+
+.avatar {
+    height: 40px;
+    width: 40px;
+}
+
+.navbar {
+    background-color:#009E60;
+}
+
+.navbar-btn {
+    border-color: palegreen;
+    border-radius: 5px;
+}
+
+.navbar-expand .navbar-nav {
+    margin-left: auto;
 }
 
 /* Sidebar Toggle */
