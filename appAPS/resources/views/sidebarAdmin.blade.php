@@ -19,9 +19,9 @@
     <body>
         <div id="nvAdmin">
             <div class="wrapper">
-                <aside id="sidebar">
+                <aside id="sidebar" class="js-sidebar">
                     <!-- Content for Sidebar -->
-                    <div class="h-100">
+                    <div class="vh-100 overflow-auto">
                         <div class="sidebar-logo">
                             <img src="{{ asset('img/logojpr.png') }}" class="logo-responsive" alt="logo">
                             <a href="#">{{ __('Jepara APS') }}</a>
@@ -124,9 +124,34 @@
                             </ul>
                         </div>
                     </nav>
-                    <main class="px-3 py-2">
+                    <main class="content px-3 py-2">
                         @yield('content')
                     </main>
+
+                    <footer class="footer">
+                        <div class="container-fluid">
+                            <div class="row text-muted">
+                                <div class="col-6 text-start">
+                                    <p class="mb-0">
+                                        <a href="#" class="text-muted">
+                                            <strong>{{ __('© 2023 Jepara APS') }}</strong>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="#" class="text-muted">{{ __('Kontak') }}</a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="text-muted">{{ __('Tentang Kami') }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                
                 </div>
             </div>
         </div>

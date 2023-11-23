@@ -12,6 +12,9 @@ body {
     opacity: 1;
     overflow-y: scroll;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 a {
@@ -65,7 +68,10 @@ li {
 /* Sidebar Elements Style */
 
 .sidebar-logo {
-    padding: 1.5rem;
+    padding-top: 1.4rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .sidebar-logo a {
@@ -86,7 +92,7 @@ li {
 .sidebar-header {
     color: palegreen;
     font-size: 1.2rem;
-    padding: 1rem 1.55rem .375rem;
+    padding: 1rem 1.55rem 1rem;
     font-weight: bold;
 }
 
@@ -126,8 +132,9 @@ a.sidebar-link {
 }
 
 .navbar-btn {
-    border-color: palegreen;
     border-radius: 5px;
+    border-color: palegreen;
+    background-color: #00A86B;
 }
 
 .navbar-expand .navbar-nav {
@@ -138,4 +145,23 @@ a.sidebar-link {
 
 #sidebar.collapsed {
     margin-left: -264px;
+}
+
+@media (max-width: 767px) {
+    .js-sidebar {
+        margin-left: -264px;
+    }
+    
+    #sidebar.collapsed {
+        margin-left: 0;
+    }
+}
+
+footer {
+    width: 100%;
+    height: auto;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    margin-top: auto;
 }
