@@ -1,9 +1,9 @@
-@extends('sidebar.superadmin')
+@extends('sidebar.opd')
 
 @section('content')
 <div class="container-fluid">
     <div class="row my-2">
-        <h5>{{ __('Dashboard Super Admin') }}</h5>
+        <h5>{{ __('Dashboard OPD') }}</h5>
     </div>
     <div class="row">
         <div class="card flex-fill border-0 p-2">

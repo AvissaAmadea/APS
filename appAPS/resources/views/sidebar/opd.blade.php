@@ -7,7 +7,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('nvAdmin.name', 'APS') }}</title>
+        <title>{{ config('nvOpd.name', 'APS') }}</title>
 
         <!-- Scripts -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -21,14 +21,14 @@
             <div class="wrapper">
                 <aside id="sidebar" class="js-sidebar">
                     <!-- Content for Sidebar -->
-                    <div class="vh-100 overflow-auto pb-2">
+                    <div class="vh-100 overflow-auto">
                         <div class="sidebar-logo">
                             <img src="{{ asset('img/logojpr.png') }}" class="logo-responsive" alt="logo">
                             <a href="#">{{ __('Jepara APS') }}</a>
                         </div>
                         <ul class="sidebar-nav">
                             <li class="sidebar-header">
-                                {{ __('Super Admin') }}
+                                {{ __('OPD') }}
                             </li>
 
                             <li class="sidebar-item">
@@ -38,34 +38,9 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#kelolaAset" aria-expanded="false">
-                                    <i class="fa-solid fa-file-pen pe-2"></i>{{ __('Kelola Aset') }}
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-clipboard-list pe-3"></i></i></i>{{ __('Lihat Aset') }}
                                 </a>
-                                <ul id="kelolaAset" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Kategori') }}</a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Aset') }}</a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#kelolaUser" aria-expanded="false">
-                                    <i class="fa-solid fa-user-pen pe-2"></i>{{ __('Kelola Pengguna') }}
-                                </a>
-                                <ul id="kelolaUser" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Super Admin') }}</a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Sekretaris Daerah') }}</a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('OPD') }}</a>
-                                    </li>
-                                </ul>
                             </li>
 
                             <li class="sidebar-item">
@@ -78,20 +53,6 @@
                                 <a href="#" class="sidebar-link">
                                     <i class="fa-solid fa-file-export pe-2"></i>{{ __('Pengembalian') }}
                                 </a>
-                            </li>
-
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#kelolaLaporan" aria-expanded="false">
-                                    <i class="fa-solid fa-file-signature pe-2"></i>{{ __('Kelola Laporan') }}
-                                </a>
-                                <ul id="kelolaLaporan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Peminjaman') }}</a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
-                                    </li>
-                                </ul>
                             </li>
 
                             <li class="sidebar-item">
@@ -111,7 +72,7 @@
                                     <i class="fa-solid fa-arrow-right-from-bracket pe-2"></i>{{ __('Keluar') }}
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </aside>
@@ -130,7 +91,7 @@
                                         <span class="badge rounded-pill badge-notification bg-danger">{{ __('#') }}</span>
                                     </a>
                                 </li>
-
+                                
                                 <li class="nav-item">
                                     <a href="#" class="nav-link fw-bold text-white" role="button" aria-expanded="false">
                                         <i class="pe-1"><img src="{{ asset('img/person.png') }}" class="avatar img-fluid rounded-circle" alt=""></i>
@@ -148,14 +109,14 @@
                     <footer class="footer">
                         <div class="container-fluid">
                             <div class="row text-muted">
-                                <div class="col-6 text-start">
+                                <div class="col text-end">
                                     <p class="mb-0">
                                         <a href="#" class="text-muted">
                                             <strong>{{ __('© 2023 Jepara APS') }}</strong>
                                         </a>
                                     </p>
                                 </div>
-                                <div class="col-6 text-end">
+                                <!-- <div class="col-6 text-end">
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
                                             <a href="#" class="text-muted">{{ __('Kontak') }}</a>
@@ -164,7 +125,7 @@
                                             <a href="#" class="text-muted">{{ __('Tentang Kami') }}</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </footer>

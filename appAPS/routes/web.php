@@ -25,3 +25,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/sidebarAdmin', function () { return view('sidebarAdmin'); });
 Route::get('/dashboardAdmin', function () { return view('dashboardAdmin'); });
+Route::get('/dashboardSekda', function () { return view('dashboardSekda'); });
+Route::get('/dashboardOpd', function () { return view('dashboardOpd'); });
