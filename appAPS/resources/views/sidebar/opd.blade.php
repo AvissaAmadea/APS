@@ -24,7 +24,7 @@
                     <div class="vh-100 overflow-auto">
                         <div class="sidebar-logo">
                             <img src="{{ asset('img/logojpr.png') }}" class="logo-responsive" alt="logo">
-                            <a href="#">{{ __('Jepara APS') }}</a>
+                            <a href="#">Jepara APS</a>
                         </div>
                         <ul class="sidebar-nav">
                             <li class="sidebar-header">
@@ -93,9 +93,9 @@
                                 </li>
                                 
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link fw-bold text-white" role="button" aria-expanded="false">
-                                        <i class="pe-1"><img src="{{ asset('img/person.png') }}" class="avatar img-fluid rounded-circle" alt=""></i>
-                                        {{ __('Person') }}
+                                    <a class="nav-link text-white my-2 mx-2 position-relative" href="#" role="button" aria-expanded="false">
+                                        <i class="fa-solid fa-bell fa-lg text-white"></i>
+                                        <span class="badge rounded-pill badge-notification bg-danger position-absolute top-0 d-block" style="left: 17px;">{{ __('#') }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -110,9 +110,9 @@
                         <div class="container-fluid">
                             <div class="row text-muted">
                                 <div class="col text-end">
-                                    <p class="mb-0">
+                                    <p class="mb-2">
                                         <a href="#" class="text-muted">
-                                            <strong>{{ __('© 2023 Jepara APS') }}</strong>
+                                            <strong>© 2023 Jepara APS</strong>
                                         </a>
                                     </p>
                                 </div>

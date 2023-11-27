@@ -24,7 +24,7 @@
             </div>
             <div class="card-body p-0 d-flex flex-fill mx-2 mt-2">
                 <!-- <div class="table-responsive"> -->
-                  <table class="table table-bordered border-dark">
+                  <table class="table table-bordered border-dark align-middle">
                       <thead >
                           <tr class="text-center table-dark">
                               <th scope="col">{{ __('No.') }}</th>
@@ -37,7 +37,7 @@
                       </thead>
                       <tbody>
                           <tr>
-                              <th class="text-center" scope="row">{{ __('1') }}</th>
+                              <th class="text-center">{{ __('1') }}</th>
                               <td>{{ __('Aset') }}</td>
                               <td>{{ __('Dinas Sosial') }}</td>
                               <td>{{ __('10-03-2024') }}</td>

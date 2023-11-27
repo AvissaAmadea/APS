@@ -11,6 +11,7 @@ body {
     font-size: 0.875rem;
     opacity: 1;
     overflow-y: scroll;
+    overflow-x: auto;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -54,7 +55,6 @@ li {
     flex-direction: column;
     min-height: 100vh;
     min-width: 0;
-    overflow: hidden;
     transition: all 0.35s ease-in-out;
     width: 100%;
     background: var(--bs-success-bg-subtle);

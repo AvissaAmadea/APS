@@ -24,7 +24,7 @@
                     <div class="vh-100 overflow-auto pb-2">
                         <div class="sidebar-logo">
                             <img src="{{ asset('img/logojpr.png') }}" class="logo-responsive" alt="logo">
-                            <a href="#">{{ __('Jepara APS') }}</a>
+                            <a href="#">Jepara APS</a>
                         </div>
                         <ul class="sidebar-nav">
                             <li class="sidebar-header">
@@ -125,9 +125,9 @@
                         <div class="navbar-collapse navbar">
                             <ul class="navbar-nav ms-auto mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link text-white my-2" href="#" role="button" aria-expanded="false">
+                                    <a class="nav-link text-white my-2 mx-2 position-relative" href="#" role="button" aria-expanded="false">
                                         <i class="fa-solid fa-bell fa-lg text-white"></i>
-                                        <span class="badge rounded-pill badge-notification bg-danger">{{ __('#') }}</span>
+                                        <span class="badge rounded-pill badge-notification bg-danger position-absolute top-0 d-block" style="left: 17px;">{{ __('#') }}</span>
                                     </a>
                                 </li>
 
@@ -149,13 +149,13 @@
                         <div class="container-fluid">
                             <div class="row text-muted">
                                 <div class="col-6 text-start">
-                                    <p class="mb-0">
+                                    <p class="mb-2">
                                         <a href="#" class="text-muted">
-                                            <strong>{{ __('© 2023 Jepara APS') }}</strong>
+                                            <strong>© 2023 Jepara APS</strong>
                                         </a>
                                     </p>
                                 </div>
-                                <div class="col-6 text-end">
+                                <!-- <div class="col-6 text-end">
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
                                             <a href="#" class="text-muted">{{ __('Kontak') }}</a>
@@ -164,7 +164,7 @@
                                             <a href="#" class="text-muted">{{ __('Tentang Kami') }}</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </footer>
