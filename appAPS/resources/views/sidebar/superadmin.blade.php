@@ -107,7 +107,18 @@
                             </li>
     
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                {{-- <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a> --}}
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+
+                                <a href="{{ route('logout') }}" class="sidebar-link" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                                     <i class="fa-solid fa-arrow-right-from-bracket pe-2"></i>{{ __('Keluar') }}
                                 </a>
                             </li>

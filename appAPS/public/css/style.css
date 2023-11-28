@@ -104,6 +104,12 @@ a.sidebar-link {
     font-size: 0.9rem;
 }
 
+a.sidebar-link.active,
+a.sidebar-link:hover {
+    background-color: #16633f;
+    color: white;
+}
+
 .sidebar-link[data-bs-toggle="collapse"]::after {
     border: solid;
     border-width: 0  .075rem  .075rem  0;

@@ -18,6 +18,17 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
+Route::middleware(['superadmin'])->group(function () {
+    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+});
+
+Route::middleware(['sekda'])->group(function () {
+    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+});
+
+Route::middleware(['opd'])->group(function () {
+    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+});
 
 Auth::routes();
 

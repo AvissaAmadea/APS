@@ -43,6 +43,10 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'sekda' => \App\Http\Middleware\SekdaMiddleware::class,
+        'opd' => \App\Http\Middleware\OpdMiddleware::class,
     ];
 
     /**
@@ -65,4 +69,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+
 }

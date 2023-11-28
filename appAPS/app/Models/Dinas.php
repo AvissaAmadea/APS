@@ -17,4 +17,7 @@ class Dinas extends Model
         'id',
     ];
 
+    public function users() {
+        return $this->hasMany(User::class, 'id_dinas');
+    }
 }

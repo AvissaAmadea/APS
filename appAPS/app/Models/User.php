@@ -25,8 +25,8 @@ class User extends Authenticatable
         'telp',
         'email',
         'password',
-        'id_dinas',
-        'id_role',
+        'dinas_id',
+        'role',
     ];
 
     protected $guarded = [
@@ -52,4 +52,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function dinas() {
+        return $this->belongsTo(Dinas::class, 'id_dinas');
+    }
+
+    public function role() {
+        return $this->belongsTo(Roles::class, 'id_role');
+    }
 }
