@@ -6,19 +6,21 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SekdaMiddleware
+class CheckUserRole
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (auth()->check() && auth()->user()->role_id === '2') {
+        $user = $request->user();
+
+        if ($user && in_array($user->role->name, $roles)) {
             return $next($request);
         }
 
-        return redirect()->route('login')->with('error', 'Unauthorized');
+        return redirect('/login');
     }
 }

@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Roles;
 use Illuminate\Http\Request;
 
-class UseController extends Controller
+class UserController extends Controller
 {
     public function assignRole(Request $request, $userId)
     {
@@ -32,5 +32,14 @@ class UseController extends Controller
         $user->save();
 
         return response()->json(['message' => 'Role assigned successfully']);
+    }
+
+    public function show($userId)
+    {
+        // Retrieve user information with roles and dinas
+        $user = User::with('dinas', 'roles')->find($userId);
+
+        // Further processing or returning the user data
+        return view('user.show', compact('user'));
     }
 }

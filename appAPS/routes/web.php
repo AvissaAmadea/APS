@@ -18,17 +18,33 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::middleware(['superadmin'])->group(function () {
-    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+// Login Routes
+Route::get('/login', 'LoginController@showLoginForm')->name('login');
+Route::post('/login', 'LoginController@login')->name('login.submit');
+
+// Registration Routes
+Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'RegisterController@register')->name('register.submit');
+
+// Common Routes
+Route::middleware(['auth'])->group(function () {
+    // Dashboard Routes for each role
+    Route::get('/dashboard',function () {
+        return view('superadmin');
+    })->name('superadmin.dashboard')->middleware('role:1'); // 1 for superadmin
+
+    Route::get('/dashboard',function () {
+        return view('sekda');
+    })->name('sekda.dashboard')->middleware('role:2'); // 2 for sekda
+
+    Route::get('/dashboard',function () {
+        return view('opd');
+    })->name('opd.dashboard')->middleware('role:3'); // 3 for opd
 });
 
-Route::middleware(['sekda'])->group(function () {
-    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
-});
-
-Route::middleware(['opd'])->group(function () {
-    // Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
-});
+Route::get('/dashboard', 'SuperadminController@dashboard')->middleware('superadmin.dashboard');
+Route::get('/dashboard', 'SekdaController@dashboard')->middleware('sekda.dashboard');
+Route::get('/dashboard', 'OpdController@dashboard')->middleware('opd.dashboard');
 
 Auth::routes();
 

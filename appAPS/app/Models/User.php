@@ -21,12 +21,11 @@ class User extends Authenticatable
         'nama',
         'nip',
         'jabatan',
-        'nama_dinas',
         'telp',
         'email',
         'password',
         'dinas_id',
-        'role',
+        'role_id',
     ];
 
     protected $guarded = [
@@ -54,10 +53,36 @@ class User extends Authenticatable
     ];
 
     public function dinas() {
-        return $this->belongsTo(Dinas::class, 'id_dinas');
+        return $this->hasMany(Dinas::class); // one-to-many relationship
     }
 
-    public function role() {
-        return $this->belongsTo(Roles::class, 'id_role');
+    public function roles() {
+        return $this->belongsToMany(Roles::class); // many-to-many relationship
+    }
+
+     // Query scope to load dinas
+     public function scopeWithDinas($query)
+     {
+         return $query->with('dinas');
+     }
+
+     // Query scope to load roles
+    public function scopeWithRoles($query)
+    {
+        return $query->with('roles');
+    }
+
+    public function checkRole()
+    {
+        switch ($this->role_id) {
+            case 1:
+                return route("superadmin.dashboard");
+            case 2:
+                return route("sekda.dashboard");
+            case 3:
+                return route("opd.dashboard");
+            default:
+                return "/login";
+        }
     }
 }

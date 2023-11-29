@@ -15,10 +15,10 @@ class OpdMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'opd') {
+        if (auth()->check() && auth()->user()->role_id === '3') {
             return $next($request);
         }
 
-        return redirect()->route('home')->with('error', 'Unauthorized');
+        return redirect()->route('login')->with('error', 'Unauthorized');
     }
 }

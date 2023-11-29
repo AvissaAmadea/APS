@@ -44,9 +44,21 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'sekda' => \App\Http\Middleware\SekdaMiddleware::class,
-        'opd' => \App\Http\Middleware\OpdMiddleware::class,
+        'superadmin' => [
+            \App\Http\Middleware\SuperadminMiddleware::class,
+        ],
+
+        'sekda' => [
+            \App\Http\Middleware\SekdaMiddleware::class,
+        ],
+
+        'opd' => [
+            \App\Http\Middleware\OpdMiddleware::class,
+        ],
+
+        'checkRole' => [
+            \App\Http\Middleware\CheckUserRole::class,
+        ],
     ];
 
     /**

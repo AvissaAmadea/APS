@@ -15,7 +15,7 @@ class SuperadminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'superadmin') {
+        if (auth()->check() && auth()->user()->role_id === '1') {
             return $next($request);
         }
 

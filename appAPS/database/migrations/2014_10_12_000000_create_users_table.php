@@ -25,9 +25,9 @@ return new class extends Migration
             $table->string('password')->unique();
             // $table->string('status')->default('inactive');
 
-            $table->unsignedBigInteger('role_id')->nullable()->change();  //0:superadmin ; 1:sekda ; 2:opd
+            $table->unsignedBigInteger('role_id')->nullable()->change();  //1:superadmin ; 2:sekda ; 3:opd
 
-            // $table->unsignedBigInteger('role')->default(2);  //0:superadmin ; 1:sekda ; 2:opd
+            // $table->unsignedBigInteger('role')->default(2);  //1:superadmin ; 2:sekda ; 3:opd
 
             $table->rememberToken();
             $table->timestamps();
