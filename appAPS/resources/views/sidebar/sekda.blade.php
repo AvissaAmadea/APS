@@ -96,9 +96,13 @@
                             </li>
     
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa-solid fa-arrow-right-from-bracket pe-2"></i>{{ __('Keluar') }}
                                 </a>
+                            
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                             </li>
 
                         </ul>

@@ -27,18 +27,19 @@ class RedirectIfAuthenticated
     // }
 //}
 
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if (Auth::guard($guard)->check()) {
-            switch (auth()->user()->role_id) {
-                case 1:
-                    return redirect()->route("superadmin.dashboard");
-                case 2:
-                    return redirect()->route("sekda.dashboard");
-                case 3:
-                    return redirect()->route("opd.dashboard");
-                default:
-                    return redirect("/login");
+        if (auth()->check()) {
+            $role = auth()->user()->role_id;
+
+            if ($role == 1) {
+                return redirect()->route('dashboard.superadmin'); // Redirect superadmin to their dashboard
+            } elseif ($role == 2) {
+                return redirect()->route('dashboard.sekda'); // Redirect sekda to their dashboard
+            } elseif ($role == 3) {
+                return redirect()->route('dashboard.opd'); // Redirect opd to their dashboard
+            } else{
+                return redirect()->route('login');
             }
         }
 

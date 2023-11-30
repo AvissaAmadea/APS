@@ -31,12 +31,12 @@ class LoginController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected function authenticated(Request $request, $user)
     {
-        if ($user->role->id === 1) {
-            return redirect()->route('superadmin.dashboard'); // Redirect superadmin to their dashboard
-        } elseif ($user->role->id === 2) {
-            return redirect()->route('sekda.dashboard'); // Redirect sekda to their dashboard
-        } elseif ($user->role->id === 3) {
-            return redirect()->route('opd.dashboard'); // Redirect opd to their dashboard
+        if ($user->role_id == 1) {
+            return redirect()->route('dashboard.superadmin'); // Redirect superadmin to their dashboard
+        } elseif ($user->role_id == 2) {
+            return redirect()->route('dashboard.sekda'); // Redirect sekda to their dashboard
+        } elseif ($user->role_id == 3) {
+            return redirect()->route('dashboard.opd'); // Redirect opd to their dashboard
         }
 
         // Default redirect if the user role doesn't match expected roles
@@ -47,27 +47,7 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email','password');
-
-        // Attempt to authenticate user
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
-            if ($user->role_id === 1) { //'1' is the role_id for superadmin
-                return redirect()->route('superadmin.dashboard');
-            } elseif ($user->role_id === 2) { // '2' for sekda
-                return redirect()->route('sekda.dashboard');
-            } elseif ($user->role_id === 3) { // '3' for opd
-                return redirect()->route('opd.dashboard');
-            }
-        }
-
-        return back()->withErrors(['email'=> 'Invalid credentials']);
-    }
-
+    
     /**
      * Create a new controller instance.
      *
@@ -76,5 +56,13 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    // logout method
+    public function logout()
+    {
+        Auth::logout(); // This method will invalidate the authenticated user's session
+
+        return redirect('/login'); // Redirect to a login page or any other page after logout
     }
 }

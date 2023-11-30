@@ -13,6 +13,6 @@ class SuperadminController extends Controller
     
     public function dashboard()
     {
-        return view('superadmin.dashboard'); // Assuming 'dashboard.superadmin' is the view name
+        return view('dashboard.superadmin'); // Assuming 'dashboard.superadmin' is the view name
     }
 }

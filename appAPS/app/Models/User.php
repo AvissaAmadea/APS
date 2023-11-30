@@ -53,11 +53,11 @@ class User extends Authenticatable
     ];
 
     public function dinas() {
-        return $this->hasMany(Dinas::class); // one-to-many relationship
+        return $this->belongsTo(Dinas::class, 'dinas_id'); // one-to-many relationship
     }
 
     public function roles() {
-        return $this->belongsToMany(Roles::class); // many-to-many relationship
+        return $this->belongsTo(Roles::class, 'role_id'); // many-to-many relationship
     }
 
      // Query scope to load dinas
@@ -74,15 +74,15 @@ class User extends Authenticatable
 
     public function checkRole()
     {
-        switch ($this->role_id) {
-            case 1:
-                return route("superadmin.dashboard");
-            case 2:
-                return route("sekda.dashboard");
-            case 3:
-                return route("opd.dashboard");
-            default:
-                return "/login";
+        if ($this->role_id == 1) {
+            return "dashboard.superadmin";
+        } else if ($this->role_id == 2) {
+            return "dashboard.sekda";
+        } else if ($this->role_id == 3) {
+            return "dashboard.opd";
+        } else {
+            return "/login";
         }
     }
+
 }

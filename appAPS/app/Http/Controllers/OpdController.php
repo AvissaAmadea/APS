@@ -13,6 +13,6 @@ class OpdController extends Controller
 
     public function dashboard()
     {
-        return view('opd.dashboard'); // Assuming 'dashboard.opd' is the view name
+        return view('dashboard.opd'); // Assuming 'dashboard.opd' is the view name
     }
 }

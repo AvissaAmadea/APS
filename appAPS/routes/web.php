@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\SuperadminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,25 +28,92 @@ Route::post('/login', 'LoginController@login')->name('login.submit');
 Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'RegisterController@register')->name('register.submit');
 
-// Common Routes
-Route::middleware(['auth'])->group(function () {
-    // Dashboard Routes for each role
-    Route::get('/dashboard',function () {
-        return view('superadmin');
-    })->name('superadmin.dashboard')->middleware('role:1'); // 1 for superadmin
 
-    Route::get('/dashboard',function () {
-        return view('sekda');
-    })->name('sekda.dashboard')->middleware('role:2'); // 2 for sekda
+// Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
+//     Route::get('/superadmin-dashboard', function () {
+//         return view('dashboard.superadmin');
+//     })->name('superadmin.dashboard');
+// });
 
-    Route::get('/dashboard',function () {
-        return view('opd');
-    })->name('opd.dashboard')->middleware('role:3'); // 3 for opd
+// Route::group(['middleware' => ['auth', 'checkRole:2']], function () {
+//     Route::get('/sekda-dashboard', function () {
+//         return view('dashboard.sekda');
+//     })->name('sekda.dashboard');
+// });
+
+// Route::group(['middleware' => ['auth', 'checkRole:3']], function () {
+//     Route::get('/opd-dashboard', function () {
+//         return view('dashboard.opd');
+//     })->name('opd.dashboard');
+// });
+
+// rangkuman dari code di atas
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::get('/superadmin-dashboard', function () {
+//         return view('dashboard.superadmin');
+//     })->name('superadmin.dashboard')->middleware('checkRole:[1]');
+    
+//     Route::get('/sekda-dashboard', function () {
+//         return view('dashboard.sekda');
+//     })->name('sekda.dashboard')->middleware('checkRole:[2]');
+    
+//     Route::get('/opd-dashboard', function () {
+//         return view('dashboard.opd');
+//     })->name('opd.dashboard')->middleware('checkRole:[3]');
+// });
+
+// Route::group(['middleware' => ['auth', 'redirectIfAuthenticated']], function () {
+//     Route::get('/superadmin-dashboard', function () {
+//         if (Auth::user()->role_id != 1) {
+//             return redirect('/login');
+//         }
+//         return view('dashboard.superadmin');
+//     })->name('dashboard.superadmin');
+
+//     Route::get('/sekda-dashboard', function () {
+//         if (Auth::user()->role_id != 2) {
+//             return redirect('/login');
+//         }
+//         return view('dashboard.sekda');
+//     })->name('dashboard.sekda');
+
+//     Route::get('/opd-dashboard', function () {
+//         if (Auth::user()->role_id != 3) {
+//             return redirect('/login');
+//         }
+//         return view('dashboard.opd');
+//     })->name('dashboard.opd');
+
+//     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// });
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/superadmin-dashboard', function () {
+        if (Auth::user()->role_id != 1) {
+            return redirect('/login');
+        }
+        return view('dashboard.superadmin');
+    })->name('dashboard.superadmin');
+
+    Route::get('/sekda-dashboard', function () {
+        if (Auth::user()->role_id != 2) {
+            return redirect('/login');
+        }
+        return view('dashboard.sekda');
+    })->name('dashboard.sekda');
+
+    Route::get('/opd-dashboard', function () {
+        if (Auth::user()->role_id != 3) {
+            return redirect('/login');
+        }
+        return view('dashboard.opd');
+    })->name('dashboard.opd');
 });
 
-Route::get('/dashboard', 'SuperadminController@dashboard')->middleware('superadmin.dashboard');
-Route::get('/dashboard', 'SekdaController@dashboard')->middleware('sekda.dashboard');
-Route::get('/dashboard', 'OpdController@dashboard')->middleware('opd.dashboard');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+
 
 Auth::routes();
 

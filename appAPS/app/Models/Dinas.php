@@ -18,6 +18,6 @@ class Dinas extends Model
     ];
 
     public function users() {
-        return $this->hasMany(User::class, 'dinas_id');
+        return $this->hasMany(User::class);
     }
 }

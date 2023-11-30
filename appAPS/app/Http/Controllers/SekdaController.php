@@ -13,6 +13,6 @@ class SekdaController extends Controller
     
     public function dashboard()
     {
-        return view('sekda.dashboard'); // Assuming 'dashboard.sekda' is the view name
+        return view('dashboard.sekda'); // Assuming 'dashboard.sekda' is the view name
     }
 }

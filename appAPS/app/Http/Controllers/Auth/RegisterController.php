@@ -33,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -73,11 +73,11 @@ class RegisterController extends Controller
      */
 
     // Passing the $request as a parameter
-    protected function create(Request $request, array $data)
+    protected function create(array $data)
     {
-        $nama_dinas = $request->input('nama_dinas');
+        $nama_dinas = $data('nama_dinas');
         $dinasId = Dinas::where('nama_dinas', $nama_dinas)->first();
-        $role_id = Roles::where('name', $data['name'])->value('id');
+        $role = Roles::where('name', $data['name'])->value('id');
         
         return User::create([
             'nama' => $data['nama'],
@@ -87,57 +87,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'dinas_id' => $dinasId->id, // setting $dinasId in Model Dinas to find nama_dinas based on dinas_id
-            'role_id' => $role_id, // Set default role 'opd'
+            'role_id' => $role, // Set default role 'opd'
         ]);
     }
 
     public function showRegistrationForm()
     {
         return view('auth.register');
-    }
-
-    public function register(Request $request, array $data) 
-    {
-        $validator = Validator::make($request->all(), [
-            'nama' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'string', 'max:255', 'unique:users'],
-            'jabatan'=> ['required', 'string', 'max:255'],
-            'telp'=> ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'dinas_id' => ['required', 'exists:dinas,id'],
-            'role_id'=> ['required','exists:roles,id'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        // Validation passes, create user
-        $nama_dinas = $request->input('nama_dinas');
-        $dinasId = Dinas::where('nama_dinas', $nama_dinas)->first();
-        $role_id = Roles::where('name', $data['name'])->value('id');
-
-        $user = User::create([
-            'nama' => $data['nama'],
-            'nip'=> $data['nip'],
-            'jabatan'=> $data['jabatan'],
-            'telp'=> $data['telp'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'dinas_id' => $dinasId->id, // setting $dinasId in Model Dinas to find nama_dinas based on dinas_id
-            'role_id' => $role_id,
-        ]);
-
-        // Redirect based on the created user's role_id
-        if ($user->role_id === 1) {
-            return redirect()->route('superadmin.dashboard');
-        } elseif ($user->role_id === 2) {
-            return redirect()->route('sekda.dashboard');
-        } elseif ($user->role_id === 3) {
-            return redirect()->route('opd.dashboard');
-        }
-
-        return back()->withErrors(['email' => 'Registration failed']);
     }
 }

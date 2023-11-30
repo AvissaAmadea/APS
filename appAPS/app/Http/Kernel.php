@@ -36,28 +36,13 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Auth\Middleware\Authenticate::class,
         ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
-
-        'superadmin' => [
-            \App\Http\Middleware\SuperadminMiddleware::class,
-        ],
-
-        'sekda' => [
-            \App\Http\Middleware\SekdaMiddleware::class,
-        ],
-
-        'opd' => [
-            \App\Http\Middleware\OpdMiddleware::class,
-        ],
-
-        'checkRole' => [
-            \App\Http\Middleware\CheckUserRole::class,
         ],
     ];
 
@@ -80,6 +65,13 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        // Middleware Tambahan
+        'checkRole' => \App\Http\Middleware\CheckUserRole::class,
+        'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'superadmin' => \App\Http\Middleware\SuperadminMiddleware::class,
+        'sekda' => \App\Http\Middleware\SekdaMiddleware::class,
+        'opd' => \App\Http\Middleware\OpdMiddleware::class,
     ];
 
 

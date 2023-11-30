@@ -13,7 +13,7 @@
                         <h4>{{ __('Riwayat Peminjaman') }}</h4>
                     </div>
                     <div class="col">
-                        <form class="form-search d-flex" method="GET" action="#" style="float: right">
+                        <form class="form-search d-flex" method="GET" action="{{ route('dashboard.superadmin') }}" style="float: right">
                             <div class="input-group">
                                     <input type="search" id="inputSearch" class="form-control" placeholder="Cari" style="max-width: 7cm"/>
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
