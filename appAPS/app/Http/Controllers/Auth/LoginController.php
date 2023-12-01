@@ -56,12 +56,13 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        //$this->middleware('guest', ['except' => ['logout', 'getLogout']]);
     }
 
     // logout method
     public function logout()
     {
-        Auth::logout(); // This method will invalidate the authenticated user's session
+        Auth::guard('user')->logout(); // This method will invalidate the authenticated user's session
 
         return redirect('/login'); // Redirect to a login page or any other page after logout
     }

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\SuperadminController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,18 +16,73 @@ use App\Http\Controllers\SuperadminController;
 |
 */
 
+//Landing page
 Route::get('/', function () {
-    return view('auth/login');
-});
+    return view('home');
+})->middleware('auth');
 
 // Login Routes
-Route::get('/login', 'LoginController@showLoginForm')->name('login');
-Route::post('/login', 'LoginController@login')->name('login.submit');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
 // Registration Routes
-Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
-Route::post('/register', 'RegisterController@register')->name('register.submit');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register')->middleware('guest');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
+// Logout Route
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+// Dashboard access Routes
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/superadmin-dashboard', function () {
+        if (Auth::check() && Auth::user()->role_id == 1) {
+            return view('dashboard.superadmin');
+        } else {
+            return redirect('/login')->withErrors('You are not authorized to access this page.');
+        }
+    })->name('dashboard.superadmin');
+
+    Route::get('/sekda-dashboard', function () {
+        if (Auth::check() && Auth::user()->role_id == 2) {
+            return view('dashboard.sekda');
+        } else {
+            return redirect('/login')->withErrors('You are not authorized to access this page.');
+        }
+    })->name('dashboard.sekda');
+
+    Route::get('/opd-dashboard', function () {
+        if (Auth::check() && Auth::user()->role_id == 3) {
+            return view('dashboard.opd');
+        } else {
+            return redirect('/login')->withErrors('You are not authorized to access this page.');
+        }
+    })->name('dashboard.opd');
+});
+
+Auth::routes();
+
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::get('/superadmin-dashboard', function () {
+//         if (Auth::user()->role_id != 1) {
+//             return redirect('/login');
+//         }
+//         return view('dashboard.superadmin');
+//     })->name('dashboard.superadmin');
+
+//     Route::get('/sekda-dashboard', function () {
+//         if (Auth::user()->role_id != 2) {
+//             return redirect('/login');
+//         }
+//         return view('dashboard.sekda');
+//     })->name('dashboard.sekda');
+
+//     Route::get('/opd-dashboard', function () {
+//         if (Auth::user()->role_id != 3) {
+//             return redirect('/login');
+//         }
+//         return view('dashboard.opd');
+//     })->name('dashboard.opd');
+// });
 
 // Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
 //     Route::get('/superadmin-dashboard', function () {
@@ -88,34 +143,11 @@ Route::post('/register', 'RegisterController@register')->name('register.submit')
 // });
 
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/superadmin-dashboard', function () {
-        if (Auth::user()->role_id != 1) {
-            return redirect('/login');
-        }
-        return view('dashboard.superadmin');
-    })->name('dashboard.superadmin');
-
-    Route::get('/sekda-dashboard', function () {
-        if (Auth::user()->role_id != 2) {
-            return redirect('/login');
-        }
-        return view('dashboard.sekda');
-    })->name('dashboard.sekda');
-
-    Route::get('/opd-dashboard', function () {
-        if (Auth::user()->role_id != 3) {
-            return redirect('/login');
-        }
-        return view('dashboard.opd');
-    })->name('dashboard.opd');
-});
-
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 
 
-Auth::routes();
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

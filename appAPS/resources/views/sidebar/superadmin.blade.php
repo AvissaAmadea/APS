@@ -107,7 +107,7 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a href="#" class="sidebar-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa-solid fa-arrow-right-from-bracket pe-2"></i>{{ __('Keluar') }}
                                 </a>
                             

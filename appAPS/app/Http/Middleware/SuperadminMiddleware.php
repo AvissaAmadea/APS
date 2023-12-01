@@ -15,10 +15,12 @@ class SuperadminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        //dd(auth()->user());
         if (auth()->check() && auth()->user()->role_id === '1') {
             return $next($request);
-        }
+        } else {
 
         return redirect()->route('login')->with('error', 'Unauthorized');
+        }
     }
 }

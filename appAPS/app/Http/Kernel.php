@@ -67,7 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         // Middleware Tambahan
-        'checkRole' => \App\Http\Middleware\CheckUserRole::class,
+        'checkUserRole' => \App\Http\Middleware\CheckUserRole::class,
         'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'superadmin' => \App\Http\Middleware\SuperadminMiddleware::class,
         'sekda' => \App\Http\Middleware\SekdaMiddleware::class,
