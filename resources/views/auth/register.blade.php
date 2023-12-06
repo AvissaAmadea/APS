@@ -27,7 +27,7 @@
                         <div class="mb-2">
                             <label for="nama" class="form-label">{{ __('Nama Lengkap') }}</label>
                             <input id="nama" type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" placeholder="Nama Lengkap" value="{{ old('nama') }}" required autocomplete="nama" autofocus>
-                            
+
                             @error('nama')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -38,19 +38,8 @@
                         <div class="mb-2">
                             <label for="nip" class="form-label">{{ __('NIP') }}</label>
                             <input id="nip" type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" placeholder="19********" value="{{ old('nip') }}" required autocomplete="nip" autofocus>
-                        
-                            @error('nip')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
 
-                        <div class="mb-2">
-                            <label for="jabatan" class="form-label">{{ __('Jabatan') }}</label>
-                            <input id="jabatan" type="text" class="form-control @error('jabatan') is-invalid @enderror" name="jabatan" placeholder="Staf" value="{{ old('jabatan') }}" required autocomplete="jabatan" autofocus>
-                        
-                            @error('jabatan')
+                            @error('nip')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -65,8 +54,19 @@
                                     <option value="{{ $dinasData->id }}">{{ $dinasData->nama_dinas }}</option>
                                 @endforeach
                             </select>
-                        
+
                             @error('dinas_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="jabatan" class="form-label">{{ __('Jabatan') }}</label>
+                            <input id="jabatan" type="text" class="form-control @error('jabatan') is-invalid @enderror" name="jabatan" placeholder="Staf" value="{{ old('jabatan') }}" required autocomplete="jabatan" autofocus>
+
+                            @error('jabatan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -87,7 +87,7 @@
                         <div class="mb-2">
                             <label for="email" class="form-label">{{ __('Email') }}</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="name@example.com" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                        
+
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -98,7 +98,7 @@
                         <div class="mb-2">
                             <label for="password" class="form-label">{{ __('Password') }}</label>
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="password" required autocomplete="new-password">
-                            
+
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -126,7 +126,7 @@
 
                         <div class="row">
                             <div class="text-center">
-                                <div id="emailHelp" class="text-center text-dark">Sudah punya akun? 
+                                <div id="emailHelp" class="text-center text-dark">Sudah punya akun?
                                     <a href="{{ route('login') }}" class="text-blue fw-bold"> {{ __('Login') }}</a>
                                 </div>
                             </div>

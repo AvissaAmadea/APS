@@ -16,16 +16,34 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('user.index', ['users'=> $users]);
+        $users = User::with(['dinas', 'roles'])->get();
+        return view('user.index')->with('users',$users);
     }
 
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
-        return view('user.create');
+        $dinas = Dinas::all(); // Mengambil semua data dinas
+        $roles = Role::all(); // Mengambil semua data roles
+        return view('user.create', compact('dinas','roles'));
+    }
+
+    public function createProcess(Request $request)
+    {
+        DB::table('users')->insert([
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'dinas_id' => $request->dinas_id,
+            'jabatan' => $request->jabatan,
+            'telp' => $request->telp,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+        ]);
+        return redirect('user')->with('status', 'Pengguna berhasil ditambahkan!');
     }
 
     /**
@@ -33,20 +51,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $dinas = Dinas::all(); // Mengambil semua data dinas
-        $role = Role::all(); // Mengambil semua data role
+        // $user = new User;
+        // $user->nama = $request->nama;
+        // $user->nip = $request->nip;
+        // $user->dinas_id = $request->dinas_id;
+        // $user->jabatan = $request->jabatan;
+        // $user->telp = $request->telp;
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->password);
+        // $user->role_id = $request->role_id;
+        // $user->save();
 
-        $data = [
-            'nama' => $request->nama,
-            'nip'=> $request->nip,
-            'jabatan'=> $request->jabatan,
-            'telp'=> $request->telp,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'dinas_id' => $request['inputDinas'],
-            'role_id' => $request['inputRole'],
-        ];
-        User::create($data);
+        // return redirect('user');
     }
 
     /**
@@ -54,15 +70,19 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $users = User::with(['dinas', 'roles'])->get();
+        return view('user.show', ['users'=> $users]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        return view('user.edit', compact('id'));
+        $users = DB::table('users')->where('id',$id)->first();
+        $dinas = DB::table('dinas')->where('id',$id)->first();
+        $roles = DB::table('roles')->where('id',$id)->first();
+        return view('user.edit', compact('users','dinas','roles'));
     }
 
     /**

@@ -29,9 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 Auth::routes();
 
-Route::resource('user', UserController::class);
 Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('user');
-// Route::get('/userInput', [App\Http\Controllers\UserController::class, 'create'])->name('userInput');
+Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create'])->name('user/create');
+Route::post('/user', [App\Http\Controllers\UserController::class, 'createProcess'])->name('createProcess');
+Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user/edit');
 
 Route::get('/createUser', function () { return view('createUser'); });
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
