@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['dinas', 'roles'])->get();
-        return view('user.index')->with('users',$users);
+        return view('user')->with('users',$users);
     }
 
     /**

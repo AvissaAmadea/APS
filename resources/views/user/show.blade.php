@@ -10,7 +10,7 @@
             <h6 class="card-header d-flex justify-content-between align-items-center">
                 Detail Pengguna
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-warning btn-sm" href="{{ url('user/edit/'.$user->id) }}" role="button" style="width: fit-content">Edit</a>
+                    <a class="btn btn-warning btn-sm" href="{{ url('user/edit/'.$item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
                 </div>
             </h6>
             <div class="card-body mx-2">
