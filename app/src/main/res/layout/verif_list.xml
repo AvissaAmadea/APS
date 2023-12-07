@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="13dp"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kode Peminjaman"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"/>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/namaPeminjamVerif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="namaPeminjam"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/tglPinjamVerif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="20dp"
+                android:text="tglPinjam"
+                />
+
+            <TextView
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/black"
+                android:id="@+id/tglKembaliVerif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:text="tglKembali"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/namaAsetVerif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="namaAset"
+                />
+
+            <TextView
+                android:id="@+id/statusVerif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="156dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="StatusVerif"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

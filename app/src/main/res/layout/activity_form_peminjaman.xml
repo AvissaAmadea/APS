@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FormPeminjaman"
+    android:background="@color/grey">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:background="@drawable/square"
+            android:id="@+id/judul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:id="@+id/backToMenu1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Form Peminjaman"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            app:cardCornerRadius="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Nama"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck" />
+                <EditText
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableRight="@drawable/baseline_person_24"
+                    android:minHeight="50dp"
+                    android:inputType="textPersonName"
+                    android:hint="Nama Peminjam"
+                    android:id="@+id/namaPeminjam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Aset"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck" />
+                <EditText
+                    android:minHeight="50dp"
+                    android:inputType="textPersonName"
+                    android:hint="Nama Aset"
+                    android:id="@+id/nama_aset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Tanggal Peminjaman"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck"/>
+                <EditText
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:minHeight="50dp"
+                    android:hint="DD/MM/YYYY"
+                    android:id="@+id/tglPinjam"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:drawableRight="@drawable/baseline_calendar_month_24"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Tanggal Pengembalian"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck"/>
+                <EditText
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:minHeight="50dp"
+                    android:hint="DD/MM/YYYY"
+                    android:id="@+id/tglKembali"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:drawableRight="@drawable/baseline_calendar_month_24"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Tujuan"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck" />
+
+                <EditText
+                    android:minHeight="50dp"
+                    android:inputType="text"
+                    android:hint="Tujuan Peminjaman"
+                    android:id="@+id/Tujuan"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Surat Permohonan"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck" />
+                <EditText
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:minHeight="50dp"
+                    android:hint="Upload pdf"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/surat"
+                    android:drawableRight="@drawable/baseline_upload_24"/>
+
+                <Button
+                    android:id="@+id/simpanPinjam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginRight="15dp"
+                    android:backgroundTint="@color/hijau"
+                    android:text="SIMPAN" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+
+
+</ScrollView>
