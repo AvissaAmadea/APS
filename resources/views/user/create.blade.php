@@ -9,7 +9,7 @@
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header">Tambah Pengguna</h6>
             <div class="card-body mx-2">
-                <form class="form text-end" method="POST" action="{{ route('user') }}">
+                <form class="form text-end" method="POST" action="{{ url('user') }}">
                     @csrf
 
                     <div class="form-group mb-2 row">

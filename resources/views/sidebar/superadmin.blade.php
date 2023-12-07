@@ -52,7 +52,7 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ route('user') }}" class="sidebar-link">
+                                <a href="{{ url('user/') }}" class="sidebar-link">
                                     <i class="fa-solid fa-user-pen pe-2"></i>{{ __('Kelola Pengguna') }}
                                 </a>
                                 {{-- <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#kelolaUser" aria-expanded="false">

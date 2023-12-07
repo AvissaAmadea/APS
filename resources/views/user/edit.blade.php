@@ -9,7 +9,7 @@
         <div class="card flex-fill border-0 p-1">
             <h6 class="card-header">Edit Pengguna</h6>
             <div class="card-body mx-2">
-                <form class="form text-end" method="POST" action="{{ route('user/update', $user->id) }}">
+                <form class="form text-end" method="POST" action="{{ url('user/update', $user->id) }}">
                     @method('PATCH')
                     @csrf
                     <div class="form-group mb-2 row">
