@@ -33,7 +33,6 @@ public class FormAset extends AppCompatActivity {
 
     EditText namaAset, detailAset;
     Spinner kategoriAset, dinasPemilik, status;
-    RadioGroup radio;
     ArrayList<String> kategoriList = new ArrayList<>();
     ArrayList<String> dinasList = new ArrayList<>();
     ArrayAdapter<String> kategoriAdapter;
@@ -150,11 +149,7 @@ public class FormAset extends AppCompatActivity {
         } else if (detail.equals(null)) {
             detailAset.setError("Masukkan detail Aset");
             detailAset.requestFocus();
-        } else if (kategori.equals("Pilih Kategori")) {
-            Toast.makeText(FormAset.this,"Isi dengan benar", Toast.LENGTH_LONG).show();
-        } else if (dinas.equals("Pilih Dinas")) {
-            Toast.makeText(FormAset.this,"Isi dengan benar", Toast.LENGTH_LONG).show();
-        } else if (status1.equals("Pilih Status")) {
+        } else if (kategori.equals("Pilih Kategori")||status1.equals("Pilih Status")||kategori.equals("Pilih Kategori")) {
             Toast.makeText(FormAset.this,"Isi dengan benar", Toast.LENGTH_LONG).show();
         } else {
             RequestQueue requestQueue = Volley.newRequestQueue(this);

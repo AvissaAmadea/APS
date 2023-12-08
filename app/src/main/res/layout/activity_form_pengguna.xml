@@ -1,9 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.FormPengguna">
+    tools:context=".Admin.FormPengguna"
+    android:background="@color/grey">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:background="@drawable/square"
+                android:id="@+id/judul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    android:id="@+id/backToMenu1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Form Pengguna"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25sp" />
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nama Pengguna"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <EditText
+                        android:id="@+id/etNama"
+                        android:inputType="textPersonName"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Nama User"
+                        android:minHeight="50dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Username"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <EditText
+                        android:id="@+id/etUsername"
+                        android:inputType="textPersonName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Username"
+                        android:layout_marginTop="5dp"
+                        android:minHeight="50dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="NIP"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <EditText
+                        android:inputType="textPersonName"
+                        android:id="@+id/etNip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:hint="NIP"
+                        android:layout_marginTop="5dp"
+                        android:minHeight="50dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Email"
+                        android:layout_marginTop="5dp"
+                        android:inputType="textEmailAddress"
+                        android:minHeight="50dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Asal Dinas"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerDinas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:minHeight="50dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bidang Dinas"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <Spinner
+                        android:id="@+id/SpinnerBidang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:minHeight="50dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Jabatan Dinas"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerJabatan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:minHeight="50dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Role Pengguna"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerRole"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:minHeight="50dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="15dp"/>
+                    <Button
+                        android:id="@+id/btn_form_pengguna"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:text="simpan"
+                        android:fontFamily="@font/poppins_bold"
+                        android:backgroundTint="@color/hijau"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+</ScrollView>

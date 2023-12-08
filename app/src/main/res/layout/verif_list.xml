@@ -31,12 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/namaPeminjamVerif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="namaPeminjam"
                 android:textColor="@color/black"
@@ -49,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
-                android:layout_marginTop="20dp"
                 android:text="tglPinjam"
                 />
 
@@ -60,7 +59,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
                 android:text="tglKembali"
                 />
 
