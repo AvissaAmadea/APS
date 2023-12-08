@@ -17,7 +17,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['dinas', 'roles'])->get();
-        return view('user')->with('users',$users);
+        // $activeUsers = User::where('status', true)->get();
+        // $users = User::withTrashed()->get();
+        return view('user.index')->with('users',$users);
     }
 
     /**
@@ -50,7 +52,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $id)
+    public function show(Request $request, $id)
     {
         // $users = User::with(['dinas', 'roles'])->get();
         $user = User::findOrFail($id);
@@ -75,7 +77,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         DB::table('users')->where('id',$id)
             ->update([
@@ -95,9 +97,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(string $id)
+    public function destroy($id)
     {
-        DB::table('users')->where('id',$id)->delete();
+        // DB::table('users')->where('id',$id)->delete();
+        $user = User::find($id);
+        $user->delete(); // Soft delete user
+        $user->status = false; // Set status user menjadi nonaktif
+        $user->save();
         return redirect('user')->with('status', 'Data Pengguna berhasil dihapus!');
     }
 }

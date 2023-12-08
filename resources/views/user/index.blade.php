@@ -35,12 +35,9 @@
                           <tr class="text-center table-dark">
                               <th scope="col">No.</th>
                               <th scope="col">Nama</th>
-                              {{-- <th scope="col">NIP</th>
-                              <th scope="col">Jabatan</th> --}}
                               <th scope="col">Dinas</th>
-                              {{-- <th scope="col">Email</th> --}}
-                              <th scope="col">No. Telepon</th>
                               <th scope="col">Role</th>
+                              <th scope="col">Status</th>
                               <th scope="col">Aksi</th>
                           </tr>
                       </thead>
@@ -49,20 +46,25 @@
                             <tr class="text-center">
                                 <th>{{ ( $loop->iteration ) }}</th>
                                 <td>{{ ( $item->nama ) }}</td>
-                                {{-- <td>{{ ( $item->nip ) }}</td>
-                                <td>{{ ( $item->jabatan ) }}</td> --}}
                                 <td>{{ ( $item->dinas->nama_dinas ) }}</td>
-                                {{-- <td>{{ ( $item->email ) }}</td> --}}
-                                <td>{{ ( $item->telp ) }}</td>
                                 <td>{{ ( $item->roles->name ) }}</td>
+                                <td>
+                                    @if($item->trashed())
+                                        <div class="p-0 mb-0 bg-danger text-white">Inactive</div>
+                                    @else
+                                        <div class="p-0 mb-0 bg-primary text-white">Active</div>
+                                    @endif
+                                </td>
                                 <td class="text-center">
-                                    <a class="btn btn-info btn-sm" href="{{ url('user/show/'.$item->id) }}" role="button"><i class="fa-solid fa-circle-info"></i></a>
-                                    <a class="btn btn-warning btn-sm" href="{{ url('user/edit/'.$item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
-                                    <form action="{{ url('user/'.$item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
-                                        @method('delete')
+                                    <a class="btn btn-info btn-sm" href="{{ route('user.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                    <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
+                                    <form action="{{ route('user.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
                                         @csrf
-                                        <a class="btn btn-danger btn-sm" href="{{ url('user/delete') }}" role="button"><i class="fa-solid fa-trash-can"></i></a>
+                                        @method('delete')
+
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach

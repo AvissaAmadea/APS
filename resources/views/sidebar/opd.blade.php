@@ -90,7 +90,7 @@
                         <div class="navbar-collapse navbar">
                             <ul class="navbar-nav ms-auto mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link text-white my-2" href="#" role="button" aria-expanded="false">
+                                    <a class="nav-link text-white my-2 mx-2 position-relative" href="#" role="button" aria-expanded="false">
                                         <i class="fa-solid fa-bell fa-lg text-white"></i>
                                         <span class="badge rounded-pill badge-notification bg-danger position-absolute top-0 d-block" style="left: 20px;">{{ __('#') }}</span>
                                     </a>

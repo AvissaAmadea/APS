@@ -10,12 +10,12 @@
             <h6 class="card-header d-flex justify-content-between align-items-center">
                 Detail Pengguna
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-warning btn-sm" href="{{ url('user/edit/'.$item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
+                    <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $user->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
                 </div>
             </h6>
             <div class="card-body mx-2">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-md-8 offset-md-3">
+                    <div class="col-md-9 offset-md-3">
                         <div class="form text-end">
                             <div class="form-group mb-2 row">
                                 <label for="nama" class="col-sm-2 col-form-label">Nama :</label>
@@ -65,6 +65,35 @@
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="role_id" name="role_id" value="{{ $user->roles->name }}">
                                 </div>
                             </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="role_id" class="col-sm-2 col-form-label">Status :</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="status" name="status" value="{{ $user->status }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="email" class="col-sm-2 col-form-label">Created_at :</label>
+                                <div class="col-sm-10">
+                                    <input type="email" readonly class="form-control-plaintext fw-bold" id="email" name="email" value="{{ $user->created_at }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="email" class="col-sm-2 col-form-label">Updated_at :</label>
+                                <div class="col-sm-10">
+                                    <input type="email" readonly class="form-control-plaintext fw-bold" id="email" name="email" value="{{ $user->updated_at }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="email" class="col-sm-2 col-form-label">Deleted_at :</label>
+                                <div class="col-sm-10">
+                                    <input type="email" readonly class="form-control-plaintext fw-bold" id="email" name="email" value="{{ $user->deleted_at }}">
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

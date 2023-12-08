@@ -9,7 +9,7 @@
         <div class="card flex-fill border-0 p-1">
             <h6 class="card-header">Edit Pengguna</h6>
             <div class="card-body mx-2">
-                <form class="form text-end" method="POST" action="{{ url('user/update', $user->id) }}">
+                <form class="form text-end" method="POST" action="{{ route('user.update', $user->id) }}">
                     @method('PATCH')
                     @csrf
                     <div class="form-group mb-2 row">
@@ -91,10 +91,13 @@
                         @enderror
                     </div>
 
-                    <div class="form-group mb-2 row">
+                    {{-- <div class="form-group mb-2 row">
                         <label for="password" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="password" placeholder="hanya pemilik akun yang dapat mengedit password" readonly>
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="password" readonly>
+                            <div class="text-danger text-start">
+                                Hanya pemilik akun yang dapat mengedit password!
+                            </div>
                         </div>
 
                         @error('password')
@@ -102,7 +105,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="form-group mb-2 row">
                         <label for="role_id" class="col-sm-2 col-form-label">Role</label>
