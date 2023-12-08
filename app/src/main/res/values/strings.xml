@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="forgot_pass"><u>Lupa Password?</u></string>
+    <string name="blm_punya_akun"><u>Belum Punya Akun?<b> DAFTAR.</b></u></string>
+    <string name="sudah_punya"><u>Sudah Punya Akun? <b> MASUK.</b></u></string>
 </resources>

@@ -1,10 +1,15 @@
 package com.example.myapplication.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Db;
+import com.example.myapplication.FormPeminjaman;
 import com.example.myapplication.R;
 
 import org.json.JSONArray;
@@ -158,12 +164,14 @@ public class FormAset extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(FormAset.this, "Berhasil Menyimpan", Toast.LENGTH_LONG).show();
+                            showSuccessDialog();
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(FormAset.this, "Error during insert data", Toast.LENGTH_SHORT).show();
                     Log.e("FormAsetActivity", "Error during insert data: " + error.toString());
+                    showFailedDialog();
 
                 }
             }){
@@ -180,5 +188,48 @@ public class FormAset extends AppCompatActivity {
             requestQueue.add(stringRequest);
         }
 
+    }
+    private void showFailedDialog() {
+        ConstraintLayout constraintLayout = findViewById(R.id.failedSave);
+        View view = LayoutInflater.from(FormAset.this).inflate(R.layout.failed_dialog, constraintLayout);
+        Button btn = view.findViewById(R.id.btnG);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(FormAset.this);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        btn.findViewById(R.id.btnG).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Toast.makeText(FormAset.this, "DONE", Toast.LENGTH_SHORT).show();
+            }
+        });
+        if (dialog.getWindow() !=null){
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        dialog.show();
+    }
+
+    private void showSuccessDialog() {
+        ConstraintLayout constraintLayout = findViewById(R.id.successSave);
+        View view = LayoutInflater.from(FormAset.this).inflate(R.layout.success_dialog, constraintLayout);
+        Button button = view.findViewById(R.id.btn);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(FormAset.this);
+        builder.setView(view);
+
+        final AlertDialog alertDialog = builder.create();
+        button.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                Toast.makeText(FormAset.this, "DONE", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (alertDialog.getWindow() !=null){
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
     }
 }
