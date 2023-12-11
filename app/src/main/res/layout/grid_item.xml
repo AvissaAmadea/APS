@@ -2,23 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center">
 
-    <ImageView
-        android:id="@+id/gridItemImage"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:scaleType="centerCrop" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="175dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/gridItemImage"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_launcher_foreground"
+                android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/gridItemText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Menu Item"
-        android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        android:paddingTop="8dp" />
+            <TextView
+                android:id="@+id/gridItemText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu Item"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

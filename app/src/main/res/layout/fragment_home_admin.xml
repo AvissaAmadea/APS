@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment"
+    tools:context=".Opd.HomeFragmentOPD"
     android:background="@color/grey">
 
     <LinearLayout
@@ -68,11 +68,11 @@
             android:layout_height="match_parent">
 
             <GridView
-                android:id="@+id/gridView"
+                android:id="@+id/gridViewAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:columnWidth="120dp"
-                android:numColumns="auto_fit"
+                android:numColumns="3"
                 android:horizontalSpacing="8dp"
                 android:verticalSpacing="8dp"
                 android:gravity="center"

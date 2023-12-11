@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 public class Db {
-    public static String ip = "172.18.2.228";
+    public static String ip = "192.168.45.201";
+
+    public static final String getUser = "http://"+ip+"/aps1/User/getUser.php";
 
     public static final String urlLogin = "http://"+ip+"/aps1/login.php";
 

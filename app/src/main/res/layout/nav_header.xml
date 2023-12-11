@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/green_pea">
     <TextView
         android:id="@+id/namaUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:fontFamily="@font/poppins_bold"
         android:text="Nama User"
         android:textSize="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"/>
     <TextView
@@ -21,6 +22,9 @@
         android:textSize="15dp"
         android:text="username"
         android:layout_marginLeft="15dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/poppins_medium"/>
 
 

@@ -16,6 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.Admin.AdminActivity;
+import com.example.myapplication.Opd.OpdActivity;
+import com.example.myapplication.Sekre.SekreActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +41,10 @@ public class Login extends AppCompatActivity {
         link = findViewById(R.id.to_register);
         forgot_password = findViewById(R.id.lupa_password);
         login = findViewById(R.id.btn_login);
+
+        link.setOnClickListener(view -> {
+            startActivity(new Intent(Login.this, Register.class));
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
