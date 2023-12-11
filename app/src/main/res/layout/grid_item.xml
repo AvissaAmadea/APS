@@ -1,0 +1,24 @@
+<!-- res/layout/grid_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/gridItemImage"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/gridItemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menu Item"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:paddingTop="8dp" />
+</LinearLayout>
