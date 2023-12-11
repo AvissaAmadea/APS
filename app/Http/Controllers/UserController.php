@@ -16,9 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['dinas', 'roles'])->get();
-        // $activeUsers = User::where('status', true)->get();
-        // $users = User::withTrashed()->get();
+        // $users = User::with(['dinas', 'roles'])->get();
+        $users = User::withTrashed()->with('dinas', 'roles')->paginate(5);
         return view('user.index')->with('users',$users);
     }
 
@@ -55,7 +54,7 @@ class UserController extends Controller
     public function show(Request $request, $id)
     {
         // $users = User::with(['dinas', 'roles'])->get();
-        $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
         $dinas = Dinas::find($request->input('dinas_id'));
         $roles = Role::find($request->input('role_id'));
 
@@ -67,7 +66,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
         $dinas = Dinas::all();
         $roles = Role::all();
 
@@ -105,5 +104,37 @@ class UserController extends Controller
         $user->status = false; // Set status user menjadi nonaktif
         $user->save();
         return redirect('user')->with('status', 'Data Pengguna berhasil dihapus!');
+    }
+
+    public function trash()
+    {
+        $users = User::onlyTrashed()->with('dinas', 'roles')->paginate(5);
+        return view('user.trash')->with('users',$users);
+    }
+
+    public function restore($id = null)
+    {
+        if($id != null) {
+            $users = User::onlyTrashed()
+                ->where('id', $id)
+                ->restore();
+        } else {
+            $users = User::onlyTrashed()->restore();
+        }
+
+        return redirect('user.trash')->with('status','Data Pengguna berhasil dipulihkan!');
+    }
+
+    public function delete($id = null)
+    {
+        if($id != null) {
+            $users = User::onlyTrashed()
+                ->where('id', $id)
+                ->forceDelete();
+        } else {
+            $users = User::onlyTrashed()->forceDelete();
+        }
+
+        return redirect('user.trash')->with('status','Data Pengguna berhasil dihapus permanen!');
     }
 }

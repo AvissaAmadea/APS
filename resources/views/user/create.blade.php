@@ -7,7 +7,12 @@
     </div>
     <div class="row">
         <div class="card flex-fill border-0 p-2">
-            <h6 class="card-header">Tambah Pengguna</h6>
+            <h6 class="card-header d-flex justify-content-between align-items-center">
+                Tambah Pengguna
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a class="btn btn-secondary btn-sm" href="{{ url('user/') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
+                </div>
+            </h6>
             <div class="card-body mx-2">
                 <form class="form text-end" method="POST" action="{{ url('user') }}">
                     @csrf

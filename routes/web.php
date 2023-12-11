@@ -26,20 +26,29 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
 
     // Routing Kelola User
-    Route::resource('user', App\Http\Controllers\UserController::class);
+    Route::delete('/user/{id}/delete', [App\Http\Controllers\UserController::class, 'destroy'])->name('user/destroy');
+    Route::get('/user/trash', [App\Http\Controllers\UserController::class, 'trash'])->name('user/trash');
+    Route::get('/user/restore/{id?}', [App\Http\Controllers\UserController::class, 'restore'])->name('user/restore');
+    Route::get('/user/delete/{id?}', [App\Http\Controllers\UserController::class, 'delete'])->name('user/delete');
+
+    Route::resource('user', App\Http\Controllers\UserController::class)->except([
+        'destroy', 'trash', 'restore', 'delete'
+    ]);
 
     //Route Kelola Kategori
+    Route::get('/kategori', [App\Http\Controllers\UserController::class, 'index'])->name('user');
 
 });
 
 Auth::routes();
 
-// Routing Kelola User
+    // Routing Kelola User
     // Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('user');
     // Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create'])->name('user/create');
     // Route::post('/user', [App\Http\Controllers\UserController::class, 'store'])->name('store');
     // Route::get('/user/show/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('user/show');
     // Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user/edit');
-    // Route::patch('/user/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('user/update');
-    // Route::destroy('/user/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user/destroy');
-
+    // Route::delete('/user/{id}/delete', [App\Http\Controllers\UserController::class, 'destroy'])->name('user/destroy');
+    // Route::get('/user/trash', [App\Http\Controllers\UserController::class, 'trash'])->name('user/trash');
+    // Route::get('/user/restore/{id?}', [App\Http\Controllers\UserController::class, 'restore'])->name('user/restore');
+    // Route::get('/user/delete/{id?}', [App\Http\Controllers\UserController::class, 'delete'])->name('user/delete');

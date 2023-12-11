@@ -13,11 +13,12 @@
         @endif
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header d-flex justify-content-between align-items-center">
-                Data Pengguna
+                Data Pengguna Terhapus
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-success btn-sm" href="{{ route('user.create') }}" role="button" style="width: fit-content"><i class="fa-solid fa-plus pe-2"></i>{{ __('Tambah') }}</a>
-                    <a class="btn btn-danger btn-sm" href="{{ url('user/trash') }}" role="button" style="width: fit-content"><i class="fa-solid fa-trash pe-2"></i>{{ __('Trash') }}</a>
-                    <form class="form-search d-flex" method="GET" action="#">
+                    <a class="btn btn-secondary btn-sm" href="{{ url('user/') }}" role="button"><i class="fa-solid fa-chevron-left pe-1"></i>Back</a>
+                    <a class="btn btn-danger btn-sm" href="{{ url('user/delete') }}" role="button"><i class="fa-solid fa-trash pe-1"></i>All Delete</a>
+                    <a class="btn btn-success btn-sm" href="{{ url('user/restore') }}" role="button"><i class="fa-solid fa-rotate-left pe-1"></i>All Restore</a>
+                    <form class="form-search" method="GET" action="#">
                         <div class="input-group">
                             <input type="search" id="inputSearch" class="form-control" placeholder="Cari" style="max-width: 15rem; height: 33px"/>
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
@@ -29,10 +30,11 @@
                 <div class="row">
                     <div class="col d-flex align-items-center justify-content-between">
                         <div>
-                            <a class="btn btn-success btn-sm" href="{{ url('user/create') }}" role="button" style="width: fit-content"><i class="fa-solid fa-plus pe-2"></i>{{ __('Tambah') }}</a>
-                            <a class="btn btn-danger btn-sm" href="{{ url('user/trash') }}" role="button" style="width: fit-content"><i class="fa-solid fa-trash pe-2"></i>{{ __('Trash') }}</a>
+                            <a class="btn btn-secondary btn-sm" href="{{ url('user/') }}" role="button"><i class="fa-solid fa-chevron-left pe-1"></i>Back</a>
+                            <a class="btn btn-danger btn-sm" href="{{ url('user/delete') }}" role="button"><i class="fa-solid fa-trash pe-1"></i>All Delete</a>
+                            <a class="btn btn-success btn-sm" href="{{ url('user/restore') }}" role="button"><i class="fa-solid fa-rotate-left pe-1"></i>All Restore</a>
                         </div>
-                        <form class="form-search d-flex" method="GET" action="#">
+                        <form class="form-search" method="GET" action="#">
                             <div class="input-group">
                                 <input type="search" id="inputSearch" class="form-control" placeholder="Cari" style="max-width: 15rem; height: 33px"/>
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
@@ -70,15 +72,8 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-info btn-sm" href="{{ route('user.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
-                                        <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
-                                        <form action="{{ url('user/destroy/', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
-                                            @csrf
-                                            @method('delete')
-
-                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-x"></i></button>
-                                        </form>
-
+                                        <a class="btn btn-success btn-sm" href="{{ url('user/restore/', $item->id) }}" role="button"><i class="fa-solid fa-rotate-left"></i></a>
+                                        <a class="btn btn-danger btn-sm" href="{{ url('user/delete/', $item->id) }}" role="button" onclick="return confirm('Yakin akan hapus data permanen?')"><i class="fa-solid fa-x"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -89,7 +84,6 @@
                         @endif
                       </tbody>
                   </table>
-
                 <!-- </div> -->
             </div>
             <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
