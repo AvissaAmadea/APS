@@ -8,19 +8,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Aset extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'asets';
 
     protected $fillable = [
-        'namaAset',
-        'alamat'];
+        'nama_aset',
+        'kategori_id',
+        'dinas_id',
+        'detail',
+        'status_aset',
+    ];
+
+    protected $casts = [
+        'status_aset' => 'string', // Tipe data enum diubah menjadi string
+    ];
 
     protected $guarded = [
         'id',
     ];
 
     public function kategoris() {
-        return $this->belongsTo(Kategori::class, 'kat_id'); // one-to-many relationship
+        return $this->belongsTo(Kategori::class, 'kategori_id'); // one-to-many relationship
     }
+
+    public function dinas() {
+        return $this->belongsTo(Dinas::class, 'dinas_id'); // one-to-many relationship
+    }
+
 }

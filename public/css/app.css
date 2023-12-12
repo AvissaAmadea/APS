@@ -224,3 +224,9 @@ footer {
     font-size: 0.875rem;
     padding: 0.125rem 0.75rem 0.125rem 0.75rem;
 }
+
+.status-badge {
+    padding: 0.2em 0.5em; /* Atur padding sesuai kebutuhan */
+    border-radius: 0.25rem; /* Atur radius sudut sesuai kebutuhan */
+    display: inline-block; /* Untuk memberi warna latar belakang hanya di tinggi teks */
+}

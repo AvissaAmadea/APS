@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('asets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('namaAset');
-            $table->unsignedBigInteger('kat_id')->nullable()->change();
-            $table->foreignId('kat_id')->nullable()->constrained('kategoris')->onDelete('set null')->onUpdate('cascade');
+            $table->string('nama_aset');
+            $table->unsignedBigInteger('kategori_id')->nullable()->change();
+            $table->foreignId('kategori_id')->nullable()->constrained('kategoris')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('dinas_id')->nullable()->change();
             $table->foreignId('dinas_id')->nullable()->constrained('dinas')->onDelete('set null')->onUpdate('cascade');
-            $table->string('ket');
-            $table->enum('status', ['Tersedia', 'Tidak Tersedia'])->default('Tersedia');
+            $table->string('detail');
+            $table->enum('status_aset', ['Tersedia', 'Tidak Tersedia'])->default('Tersedia');
             $table->timestamps();
+
         });
     }
 

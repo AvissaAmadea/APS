@@ -32,9 +32,21 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
-                                    <i class="fa-solid fa-list pe-2"></i>{{ __('Dashboard') }}
-                                </a>
+                                @if(Auth::check())
+                                    @if(Auth::user()->role_id == 1)
+                                        <a href="{{ route('dashboard.superadmin') }}" class="sidebar-link">
+                                            <i class="fa-solid fa-list pe-2"></i>{{ __('Dashboard') }}
+                                        </a>
+                                    @elseif(Auth::user()->role_id == 2)
+                                        <a href="{{ route('dashboard.sekda') }}" class="sidebar-link">
+                                            <i class="fa-solid fa-list pe-2"></i>{{ __('Dashboard') }}
+                                        </a>
+                                    @elseif(Auth::user()->role_id == 3)
+                                        <a href="{{ route('dashboard.opd') }}" class="sidebar-link">
+                                            <i class="fa-solid fa-list pe-2"></i>{{ __('Dashboard') }}
+                                        </a>
+                                    @endif
+                                @endif
                             </li>
 
                             <li class="sidebar-item">
