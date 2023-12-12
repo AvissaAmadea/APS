@@ -123,8 +123,8 @@ public class Register extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showSuccessDialog();
                         Toast.makeText(Register.this, "Berhasil", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), Login.class));
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -5,121 +5,108 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Db;
-import com.example.myapplication.GridAdapter;
+import com.example.myapplication.ListAset;
+import com.example.myapplication.PelaporanKerusakanKehilangan;
 import com.example.myapplication.R;
-import com.example.myapplication.Register;
+import com.example.myapplication.Riwayat;
+import com.example.myapplication.transaksi;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class HomeFragmentAdmin extends Fragment {
 
-    private GridView gridView;
-    private String[] MenuItems = {"Daftar Aset", "Transaksi", "Pelaporan", "Riwayat", "Kelola","Laporan"};
-    private int[] MenuItemsIcons = {R.drawable.baseline_list_alt_24, R.drawable.baseline_assignment_turned_in_24,
-            R.drawable.baseline_report_24, R.drawable.baseline_history_24, R.drawable.baseline_people_24, R.drawable.baseline_assessment_24};
+    CardView daftar, transaksi, lapor, riwayat, kelola, laporan;
 
     TextView nama;
 
-    @Nullable
+    ArrayList<String> peminjamanList = new ArrayList<>();
+    ArrayAdapter<String> peminjamanAdapter;
+
+    RecyclerView recyclerView;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_admin, container, false);
-
         nama = view.findViewById(R.id.nm_user);
+        daftar = view.findViewById(R.id.imgAset);
+        transaksi = view.findViewById(R.id.imgTrans);
+        lapor = view.findViewById(R.id.imgLapor);
+        riwayat = view.findViewById(R.id.imgRiwayat);
+        kelola = view.findViewById(R.id.Kelola);
+        laporan = view.findViewById(R.id.lapor);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.getUser,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            String userName = jsonResponse.getString("nama");
 
-                            // Update the TextView with the user's name
-                            nama.setText(userName);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
+        fetchNama(nama);
+
+        daftar.setOnClickListener(view1 -> {
+            Intent intent = new Intent(requireContext(), ListAset.class);
+            startActivity(intent);
+        });
+        transaksi.setOnClickListener(view1 -> {
+            startActivity(new Intent(requireContext(), transaksi.class));
+        });
+        lapor.setOnClickListener(view1 -> {
+            startActivity(new Intent(requireContext(), PelaporanKerusakanKehilangan.class));
+        });
+        riwayat.setOnClickListener(view1 -> {
+            startActivity(new Intent(requireContext(), Riwayat.class));
+        });
+        kelola.setOnClickListener(view1 -> {
+            startActivity(new Intent(requireContext(), ListPengguna.class));
         });
 
-        gridView = view.findViewById(R.id.gridViewAdmin);
-        GridAdapter gridAdapter = new GridAdapter(requireContext(), MenuItems, MenuItemsIcons);
-        gridView.setAdapter(gridAdapter);
-        // Set item click listener
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // Handle item click
-                        String selectedItem = ((String) parent.getItemAtPosition(position));
-                        handleMenuItemClick(selectedItem);
-                    }
-                });
 
 
-            }
-        });
         return view;
     }
 
+    private void fetchNama(TextView nama) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Db.urlLogin,
+                null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject userObject = response.getJSONArray("user").getJSONObject(0);
+                    String nama1 = userObject.optString("nama");
+                       nama.setText(nama1);
 
-    private void handleMenuItemClick(String menuItem) {
-        // Start corresponding activity based on the selected menu item
-        Intent intent;
-        switch (menuItem) {
-            case "Daftar Aset":
-
-
-            case "Laporan":
-
-
-            case "Transaksi":
-
-
-            case "Verifikasi":
-
-
-            case "Kelola Aset":
-
-
-            case "Kelola Anggota":
-
-
-            default:
-                showToast("Activity not found for menu item: " + menuItem);
-        }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonObjectRequest);
     }
 
-    private void showToast(String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
+
+
 }

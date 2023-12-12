@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Admin.AdminActivity;
+import com.example.myapplication.Admin.HomeFragmentAdmin;
 import com.example.myapplication.Opd.OpdActivity;
 import com.example.myapplication.Sekre.SekreActivity;
 
@@ -70,6 +71,7 @@ public class Login extends AppCompatActivity {
                                 String errorMassage = jsonResponse.getString("error");
                                 Toast.makeText(Login.this, errorMassage, Toast.LENGTH_SHORT).show();
                             } else {
+                                String username = jsonResponse.getString("username");
                                 int id_role = jsonResponse.getInt("id_role");
                                 if (id_role == 1) {
                                     startActivity(new Intent(Login.this, AdminActivity.class));

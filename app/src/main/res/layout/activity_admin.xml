@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/drawer_layout2"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     tools:context=".Admin.AdminActivity">
@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar2"
             android:elevation="4dp"
             android:background="@color/hijau"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"

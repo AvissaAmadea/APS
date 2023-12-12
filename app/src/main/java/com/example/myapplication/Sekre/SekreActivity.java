@@ -41,7 +41,7 @@ public class SekreActivity extends AppCompatActivity implements NavigationView.O
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragmentOPD()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragmentSekre()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
     }

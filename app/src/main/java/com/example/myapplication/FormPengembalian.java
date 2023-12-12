@@ -34,7 +34,6 @@ public class FormPengembalian extends AppCompatActivity {
 
     Spinner spinner;
     private int tahun,bulan,tanggal;
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
