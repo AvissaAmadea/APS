@@ -17,14 +17,17 @@ return new class extends Migration
 
             $table->unsignedBigInteger('user_id')->nullable()->change();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null')->onUpdate('cascade');
+
             $table->unsignedBigInteger('aset_id')->nullable()->change();
             $table->foreignId('aset_id')->nullable()->constrained('asets')->onDelete('set null')->onUpdate('cascade');
 
-            $table->timestamp('tgl_pinjam');
-            $table->timestamp('tgl_kembali');
+            $table->dateTime('tgl_pinjam');
+            $table->dateTime('tgl_kembali');
             $table->string('tujuan');
 
+            $table->string('surat_pinjam');
 
+            $table->enum('status_pinjam', ['Diterima', 'Menunggu Verifikasi', 'Ditolak'])->default('Menunggu Verifikasi');
 
             $table->timestamps();
         });

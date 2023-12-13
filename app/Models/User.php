@@ -56,10 +56,10 @@ class User extends Authenticatable
     protected $primarykey = 'id';
 
     public function dinas() {
-        return $this->belongsTo(Dinas::class, 'dinas_id'); // one-to-many relationship
+        return $this->belongsTo(Dinas::class, 'dinas_id');
     }
 
     public function roles() {
-        return $this->belongsTo(Role::class, 'role_id'); // many-to-many relationship
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

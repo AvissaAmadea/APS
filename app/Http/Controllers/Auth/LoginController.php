@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+
 
 class LoginController extends Controller
 {
@@ -32,14 +34,14 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->role_id == 1) {
-            return view('dashboard.superadmin'); // Redirect superadmin to their dashboard
+            return view('dashboard.superadmin')->with('status', 'Selamat Datang Super Admin!'); // Redirect superadmin to their dashboard
         } elseif ($user->role_id == 2) {
-            return view('dashboard.sekda'); // Redirect sekda to their dashboard
+            return view('dashboard.sekda')->with('status', 'Selamat Datang Sekretaris Daerah!'); // Redirect sekda to their dashboard
         } elseif ($user->role_id == 3) {
-            return view('dashboard.opd'); // Redirect opd to their dashboard
+            return view('dashboard.opd')->with('status', 'Selamat Datang OPD!'); // Redirect opd to their dashboard
         } else {
             // Default redirect if the user role doesn't match expected roles
-            return redirect('/login');
+            return redirect('/login')->with('error', 'Silahkan Registrasi terlebih dahulu!');
         }
     }
 

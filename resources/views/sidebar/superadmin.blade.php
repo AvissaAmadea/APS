@@ -84,7 +84,7 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ url('peminjaman/superadmin/create/') }}" class="sidebar-link">
                                     <i class="fa-solid fa-file-circle-plus pe-2"></i>{{ __('Peminjaman') }}
                                 </a>
                             </li>

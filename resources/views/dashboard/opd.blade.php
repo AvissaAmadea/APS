@@ -6,6 +6,16 @@
         <h5>{{ __('Dashboard OPD') }}</h5>
     </div>
     <div class="row">
+        @if (session('status'))
+            <div class="alert alert-primary text-center">
+                {{ session('status') }}
+            </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger text-center">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <div class="card flex-fill border-0 p-2">
             <div class="card-title my-2 mx-2">
                 <div class="row">

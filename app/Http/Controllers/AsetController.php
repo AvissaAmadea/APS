@@ -26,7 +26,7 @@ class AsetController extends Controller
     {
         $dinas = Dinas::all(); // Mengambil semua data dinas
         $kategoris = Kategori::all(); // Mengambil semua data kategori
-        $status_asets = Aset::select('status_aset')->distinct()->get(); // Mengambil status yang unik dari tabel aset
+        $status_asets = Aset::select('status_aset')->distinct()->get();
         return view('aset.create', compact('dinas','kategoris','status_asets'));
     }
 

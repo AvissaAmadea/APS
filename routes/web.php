@@ -22,40 +22,60 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-    // Routing dashboard dari sidebar
-    Route::get('/superadmin', [App\Http\Controllers\DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
-    Route::get('/sekda', [App\Http\Controllers\DashboardController::class, 'sekda'])->name('dashboard.sekda');
-    Route::get('/opd', [App\Http\Controllers\DashboardController::class, 'opd'])->name('dashboard.opd');
+    // Routing middleware untuk Superadmin
+    Route::middleware('superadmin')->group(function () {
+        Route::get('/dashboard/superadmin', [App\Http\Controllers\DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
 
-    // Routing Kelola User
-    Route::delete('/user/{id}/delete', [App\Http\Controllers\UserController::class, 'destroy'])->name('user/destroy');
-    Route::get('/user/trash', [App\Http\Controllers\UserController::class, 'trash'])->name('user/trash');
-    Route::get('/user/restore/{id?}', [App\Http\Controllers\UserController::class, 'restore'])->name('user/restore');
-    Route::get('/user/delete/{id?}', [App\Http\Controllers\UserController::class, 'delete'])->name('user/delete');
+        // Routing dashboard dari sidebar
+        Route::get('/superadmin', [App\Http\Controllers\DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
 
-    Route::resource('user', App\Http\Controllers\UserController::class)->except([
-        'destroy', 'trash', 'restore', 'delete'
-    ]);
+        // Routing Kelola User
+        Route::delete('/user/{id}/delete', [App\Http\Controllers\UserController::class, 'destroy'])->name('user/destroy');
+        Route::get('/user/trash', [App\Http\Controllers\UserController::class, 'trash'])->name('user/trash');
+        Route::get('/user/restore/{id?}', [App\Http\Controllers\UserController::class, 'restore'])->name('user/restore');
+        Route::get('/user/delete/{id?}', [App\Http\Controllers\UserController::class, 'delete'])->name('user/delete');
 
-    // Routing Kelola Kategori
-    Route::delete('/kategori/{id}/delete', [App\Http\Controllers\KategoriController::class, 'destroy'])->name('kategori/destroy');
+        Route::resource('user', App\Http\Controllers\UserController::class)->except([
+            'destroy', 'trash', 'restore', 'delete'
+        ]);
 
-    Route::resource('kategori', App\Http\Controllers\KategoriController::class)->except([
-        'show'
-    ]);
+        // Routing Kelola Kategori
+        Route::delete('/kategori/{id}/delete', [App\Http\Controllers\KategoriController::class, 'destroy'])->name('kategori/destroy');
 
-    // Routing Kelola Aset
-    Route::delete('/aset/{id}/delete', [App\Http\Controllers\AsetController::class, 'destroy'])->name('aset/destroy');
+        Route::resource('kategori', App\Http\Controllers\KategoriController::class)->except([
+            'show'
+        ]);
 
-    Route::resource('aset', App\Http\Controllers\AsetController::class);
+        // Routing Kelola Aset
+        Route::delete('/aset/{id}/delete', [App\Http\Controllers\AsetController::class, 'destroy'])->name('aset/destroy');
 
-    // Routing Peminjaman Aset
+        Route::resource('aset', App\Http\Controllers\AsetController::class);
 
+        // Routing Peminjaman Aset
+        Route::get('/peminjaman/superadmin/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman/superadmin/create');
+        Route::post('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman/superadmin');
 
+        Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
+            'index','show',
+        ]);
+    });
+
+    // Routing middleware untuk Sekda
+    Route::middleware('sekda')->group(function () {
+        Route::get('/dashboard/sekda', [App\Http\Controllers\DashboardController::class, 'sekda'])->name('dashboard.sekda');
+
+    });
+
+    // Routing middleware untuk OPD
+    Route::middleware('opd')->group(function () {
+        Route::get('/dashboard/opd', [App\Http\Controllers\DashboardController::class, 'opd'])->name('dashboard.opd');
+
+    });
 });
+
 
 Auth::routes();
 
@@ -85,3 +105,43 @@ Auth::routes();
     // Route::get('/aset/show/{id}', [App\Http\Controllers\AsetController::class, 'show'])->name('aset/show');
     // Route::get('/aset/edit/{id}', [App\Http\Controllers\AsetController::class, 'edit'])->name('aset/edit');
     // Route::delete('/aset/{id}/delete', [App\Http\Controllers\AsetController::class, 'destroy'])->name('aset/destroy');
+
+// Route::group(['middleware' => 'auth'], function () {
+//     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+
+//     // Routing dashboard dari sidebar
+//     Route::get('/superadmin', [App\Http\Controllers\DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
+//     Route::get('/sekda', [App\Http\Controllers\DashboardController::class, 'sekda'])->name('dashboard.sekda');
+//     Route::get('/opd', [App\Http\Controllers\DashboardController::class, 'opd'])->name('dashboard.opd');
+
+//     // Routing Kelola User
+//     Route::delete('/user/{id}/delete', [App\Http\Controllers\UserController::class, 'destroy'])->name('user/destroy');
+//     Route::get('/user/trash', [App\Http\Controllers\UserController::class, 'trash'])->name('user/trash');
+//     Route::get('/user/restore/{id?}', [App\Http\Controllers\UserController::class, 'restore'])->name('user/restore');
+//     Route::get('/user/delete/{id?}', [App\Http\Controllers\UserController::class, 'delete'])->name('user/delete');
+
+//     Route::resource('user', App\Http\Controllers\UserController::class)->except([
+//         'destroy', 'trash', 'restore', 'delete'
+//     ]);
+
+//     // Routing Kelola Kategori
+//     Route::delete('/kategori/{id}/delete', [App\Http\Controllers\KategoriController::class, 'destroy'])->name('kategori/destroy');
+
+//     Route::resource('kategori', App\Http\Controllers\KategoriController::class)->except([
+//         'show'
+//     ]);
+
+//     // Routing Kelola Aset
+//     Route::delete('/aset/{id}/delete', [App\Http\Controllers\AsetController::class, 'destroy'])->name('aset/destroy');
+
+//     Route::resource('aset', App\Http\Controllers\AsetController::class);
+
+//     // Routing Peminjaman Aset
+//     Route::get('/peminjaman/superadmin/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman/superadmin/create');
+//     Route::post('/peminjaman/superadin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('store');
+
+//     Route::resource('user', App\Http\Controllers\UserController::class)->except([
+//         'index','show',
+//     ]);
+
+// });

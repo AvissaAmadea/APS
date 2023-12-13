@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
 class DashboardController extends Controller
 {
@@ -18,17 +20,20 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index()
+    public function index(): Renderable|RedirectResponse
     {
-        if (Auth::user()->role_id == 1) {
-            return redirect()->route('dashboard.superadmin');
-        } else if (Auth::user()->role_id == 2) {
-            return redirect()->route('dashboard.sekda');
-        } else if (Auth::user()->role_id == 3) {
-            return redirect()->route('dashboard.opd');
-        } else {
-            return view('auth.login');
+        if (Auth::check()) {
+            if (Auth::user()->role_id == 1) {
+                return redirect()->route('dashboard.superadmin');
+            } elseif (Auth::user()->role_id == 2) {
+                return redirect()->route('dashboard.sekda');
+            } elseif (Auth::user()->role_id == 3) {
+                return redirect()->route('dashboard.opd');
+            }
         }
+
+        return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
+
         // if (Auth::user()->role_id == 1) {
         //     return view('dashboard.superadmin');
         // } else if (Auth::user()->role_id == 2) {
@@ -46,10 +51,11 @@ class DashboardController extends Controller
         if(Auth::user()->role_id != 1) {
             // Redirect atau tampilkan pesan error jika pengguna bukan superadmin
             return redirect()->route('/login')->with('error', 'Anda tidak memiliki akses sebagai Superadmin');
-        } else {
-            // Jika pengguna memiliki peran superadmin, tampilkan halaman dashboard superadmin
-            return view('dashboard.superadmin')->with('status', 'Selamat Datang Super Admin!');
         }
+            // Jika pengguna memiliki peran superadmin, tampilkan halaman dashboard superadmin
+            return view('dashboard.superadmin');
+
+        // return view('dashboard.superadmin');
     }
 
     public function sekda()
@@ -58,10 +64,10 @@ class DashboardController extends Controller
         if(Auth::user()->role_id != 2) {
             // Redirect atau tampilkan pesan error jika pengguna bukan sekda
             return redirect()->route('/login')->with('error', 'Anda tidak memiliki akses sebagai Sekda');
-        } else {
-            // Jika pengguna memiliki peran sekda, tampilkan halaman dashboard sekda
-            return view('dashboard.sekda')->with('status', 'Selamat Datang Sekretaris Daerah!');
         }
+            // Jika pengguna memiliki peran sekda, tampilkan halaman dashboard sekda
+            return view('dashboard.sekda');
+
     }
 
     public function opd()
@@ -70,9 +76,9 @@ class DashboardController extends Controller
         if(Auth::user()->role_id != 3) {
             // Redirect atau tampilkan pesan error jika pengguna bukan opd
             return redirect()->route('/login')->with('error', 'Anda tidak memiliki akses sebagai OPD');
-        } else {
-            // Jika pengguna memiliki peran opd, tampilkan halaman dashboard opd
-            return view('dashboard.opd')->with('status', 'Selamat Datang OPD!');
         }
+            // Jika pengguna memiliki peran opd, tampilkan halaman dashboard opd
+            return view('dashboard.opd');
+
     }
 }

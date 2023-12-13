@@ -51,7 +51,7 @@
 
                             <li class="sidebar-item">
                                 <a href="#" class="sidebar-link">
-                                    <i class="fa-solid fa-clipboard-list pe-3"></i></i></i>{{ __('Lihat Aset') }}
+                                    <i class="fa-solid fa-clipboard-list pe-2"></i></i></i>{{ __(' Lihat Aset') }}
                                 </a>
                             </li>
 
