@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
-                android:background="@drawable/square"
+                android:background="@color/white"
                 android:id="@+id/judul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,6 +37,7 @@
                     android:textSize="25sp" />
             </LinearLayout>
             <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
@@ -137,38 +138,7 @@
                         android:minHeight="50dp"
                         android:layout_marginTop="5dp"
                         android:textSize="15dp"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bidang Dinas"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"/>
 
-                    <Spinner
-                        android:id="@+id/SpinnerBidang"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:minHeight="50dp"
-                        android:layout_marginTop="5dp"
-                        android:textSize="15dp"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Jabatan Dinas"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"/>
-
-                    <Spinner
-                        android:id="@+id/spinnerJabatan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:minHeight="50dp"
-                        android:layout_marginTop="5dp"
-                        android:textSize="15dp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

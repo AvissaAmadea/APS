@@ -20,4 +20,5 @@ public class Db {
     public static final String getJabatan = "http://"+ip+"/aps1/getJabatan.php";
     public static final String getBidang = "http://"+ip+"/aps1/getBidang.php";
     public static final String addUser ="http://"+ip+"/aps1/User/addUser.php";
+    public static final String deleteUser ="http://"+ip+"/aps1/User/deleteUser.php";
 }

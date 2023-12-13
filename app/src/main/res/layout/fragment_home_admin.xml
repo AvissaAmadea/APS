@@ -52,15 +52,14 @@
                     android:textSize="25dp" />
 
                 <TextView
-                    android:inputType="textPersonName"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="5dp"
                     android:textSize="20dp"
                     android:id="@+id/nm_user"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:hint="Nama_User"
+                    android:text="Nama_User"
                     android:textColor="@color/black" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

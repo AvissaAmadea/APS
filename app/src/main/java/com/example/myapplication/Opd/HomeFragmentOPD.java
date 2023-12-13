@@ -1,6 +1,5 @@
 package com.example.myapplication.Opd;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Db;
-import com.example.myapplication.GridAdapter;
 import com.example.myapplication.ListAset;
 import com.example.myapplication.PelaporanKerusakanKehilangan;
 import com.example.myapplication.R;
@@ -89,8 +85,7 @@ public class HomeFragmentOPD extends Fragment {
                             JSONObject jsonResponse = new JSONObject(response);
                             String userName = jsonResponse.getString("nama");
 
-                            // Update the TextView with the user's name
-                            nama.setText(userName);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

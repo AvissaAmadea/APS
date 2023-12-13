@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Admin.ListPengguna"
-    android:orientation="vertical"
-    android:background="@color/eden">
+    android:background="@color/grey">
     <LinearLayout
-        android:background="@drawable/square"
+        android:background="@color/white"
         android:id="@+id/judul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,24 +23,46 @@
             android:layout_marginLeft="5dp"/>
 
         <TextView
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Daftar Pengguna"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/load_pengguna"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/judul"
+        android:layout_marginTop="14dp"
+        android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/ui_list_pengguna"
-            android:id="@+id/list_pengguna"/>
+            android:id="@+id/list_pengguna"
+            android:layout_below="@id/load_pengguna">
 
+        </androidx.recyclerview.widget.RecyclerView>
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_tambah"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginBottom="45dp"
+        android:backgroundTint="@color/green_pea"
+        android:clickable="true"
+        app:srcCompat="@drawable/round_add_24" />
+</RelativeLayout>

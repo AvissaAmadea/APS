@@ -56,8 +56,6 @@ public class FormPengguna extends AppCompatActivity {
         ETemail = findViewById(R.id.etEmail);
         ETnip = findViewById(R.id.etNip);
         SpinDinas = findViewById(R.id.spinnerDinas);
-        SpinJabat = findViewById(R.id.spinnerJabatan);
-        SpinBid = findViewById(R.id.SpinnerBidang);
         simpan = findViewById(R.id.btn_form_pengguna);
         SpinRole = findViewById(R.id.spinnerRole);
 

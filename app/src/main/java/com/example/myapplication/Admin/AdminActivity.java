@@ -24,10 +24,12 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
 
     private DrawerLayout drawerLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar2); //Ignore red line errors
         setSupportActionBar(toolbar);

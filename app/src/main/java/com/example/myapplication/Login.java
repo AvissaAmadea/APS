@@ -2,12 +2,14 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
+    ProgressBar progressBar;
     EditText etUsername, etPassword;
     TextView link, forgot_password;
 
@@ -42,6 +45,7 @@ public class Login extends AppCompatActivity {
         link = findViewById(R.id.to_register);
         forgot_password = findViewById(R.id.lupa_password);
         login = findViewById(R.id.btn_login);
+        progressBar = findViewById(R.id.load_login);
 
         link.setOnClickListener(view -> {
             startActivity(new Intent(Login.this, Register.class));
@@ -53,12 +57,17 @@ public class Login extends AppCompatActivity {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                performLogin(username, password);
+                if (username.isEmpty() || password.isEmpty()){
+                    Toast.makeText(Login.this, "Masukkan Data dengan Benar", Toast.LENGTH_SHORT).show();
+                }else{
+                    performLogin(username, password);
+                }
             }
         });
     }
 
     private void performLogin(String username, String password) {
+        progressBar.setVisibility(View.VISIBLE);
         StringRequest sq = new StringRequest(
                 Request.Method.POST,
                 Db.urlLogin,
@@ -66,19 +75,27 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            progressBar.setVisibility(View.GONE);
                             JSONObject jsonResponse = new JSONObject(response);
                             if (jsonResponse.has("error")) {
                                 String errorMassage = jsonResponse.getString("error");
                                 Toast.makeText(Login.this, errorMassage, Toast.LENGTH_SHORT).show();
-                            } else {
-                                String username = jsonResponse.getString("username");
+                            }else {
                                 int id_role = jsonResponse.getInt("id_role");
+                                String nama = jsonResponse.getString("nama");
                                 if (id_role == 1) {
-                                    startActivity(new Intent(Login.this, AdminActivity.class));
+                                   Intent intent = new Intent(Login.this, AdminActivity.class);
+                                    startActivity(intent);
+                                    Intent AdminIntent = new Intent(Login.this,HomeFragmentAdmin.class);
+                                    AdminIntent.putExtra("namaUser", nama);
                                 } else if (id_role == 2) {
-                                    startActivity(new Intent(Login.this, OpdActivity.class));
+                                    Intent intent = new Intent(Login.this, OpdActivity.class);
+                                    startActivity(intent);
+                                    intent.putExtra("namaUser", nama);
                                 } else if (id_role == 3) {
-                                    startActivity(new Intent(Login.this, SekreActivity.class));
+                                    Intent intent = new Intent(Login.this, SekreActivity.class);
+                                    startActivity(intent);
+                                    intent.putExtra("namaUser", nama);
                                 } else {
                                     Toast.makeText(Login.this, "Unvalid Roles", Toast.LENGTH_SHORT).show();
                                 }
@@ -91,6 +108,7 @@ public class Login extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.GONE);
                         Log.e("Volley Error", "Error: " + error.getMessage());
                         Toast.makeText(Login.this, "Error occurred", Toast.LENGTH_SHORT).show();
                     }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +44,8 @@ public class Register extends AppCompatActivity {
     ArrayList<String> dinasList = new ArrayList<>();
     ArrayAdapter<String> dinasAdapter;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,7 @@ public class Register extends AppCompatActivity {
         etDinas = findViewById(R.id.asal_dinas);
         bnt = findViewById(R.id.btn_regist);
         toLogin = findViewById(R.id.to_login);
+        progressBar = findViewById(R.id.pg1);
 
         fetchDinasList(etDinas);
 
@@ -65,6 +70,9 @@ public class Register extends AppCompatActivity {
         bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                progressBar.setVisibility(View.VISIBLE);
+
                 String username = etUsername.getText().toString();
                 String nama = etNama.getText().toString();
                 String email = etEmail.getText().toString();
@@ -72,12 +80,14 @@ public class Register extends AppCompatActivity {
                 String nip = etNip.getText().toString();
                 String konf = etKonf.getText().toString();
                 String dinas = etDinas.getSelectedItem().toString();
-
                 if (!konf.equals(pass)){
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(Register.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
                 }else {
                     if (!(username.isEmpty()||nama.isEmpty()||email.isEmpty()||nip.isEmpty())||dinas.equals("Pilih Dinas")){
                         registerUser(username, nama, email, nip, dinas, pass);
+                    }else {
+                        Toast.makeText(Register.this, "Masukkan data dengan benar", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -91,6 +101,7 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+
                             JSONArray jsonArray = response.getJSONArray("dinas");
                             dinasList.add("Pilih Dinas");
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -111,24 +122,28 @@ public class Register extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(Register.this, "Error fetch dinas", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
     }
 
     private void registerUser(String username, String nama, String email, String nip, String dinas, String pass) {
+
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest sq = new StringRequest(Request.Method.POST, Db.urlRegist,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressBar.setVisibility(View.GONE);
+                        showSuccessDialog();
                         Toast.makeText(Register.this, "Berhasil", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), Login.class));
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 showFailedDialog();
             }
         }){
@@ -139,10 +154,11 @@ public class Register extends AppCompatActivity {
                 map.put("password", pass);
                 map.put("email", email);
                 map.put("nip", nip);
-                map.put("dinas", dinas);
+                map.put("nama_dinas", dinas);
                 return map;
             }
         };
+        queue.add(sq);
     }
 
     private void showFailedDialog() {
@@ -157,7 +173,6 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                Toast.makeText(Register.this, "DONE", Toast.LENGTH_SHORT).show();
             }
         });
         if (dialog.getWindow() !=null){
@@ -179,7 +194,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-                Toast.makeText(Register.this, "DONE", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
 
