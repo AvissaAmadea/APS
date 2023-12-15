@@ -34,6 +34,10 @@ class Peminjaman extends Model
     }
 
     public function asets() {
-        return $this->belongsTo(Aset::class, 'aset_id');
+        return $this->belongsTo(Aset::class, 'aset_id', 'id');
+    }
+
+    public function dinas() {
+        return $this->belongsTo(Dinas::class, 'dinas_id');
     }
 }

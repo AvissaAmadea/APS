@@ -50,13 +50,13 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ url('seeAset/sekda') }}" class="sidebar-link">
                                     <i class="fa-solid fa-clipboard-list pe-2"></i>{{ __('   Lihat Aset') }}
                                 </a>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ url('peminjaman/sekda/create/') }}" class="sidebar-link">
                                     <i class="fa-solid fa-file-circle-plus pe-2"></i>{{ __('Peminjaman') }}
                                 </a>
                             </li>
@@ -153,7 +153,7 @@
                     <footer class="footer">
                         <div class="container-fluid">
                             <div class="row text-muted">
-                                <div class="col text-end">
+                                <div class="col-6 text-start">
                                     <p class="mb-2">
                                         <a href="#" class="text-muted">
                                             <strong>© 2023 Jepara APS</strong>
@@ -173,6 +173,7 @@
                             </div>
                         </div>
                     </footer>
+
 
                 </div>
             </div>

@@ -6,10 +6,19 @@
         <h6><strong>{{ __('Pengajuan Peminjaman') }}</strong></h6>
     </div>
     <div class="row">
+        @if (session('status'))
+            <div class="alert alert-primary text-center">
+                {{ session('status') }}
+            </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger text-center">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header">Form Pengajuan Peminjaman</h6>
             <div class="card-body mx-2">
-                <form class="form text-end" method="POST" action="{{ url('peminjaman/sekda/') }}" enctype="multipart/form-data">
+                <form class="form text-end" method="POST" action="{{ route('peminjaman/sekda') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group mb-2 row">
@@ -82,7 +91,7 @@
                     <div class="form-group mb-2 row">
                         <label for="surat_pinjam" class="col-sm-2 col-form-label">Surat Peminjaman</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control @error('surat_pinjam') is-invalid @enderror" id="surat_pinjam" name="surat_pinjam" accept=".jpg,.jpeg,.png,.doc,.docx,.pdf" value="{{ old('srt_pinjam') }}" required autofocus>
+                            <input type="file" class="form-control @error('surat_pinjam') is-invalid @enderror" id="surat_pinjam" name="surat_pinjam" accept=".jpg,.jpeg,.png,.doc,.docx,.pdf" value="{{ old('surat_pinjam') }}" required autofocus>
                         </div>
                         @error('surat_pinjam')
                             <span class="invalid-feedback" role="alert">

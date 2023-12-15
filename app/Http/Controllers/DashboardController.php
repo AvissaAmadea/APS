@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Support\Renderable;
 
 class DashboardController extends Controller
 {
@@ -22,28 +23,52 @@ class DashboardController extends Controller
 
     public function index(): Renderable|RedirectResponse
     {
+        $pinjams = Peminjaman::with(['users','asets.dinas'])->paginate(5);
+
         if (Auth::check()) {
+            $nama_dinas_aset = [];
+            $nama_aset = [];
+
+            foreach ($pinjams as $peminjaman) {
+                // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
+                if ($peminjaman->aset) {
+                    $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
+                    $nama_aset[] = optional($peminjaman->aset)->nama_aset;
+                } else {
+                    $nama_dinas_aset[] = null;
+                    $nama_aset[] = null;
+                }
+            }
+
             if (Auth::user()->role_id == 1) {
-                return redirect()->route('dashboard.superadmin');
+                return view('dashboard.superadmin', compact('pinjams','nama_aset','nama_dinas_aset'));
             } elseif (Auth::user()->role_id == 2) {
-                return redirect()->route('dashboard.sekda');
+                return view('dashboard.sekda', compact('pinjams','nama_aset','nama_dinas_aset'));
             } elseif (Auth::user()->role_id == 3) {
-                return redirect()->route('dashboard.opd');
+                return view('dashboard.opd', compact('pinjams','nama_dinas_aset'));
             }
         }
 
         return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-
-        // if (Auth::user()->role_id == 1) {
-        //     return view('dashboard.superadmin');
-        // } else if (Auth::user()->role_id == 2) {
-        //     return view('dashboard.sekda');
-        // } else if (Auth::user()->role_id == 3) {
-        //     return view('dashboard.opd');
-        // } else {
-        //     return view('/login');
-        // }
     }
+
+    // public function index(): Renderable|RedirectResponse
+    // {
+    //     $pinjams = Peminjaman::with(['users', 'asets'])->paginate(5);
+
+    //     if (Auth::check()) {
+    //         if (Auth::user()->role_id == 1) {
+    //             return view('dashboard.superadmin', compact('pinjams'));
+    //         } elseif (Auth::user()->role_id == 2) {
+    //             return view('dashboard.sekda', compact('pinjams'));
+    //         } elseif (Auth::user()->role_id == 3) {
+    //             return view('dashboard.opd', compact('pinjams'));
+    //         }
+    //     }
+
+    //     return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
+    // }
+
 
     public function superadmin()
     {

@@ -20,4 +20,8 @@ class Dinas extends Model
     public function users() {
         return $this->hasMany(User::class, 'dinas_id');
     }
+
+    public function peminjaman() {
+        return $this->hasMany(Peminjaman::class);
+    }
 }
