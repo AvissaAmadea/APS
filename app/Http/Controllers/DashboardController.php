@@ -23,29 +23,15 @@ class DashboardController extends Controller
 
     public function index(): Renderable|RedirectResponse
     {
-        $pinjams = Peminjaman::with(['users','asets.dinas'])->paginate(5);
-
         if (Auth::check()) {
-            $nama_dinas_aset = [];
-            $nama_aset = [];
+            $role_id = Auth::user()->role_id;
 
-            foreach ($pinjams as $peminjaman) {
-                // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-                if ($peminjaman->aset) {
-                    $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
-                    $nama_aset[] = optional($peminjaman->aset)->nama_aset;
-                } else {
-                    $nama_dinas_aset[] = null;
-                    $nama_aset[] = null;
-                }
-            }
-
-            if (Auth::user()->role_id == 1) {
-                return view('dashboard.superadmin', compact('pinjams','nama_aset','nama_dinas_aset'));
-            } elseif (Auth::user()->role_id == 2) {
-                return view('dashboard.sekda', compact('pinjams','nama_aset','nama_dinas_aset'));
-            } elseif (Auth::user()->role_id == 3) {
-                return view('dashboard.opd', compact('pinjams','nama_dinas_aset'));
+            if ($role_id == 1) {
+                return $this->superadmin();
+            } elseif ($role_id == 2) {
+                return $this->sekda();
+            } elseif ($role_id == 3) {
+                return $this->opd();
             }
         }
 
@@ -75,12 +61,29 @@ class DashboardController extends Controller
         // Lakukan pengecekan apakah pengguna memiliki peran superadmin
         if(Auth::user()->role_id != 1) {
             // Redirect atau tampilkan pesan error jika pengguna bukan superadmin
-            return redirect()->route('/login')->with('error', 'Anda tidak memiliki akses sebagai Superadmin');
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Superadmin');
         }
-            // Jika pengguna memiliki peran superadmin, tampilkan halaman dashboard superadmin
-            return view('dashboard.superadmin');
 
-        // return view('dashboard.superadmin');
+        $pinjams = Peminjaman::whereHas('users', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->with(['asets.dinas'])->paginate(5);
+
+        $nama_aset = [];
+        $nama_dinas_aset = [];
+
+        foreach ($pinjams as $peminjaman) {
+            // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
+            if ($peminjaman->aset) {
+                $nama_aset[] = optional($peminjaman->aset)->nama_aset;
+                $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
+            } else {
+                $nama_aset[] = null;
+                $nama_dinas_aset[] = null;
+            }
+        }
+
+            // Jika pengguna memiliki peran superadmin, tampilkan halaman dashboard superadmin
+            return view('dashboard.superadmin', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
     }
 
     public function sekda()
@@ -88,10 +91,29 @@ class DashboardController extends Controller
         // Lakukan pengecekan apakah pengguna memiliki peran sekda
         if(Auth::user()->role_id != 2) {
             // Redirect atau tampilkan pesan error jika pengguna bukan sekda
-            return redirect()->route('/login')->with('error', 'Anda tidak memiliki akses sebagai Sekda');
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Sekda');
         }
+
+        $pinjams = Peminjaman::whereHas('users', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->with(['users', 'asets.dinas'])->paginate(5);
+
+        $nama_aset = [];
+        $nama_dinas_aset = [];
+
+        foreach ($pinjams as $peminjaman) {
+            // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
+            if ($peminjaman->aset) {
+                $nama_aset[] = optional($peminjaman->aset)->nama_aset;
+                $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
+            } else {
+                $nama_aset[] = null;
+                $nama_dinas_aset[] = null;
+            }
+        }
+
             // Jika pengguna memiliki peran sekda, tampilkan halaman dashboard sekda
-            return view('dashboard.sekda');
+            return view('dashboard.sekda', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
 
     }
 
@@ -100,10 +122,28 @@ class DashboardController extends Controller
         // Lakukan pengecekan apakah pengguna memiliki peran opd
         if(Auth::user()->role_id != 3) {
             // Redirect atau tampilkan pesan error jika pengguna bukan opd
-            return redirect()->route('/login')->with('error', 'Anda tidak memiliki akses sebagai OPD');
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai OPD');
         }
-            // Jika pengguna memiliki peran opd, tampilkan halaman dashboard opd
-            return view('dashboard.opd');
 
+        $pinjams = Peminjaman::whereHas('users', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->with(['users', 'asets.dinas'])->paginate(5);
+
+        $nama_aset = [];
+        $nama_dinas_aset = [];
+
+        foreach ($pinjams as $peminjaman) {
+            // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
+            if ($peminjaman->aset) {
+                $nama_aset[] = optional($peminjaman->aset)->nama_aset;
+                $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
+            } else {
+                $nama_aset[] = null;
+                $nama_dinas_aset[] = null;
+            }
+        }
+
+            // Jika pengguna memiliki peran opd, tampilkan halaman dashboard opd
+            return view('dashboard.opd', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
     }
 }

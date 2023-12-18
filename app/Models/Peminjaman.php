@@ -10,12 +10,12 @@ class Peminjaman extends Model
     use HasFactory;
 
     protected $table = 'peminjaman';
-    protected $primarykey = 'id';
+    protected $primaryKey = 'id';
     protected $guarded = [
         'id',
-        'kode_pinjam',
     ];
     protected $fillable = [
+        'kode_pinjam',
         'user_id',
         'aset_id',
         'tgl_pinjam',

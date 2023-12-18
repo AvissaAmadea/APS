@@ -55,9 +55,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('aset', App\Http\Controllers\AsetController::class);
 
         // Routing Peminjaman Aset
-        Route::get('/peminjaman/superadmin', [App\Http\Controllers\AsetController::class, 'index'])->name('peminjaman/superadmin');
-        Route::get('/peminjaman/superadmin/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman/superadmin/create');
-        Route::post('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman/superadmin');
+        Route::get('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'index'])->name('peminjaman/superadmin');
+        Route::get('/peminjaman/superadmin/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.superadmin.create');
+        Route::post('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.superadmin');
 
         Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
             'show',
