@@ -23,6 +23,8 @@ class DashboardController extends Controller
 
     public function index(): Renderable|RedirectResponse
     {
+        $pinjams = [];
+
         if (Auth::check()) {
             $role_id = Auth::user()->role_id;
 
@@ -40,23 +42,24 @@ class DashboardController extends Controller
 
     // public function index(): Renderable|RedirectResponse
     // {
-    //     $pinjams = Peminjaman::with(['users', 'asets'])->paginate(5);
+    //     $pinjams = [];
 
     //     if (Auth::check()) {
-    //         if (Auth::user()->role_id == 1) {
-    //             return view('dashboard.superadmin', compact('pinjams'));
-    //         } elseif (Auth::user()->role_id == 2) {
-    //             return view('dashboard.sekda', compact('pinjams'));
-    //         } elseif (Auth::user()->role_id == 3) {
-    //             return view('dashboard.opd', compact('pinjams'));
+    //         $role_id = Auth::user()->role_id;
+
+    //         if ($role_id == 1) {
+    //             return $this->superadmin();
+    //         } elseif ($role_id == 2) {
+    //             return $this->sekda();
+    //         } elseif ($role_id == 3) {
+    //             return $this->opd();
     //         }
     //     }
 
     //     return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
     // }
 
-
-    public function superadmin()
+    protected function superadmin()
     {
         // Lakukan pengecekan apakah pengguna memiliki peran superadmin
         if(Auth::user()->role_id != 1) {
@@ -64,8 +67,10 @@ class DashboardController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Superadmin');
         }
 
-        $pinjams = Peminjaman::whereHas('users', function ($query) {
-            $query->where('user_id', Auth::user()->id);
+        $userId = Auth::id();
+
+        $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
+            $query->where('role_id', 1)->where('id', $userId);
         })->with(['asets.dinas'])->paginate(5);
 
         $nama_aset = [];
@@ -73,20 +78,20 @@ class DashboardController extends Controller
 
         foreach ($pinjams as $peminjaman) {
             // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-            if ($peminjaman->aset) {
-                $nama_aset[] = optional($peminjaman->aset)->nama_aset;
-                $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
+            if ($peminjaman->asets) {
+                $nama_aset[] = $peminjaman->asets->nama_aset;
+                $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
             } else {
                 $nama_aset[] = null;
                 $nama_dinas_aset[] = null;
             }
         }
 
-            // Jika pengguna memiliki peran superadmin, tampilkan halaman dashboard superadmin
-            return view('dashboard.superadmin', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
+        // Jika pengguna memiliki peran superadmin, tampilkan halaman dashboard superadmin
+        return view('dashboard.superadmin', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
     }
 
-    public function sekda()
+    protected function sekda()
     {
         // Lakukan pengecekan apakah pengguna memiliki peran sekda
         if(Auth::user()->role_id != 2) {
@@ -94,30 +99,31 @@ class DashboardController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Sekda');
         }
 
-        $pinjams = Peminjaman::whereHas('users', function ($query) {
-            $query->where('user_id', Auth::user()->id);
-        })->with(['users', 'asets.dinas'])->paginate(5);
+        $userId = Auth::id();
+
+        $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
+            $query->where('role_id', 2)->where('id', $userId);
+        })->with(['asets.dinas'])->paginate(5);
 
         $nama_aset = [];
         $nama_dinas_aset = [];
 
         foreach ($pinjams as $peminjaman) {
             // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-            if ($peminjaman->aset) {
-                $nama_aset[] = optional($peminjaman->aset)->nama_aset;
-                $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
+            if ($peminjaman->asets) {
+                $nama_aset[] = $peminjaman->asets->nama_aset;
+                $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
             } else {
                 $nama_aset[] = null;
                 $nama_dinas_aset[] = null;
             }
         }
 
-            // Jika pengguna memiliki peran sekda, tampilkan halaman dashboard sekda
-            return view('dashboard.sekda', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-
+        // Jika pengguna memiliki peran sekda, tampilkan halaman dashboard sekda
+        return view('dashboard.sekda', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
     }
 
-    public function opd()
+    protected function opd()
     {
         // Lakukan pengecekan apakah pengguna memiliki peran opd
         if(Auth::user()->role_id != 3) {
@@ -125,18 +131,20 @@ class DashboardController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai OPD');
         }
 
-        $pinjams = Peminjaman::whereHas('users', function ($query) {
-            $query->where('user_id', Auth::user()->id);
-        })->with(['users', 'asets.dinas'])->paginate(5);
+        $userId = Auth::id();
+
+        $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
+            $query->where('role_id', 3)->where('id', $userId);
+        })->with(['asets.dinas'])->paginate(5);
 
         $nama_aset = [];
         $nama_dinas_aset = [];
 
         foreach ($pinjams as $peminjaman) {
             // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-            if ($peminjaman->aset) {
-                $nama_aset[] = optional($peminjaman->aset)->nama_aset;
-                $nama_dinas_aset[] = optional($peminjaman->aset->dinas)->nama_dinas;
+            if ($peminjaman->asets) {
+                $nama_aset[] = $peminjaman->asets->nama_aset;
+                $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
             } else {
                 $nama_aset[] = null;
                 $nama_dinas_aset[] = null;

@@ -230,3 +230,18 @@ footer {
     border-radius: 0.25rem; /* Atur radius sudut sesuai kebutuhan */
     display: inline-block; /* Untuk memberi warna latar belakang hanya di tinggi teks */
 }
+
+/* CSS untuk loading indicator */
+.loading-indicator {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

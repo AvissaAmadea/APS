@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row my-1">
-        <h6><strong>{{ __('Dashboard OPD') }}</strong></h6>
+        <h6><strong>{{ __('Riwayat') }}</strong></h6>
     </div>
     <div class="row">
         @if (session('status'))
@@ -81,11 +81,11 @@
                 <!-- </div> -->
             </div>
             <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{-- {{ $pinjams->links('pagination::bootstrap-5') }} --}}
-                {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
+                {{ $pinjams->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
 </div>
+{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 @endsection
 

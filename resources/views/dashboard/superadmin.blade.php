@@ -1,6 +1,13 @@
 @extends('sidebar.superadmin')
 
 @section('content')
+<!-- Tambahkan loading indicator -->
+{{-- <div class="loading-indicator">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div> --}}
+
 <div class="container-fluid">
     <div class="row my-1">
         <h6><strong>{{ __('Dashboard Super Admin') }}</strong></h6>
@@ -44,23 +51,11 @@
                           </tr>
                       </thead>
                       <tbody>
-                        @if (isset($pinjams) && $pinjams->count() > 0)
+                        @if ($pinjams->count() > 0)
                             @foreach ($pinjams as $key => $item)
                                 <tr class="text-center">
                                     <th>{{ ( $pinjams->firstItem() + $key ) }}</th>
                                     <td>{{ ( $item->kode_pinjam ) }}</td>
-
-                                    {{-- @if ($nama_aset !== null)
-                                        @foreach ($nama_aset as $nama_aset)
-                                            <td>{{ $nama_aset }}</td>
-                                        @endforeach
-                                    @endif
-
-                                    @if ($nama_dinas_aset !== null)
-                                        @foreach ($nama_dinas_aset as $nama_dinas)
-                                            <td>{{ $nama_dinas }}</td>
-                                        @endforeach
-                                    @endif --}}
 
                                     {{-- Tampilkan nama aset dan nama dinas aset --}}
                                     @if(isset($nama_aset[$key]) && isset($nama_dinas_aset[$key]))
@@ -74,10 +69,10 @@
                                     <td>{{ ( $item->tgl_pinjam ) }}</td>
                                     <td>{{ ( $item->tgl_kembali ) }}</td>
                                     {{-- <td>{{ ( $item->status_pinjam ) }}</td> --}}
-                                    <td>
+                                    <td style="width: 5rem">
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center" style="width: 6rem">
                                         <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
                                         <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
                                     </td>
@@ -91,38 +86,11 @@
                       </tbody>
                   </table>
                 <!-- </div> -->
-                {{-- <table class="table table-bordered border-dark align-middle">
-                    <thead >
-                        <tr class="text-center table-dark">
-                            <th scope="col">No.</th>
-                            <th scope="col">Nama Aset</th>
-                            <th scope="col">Asal Dinas</th>
-                            <th scope="col">Waktu Pinjam</th>
-                            <th scope="col">Waktu Kembali</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th class="text-center">{{ __('1') }}</th>
-                            <td>{{ __('Aset') }}</td>
-                            <td>{{ __('Dinas Sosial') }}</td>
-                            <td>{{ __('10-03-2024') }}</td>
-                            <td>{{ __('15-03-2024') }}</td>
-                            <td class="text-center">{{ __('Status') }}</td>
-                        </tr>
-                    </tbody>
-                </table> --}}
             </div>
-            @if(isset($pinjams))
-                <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                    {{ $pinjams->links('pagination::bootstrap-5') }}
-                </div>
-            @endif
-
-            {{-- <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{ $pinjams->links('pagination::bootstrap-5') }}
-            </div> --}}
+            <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
+                {{-- {{ $pinjams->links('pagination::bootstrap-5') }} --}}
+                {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
+            </div>
         </div>
     </div>
 </div>

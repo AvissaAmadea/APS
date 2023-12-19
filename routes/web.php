@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard/superadmin', [App\Http\Controllers\DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
 
         // Routing dashboard dari sidebar
-        Route::get('/superadmin', [App\Http\Controllers\DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
+        // Route::get('/superadmin', [App\Http\Controllers\DashboardController::class, 'superadmin'])->name('dashboard.superadmin');
 
         // Routing Kelola User
         Route::delete('/user/{id}/delete', [App\Http\Controllers\UserController::class, 'destroy'])->name('user/destroy');
@@ -55,12 +55,12 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('aset', App\Http\Controllers\AsetController::class);
 
         // Routing Peminjaman Aset
-        Route::get('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'index'])->name('peminjaman/superadmin');
+        Route::get('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'superadminIndex'])->name('peminjaman.superadmin.index');
         Route::get('/peminjaman/superadmin/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.superadmin.create');
-        Route::post('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.superadmin');
+        Route::post('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.superadmin.store');
 
         Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
-            'show',
+            'destroy',
         ]);
     });
 
@@ -70,20 +70,21 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard/sekda', [App\Http\Controllers\DashboardController::class, 'sekda'])->name('dashboard.sekda');
 
         // Routing dashboard dari sidebar
-        Route::get('/sekda', [App\Http\Controllers\DashboardController::class, 'sekda'])->name('dashboard.sekda');
+        // Route::get('/sekda', [App\Http\Controllers\DashboardController::class, 'sekda'])->name('dashboard.sekda');
 
         // Routing Lihat Aset
         Route::get('/seeAset/sekda/', [App\Http\Controllers\SeeAsetController::class, 'index'])->name('seeAset/sekda');
         Route::get('/seeAset/sekda/show/{id}', [App\Http\Controllers\SeeAsetController::class, 'show'])->name('seeAset/sekda/show');
 
-         // Routing Peminjaman Aset
-         Route::get('/peminjaman/sekda', [App\Http\Controllers\AsetController::class, 'index'])->name('peminjaman/sekda');
-         Route::get('/peminjaman/sekda/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman/sekda/create');
-         Route::post('/peminjaman/sekda', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman/sekda');
+        // Routing Peminjaman Aset
+        Route::get('/peminjaman/sekda', [App\Http\Controllers\PeminjamanController::class, 'sekdaIndex'])->name('peminjaman.sekda.index');
+        Route::get('/peminjaman/sekda/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.sekda.create');
+        Route::post('/peminjaman/sekda', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.sekda.store');
 
-         Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
-             'show',
-         ]);
+        Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
+            'destroy',
+        ]);
+
     });
 
 
@@ -92,19 +93,19 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard/opd', [App\Http\Controllers\DashboardController::class, 'opd'])->name('dashboard.opd');
 
         // Routing dashboard dari sidebar
-        Route::get('/opd', [App\Http\Controllers\DashboardController::class, 'opd'])->name('dashboard.opd');
+        // Route::get('/opd', [App\Http\Controllers\DashboardController::class, 'opd'])->name('dashboard.opd');
 
         // Routing Lihat Aset
         Route::get('/seeAset/opd/', [App\Http\Controllers\SeeAsetController::class, 'index'])->name('seeAset/opd');
         Route::get('/seeAset/opd/show/{id}', [App\Http\Controllers\SeeAsetController::class, 'show'])->name('seeAset/opd/show');
 
          // Routing Peminjaman Aset
-         Route::get('/peminjaman/opd', [App\Http\Controllers\AsetController::class, 'index'])->name('peminjaman/opd');
-         Route::get('/peminjaman/opd/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman/opd/create');
-         Route::post('/peminjaman/opd', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman/opd');
+         Route::get('/peminjaman/opd', [App\Http\Controllers\PeminjamanController::class, 'opdIndex'])->name('peminjaman.opd.index');
+         Route::get('/peminjaman/opd/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.opd.create');
+         Route::post('/peminjaman/opd', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.opd.store');
 
          Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
-             'show',
+             'destroy',
          ]);
     });
 });

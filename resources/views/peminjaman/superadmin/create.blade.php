@@ -19,7 +19,7 @@
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header">Form Pengajuan Peminjaman</h6>
             <div class="card-body mx-2">
-                <form class="form text-end" method="POST" action="{{ route('peminjaman.superadmin') }}" enctype="multipart/form-data">
+                <form class="form text-end" method="POST" action="{{ route('peminjaman.superadmin.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group mb-2 row">

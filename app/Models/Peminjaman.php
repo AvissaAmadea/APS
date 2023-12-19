@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Peminjaman extends Model
 {
@@ -14,6 +15,36 @@ class Peminjaman extends Model
     protected $guarded = [
         'id',
     ];
+
+    // Set timestamps menjadi true
+    public $timestamps = true;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($peminjaman) {
+           // Set waktu saat ini dalam zona waktu UTC
+        $now = Carbon::now('UTC');
+
+        // Ubah zona waktu ke WIB sebelum disimpan
+        $now->setTimezone('Asia/Jakarta');
+
+        $peminjaman->created_at = $now;
+        $peminjaman->updated_at = null; // Mengatur updated_at menjadi null saat data pertama kali dibuat
+        });
+
+        static::updating(function ($peminjaman) {
+             // Set waktu saat ini dalam zona waktu UTC
+            $now = Carbon::now('UTC');
+
+            // Ubah zona waktu ke WIB sebelum disimpan
+            $now->setTimezone('Asia/Jakarta');
+
+            $peminjaman->updated_at = $now; // Mengatur updated_at ketika data diubah
+        });
+    }
+
     protected $fillable = [
         'kode_pinjam',
         'user_id',

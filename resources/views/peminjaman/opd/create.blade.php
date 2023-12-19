@@ -15,10 +15,11 @@
                 {{ session('error') }}
             </div>
         @endif
+
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header">Form Pengajuan Peminjaman</h6>
             <div class="card-body mx-2">
-                <form class="form text-end" method="POST" action="{{ route('peminjaman/opd') }}" enctype="multipart/form-data">
+                <form class="form text-end" method="POST" action="{{ route('peminjaman.opd.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group mb-2 row">
@@ -29,9 +30,9 @@
                     </div>
 
                     <div class="form-group mb-2 row">
-                        <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+                        <label for="user_name" class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control" id="nama" name="nama" value="{{ Auth::user()->nama }}" autofocus>
+                            <input type="text" readonly class="form-control" id="user_name" name="user_name" value="{{ Auth::user()->nama }}" autofocus>
                         </div>
                     </div>
 
