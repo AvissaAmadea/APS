@@ -81,7 +81,7 @@
                 <!-- </div> -->
             </div>
             <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{ $pinjams->links('pagination::bootstrap-5') }}
+                {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

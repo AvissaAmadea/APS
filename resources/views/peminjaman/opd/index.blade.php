@@ -66,7 +66,7 @@
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
                                     <td class="text-center" style="width: 6rem">
-                                        <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-info btn-sm" href="{{ url('peminjaman/opd/show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
                                         <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
                                     </td>
                                 </tr>
@@ -81,11 +81,10 @@
                 <!-- </div> -->
             </div>
             <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{ $pinjams->links('pagination::bootstrap-5') }}
+                {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
 </div>
-{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 @endsection
 

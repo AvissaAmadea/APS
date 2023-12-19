@@ -45,12 +45,10 @@
                                 </div>
                             </div>
 
-                            {{-- <input type="text" readonly class="status-badge @if ($aset->status_aset === 'Tersedia') text-white bg-primary fw-bold @else text-white bg-secondary fw-bold @endif" id="status_aset" name="status_aset" value="{{ $aset->status_aset }}"> --}}
-
                             <div class="form-group mb-2 row">
                                 <label for="detail" class="col-sm-2 col-form-label">Detail :</label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="detail" name="detail" value="{{ $aset->detail }}">
+                                <div class="col-sm-9">
+                                    <textarea readonly class="form-control-plaintext fw-bold" id="detail" name="detail" rows="3" style="text-align: justify;">{{ $aset->detail }}</textarea>
                                 </div>
                             </div>
                         </div>

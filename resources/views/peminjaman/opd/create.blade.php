@@ -56,7 +56,9 @@
                     <div class="form-group mb-2 row">
                         <label for="tgl_pinjam" class="col-sm-2 col-form-label">Waktu Pinjam</label>
                         <div class="col-sm-10">
-                            <input type="datetime-local" class="form-control @error('tgl_pinjam') is-invalid @enderror" id="tgl_pinjam" name="tgl_pinjam" min="{{ date('Y-m-d\TH:i', strtotime('+3 days')) }}" value="{{ old('tgl_pinjam') }}" required autofocus>
+                            <input type="datetime-local" class="form-control @error('tgl_pinjam') is-invalid @enderror" id="tgl_pinjam" name="tgl_pinjam"
+                            min="{{ \Carbon\Carbon::now()->addDays(3)->setTime(0, 0, 0)->format('Y-m-d\TH:i') }}" value="{{ old('tgl_pinjam') }}" required autofocus>
+                            {{-- <input type="datetime-local" class="form-control @error('tgl_pinjam') is-invalid @enderror" id="tgl_pinjam" name="tgl_pinjam" min="{{ date('Y-m-d\TH:i', strtotime('+3 days')) }}" value="{{ old('tgl_pinjam') }}" required autofocus> --}}
                         </div>
                         @error('tgl_pinjam')
                             <span class="invalid-feedback" role="alert">
@@ -68,7 +70,9 @@
                     <div class="form-group mb-2 row">
                         <label for="tgl_kembali" class="col-sm-2 col-form-label">Waktu Kembali</label>
                         <div class="col-sm-10">
-                            <input type="datetime-local" class="form-control @error('tgl_kembali') is-invalid @enderror" id="tgl_kembali" name="tgl_kembali" min="{{ date('Y-m-d\TH:i', strtotime('+3 days')) }}" value="{{ old('tgl_kembali') }}" required autofocus>
+                            <input type="datetime-local" class="form-control @error('tgl_kembali') is-invalid @enderror" id="tgl_kembali" name="tgl_kembali"
+                            min="{{ \Carbon\Carbon::now()->addDays(3)->setTime(0, 0, 0)->format('Y-m-d\TH:i') }}" value="{{ old('tgl_kembali') }}" required autofocus>
+                            {{-- <input type="datetime-local" class="form-control @error('tgl_kembali') is-invalid @enderror" id="tgl_kembali" name="tgl_kembali" min="{{ date('Y-m-d\TH:i', strtotime('+3 days')) }}" value="{{ old('tgl_kembali') }}" required autofocus> --}}
                         </div>
                         @error('tgl_kembali')
                             <span class="invalid-feedback" role="alert">

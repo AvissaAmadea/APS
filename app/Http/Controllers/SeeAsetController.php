@@ -30,7 +30,7 @@ class SeeAsetController extends Controller
                 return view('dashboard.opd')->with('status', 'Selamat Datang OPD!'); // Redirect opd to their dashboard
             } else {
                 // Default redirect if the user role doesn't match expected roles
-                return redirect('/login')->with('error', 'Silahkan Registrasi terlebih dahulu!');
+                return redirect('login')->with('error', 'Silahkan Registrasi terlebih dahulu!');
             }
         }
     }

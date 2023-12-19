@@ -104,7 +104,22 @@
                                 </a>
                                 <ul id="riwayat" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        <a href="{{ route('peminjaman.sekda.index') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
+                                        {{-- <a href="{{ url('/peminjaman/sekda') }}" class="sidebar-link">{{ __('Peminjaman') }}</a> --}}
+                                        @if(Auth::check())
+                                            @if(Auth::user()->role_id == 1)
+                                                <a href="{{ route('peminjaman.superadmin') }}" class="sidebar-link">
+                                                    {{ __('Peminjaman') }}
+                                                </a>
+                                            @elseif(Auth::user()->role_id == 2)
+                                                <a href="{{ url('/peminjaman/sekda') }}" class="sidebar-link">
+                                                    {{ __('Peminjaman') }}
+                                                </a>
+                                            @elseif(Auth::user()->role_id == 3)
+                                                <a href="{{ route('peminjaman.opd') }}" class="sidebar-link">
+                                                    {{ __('Peminjaman') }}
+                                                </a>
+                                            @endif
+                                        @endif
                                     </li>
                                     <li class="sidebar-item">
                                         <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
