@@ -2,8 +2,11 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row my-1">
-        <h6><strong>{{ __('Riwayat') }}</strong></h6>
+    <div class="row mt-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.sekda') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Riwayat Peminjaman</li>
+        </ol>
     </div>
     <div class="row">
         @if (session('status'))
@@ -36,7 +39,7 @@
                               <th scope="col">No.</th>
                               <th scope="col">Kode</th>
                               <th scope="col">Nama Aset</th>
-                              <th scope="col">Dinas</th>
+                              <th scope="col">Asal Aset</th>
                               <th scope="col">Waktu Pinjam</th>
                               <th scope="col">Waktu Kembali</th>
                               <th scope="col">Status</th>
@@ -66,7 +69,7 @@
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
                                     <td class="text-center" style="width: 6rem">
-                                        <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-info btn-sm" href="{{ route('peminjaman.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
                                         <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
                                     </td>
                                 </tr>

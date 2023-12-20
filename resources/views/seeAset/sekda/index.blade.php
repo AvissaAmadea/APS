@@ -2,8 +2,11 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row my-1">
-        <h6><strong>{{ __('Lihat Aset') }}</strong></h6>
+    <div class="row mt-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.sekda') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Lihat Aset</li>
+        </ol>
     </div>
     <div class="row">
         @if (session('status'))

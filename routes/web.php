@@ -55,9 +55,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('aset', App\Http\Controllers\AsetController::class);
 
         // Routing Peminjaman Aset
-        Route::get('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'superadmin'])->name('peminjaman.superadmin');
+        Route::get('peminjaman/superadmin/index', [App\Http\Controllers\PeminjamanController::class, 'superadminIndex'])->name('peminjaman.superadmin.index');
         Route::get('/peminjaman/superadmin/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.superadmin.create');
         Route::post('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.superadmin.store');
+        Route::get('peminjaman/superadmin/show/{id}', [App\Http\Controllers\PeminjamanController::class, 'superadminShow'])->name('peminjaman.superadmin.show');
 
         Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
             'destroy',
@@ -77,9 +78,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/seeAset/sekda/show/{id}', [App\Http\Controllers\SeeAsetController::class, 'show'])->name('seeAset/sekda/show');
 
         // Routing Peminjaman Aset
-        Route::get('/peminjaman/sekda', [App\Http\Controllers\PeminjamanController::class, 'sekda'])->name('peminjaman.sekda');
+        Route::get('peminjaman/sekda/index', [App\Http\Controllers\PeminjamanController::class, 'sekdaIndex'])->name('peminjaman.sekda.index');
         Route::get('/peminjaman/sekda/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.sekda.create');
         Route::post('/peminjaman/sekda', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.sekda.store');
+        Route::get('peminjaman/sekda/show/{id}', [App\Http\Controllers\PeminjamanController::class, 'sekdaShow'])->name('peminjaman.sekda.show');
+        Route::get('peminjaman/sekda/list', [App\Http\Controllers\PeminjamanController::class, 'showList'])->name('peminjaman.sekda.list');
+
 
         Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
             'destroy',
@@ -100,9 +104,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/seeAset/opd/show/{id}', [App\Http\Controllers\SeeAsetController::class, 'show'])->name('seeAset.opd.show');
 
          // Routing Peminjaman Aset
-         Route::get('/peminjaman/opd', [App\Http\Controllers\PeminjamanController::class, 'opd'])->name('peminjaman.opd');
+         Route::get('peminjaman/opd/index', [App\Http\Controllers\PeminjamanController::class, 'opdIndex'])->name('peminjaman.opd.index');
          Route::get('/peminjaman/opd/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.opd.create');
          Route::post('/peminjaman/opd', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.opd.store');
+         Route::get('peminjaman/opd/show/{id}', [App\Http\Controllers\PeminjamanController::class, 'opdShow'])->name('peminjaman.opd.show');
 
          Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
              'destroy',

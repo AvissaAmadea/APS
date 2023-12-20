@@ -1,16 +1,11 @@
 @extends('sidebar.sekda')
 
 @section('content')
-<!-- Tambahkan loading indicator -->
-{{-- <div class="loading-indicator">
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div> --}}
-
 <div class="container-fluid">
-    <div class="row my-1">
-        <h6><strong>{{ __('Dashboard Sekretaris Daerah') }}</strong></h6>
+    <div class="row mt-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Dashboard</li>
+        </ol>
     </div>
     <div class="row">
         @if (session('status'))

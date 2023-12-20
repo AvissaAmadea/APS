@@ -138,6 +138,7 @@ a.sidebar-link:hover {
 
 .navbar {
     background-color: #009e60;
+    max-height: 70px;
 }
 
 .navbar-btn {

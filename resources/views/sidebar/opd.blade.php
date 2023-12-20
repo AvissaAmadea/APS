@@ -76,21 +76,8 @@
                                 </a>
                                 <ul id="riwayat" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        {{-- <a href="{{ route('peminjaman.opd') }}" class="sidebar-link">{{ __('Peminjaman') }}</a> --}}
-                                        @if(Auth::check())
-                                            @if(Auth::user()->role_id == 1)
-                                                <a href="{{ route('peminjaman.superadmin') }}" class="sidebar-link">
-                                                    {{ __('Peminjaman') }}
-                                                </a>
-                                            @elseif(Auth::user()->role_id == 2)
-                                                <a href="{{ route('peminjaman.sekda') }}" class="sidebar-link">
-                                                    {{ __('Peminjaman') }}
-                                                </a>
-                                            @elseif(Auth::user()->role_id == 3)
-                                                <a href="{{ route('peminjaman.opd') }}" class="sidebar-link">
-                                                    </i>{{ __('Peminjaman') }}
-                                                </a>
-                                            @endif
+                                        @if(Auth::check() && Auth::user()->role_id == 3)
+                                            <a href="{{ route('peminjaman.opd.index') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
                                         @endif
                                     </li>
                                     <li class="sidebar-item">
@@ -125,8 +112,8 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-                        <div class="navbar-collapse navbar">
-                            <ul class="navbar-nav ms-auto mb-lg-0">
+                        <div class="navbar-collapse navbar pt-2 pb-0">
+                            <ul class="navbar-nav p-0">
                                 <li class="nav-item">
                                     <a class="nav-link text-white my-2 mx-2 position-relative" href="#" role="button" aria-expanded="false">
                                         <i class="fa-solid fa-bell fa-lg text-white"></i>

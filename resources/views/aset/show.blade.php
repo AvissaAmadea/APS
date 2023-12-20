@@ -2,8 +2,12 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row my-1">
-        <h6><strong>{{ __('Kelola Aset') }}</strong></h6>
+    <div class="row mt-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('aset/') }}">Kelola Aset</a></li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Detail Aset</li>
+        </ol>
     </div>
     <div class="row">
         <div class="card flex-fill border-0 p-1">
@@ -16,31 +20,31 @@
             </h6>
             <div class="card-body mx-2">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-md-9 offset-md-3">
+                    <div class="col-lg-9">
                         <div class="form text-end">
                             <div class="form-group mb-2 row">
-                                <label for="nama_aset" class="col-sm-2 col-form-label">Nama Aset :</label>
-                                <div class="col-sm-10">
+                                <label for="nama_aset" class="col-md-4 col-form-label">Nama Aset :</label>
+                                <div class="col-md-8">
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="nama_aset" name="nama_aset" value="{{ $aset->nama_aset }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
-                                <label for="kategori_id" class="col-sm-2 col-form-label">Kategori :</label>
-                                <div class="col-sm-10">
+                                <label for="kategori_id" class="col-md-4 col-form-label">Kategori :</label>
+                                <div class="col-md-8">
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="kategori_id" name="kategori_id" value="{{ $aset->kategoris->jenis }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
-                                <label for="dinas_id" class="col-sm-2 col-form-label">Dinas :</label>
-                                <div class="col-sm-10">
+                                <label for="dinas_id" class="col-md-4 col-form-label">Dinas :</label>
+                                <div class="col-md-8">
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="dinas_id" name="dinas_id" value="{{ $aset->dinas->nama_dinas }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
-                                <label for="status_aset" class="col-sm-2 col-form-label">Status :</label>
+                                <label for="status_aset" class="col-md-4 col-form-label">Status :</label>
                                 <div class="col-auto mt-1">
                                     <span class="status-badge @if ($aset->status_aset === 'Tersedia') text-white bg-primary @else text-white bg-secondary @endif" id="status_aset" name="status_aset" readonly>{{ $aset->status_aset }}</span>
                                 </div>
@@ -49,9 +53,10 @@
                             {{-- <input type="text" readonly class="status-badge @if ($aset->status_aset === 'Tersedia') text-white bg-primary fw-bold @else text-white bg-secondary fw-bold @endif" id="status_aset" name="status_aset" value="{{ $aset->status_aset }}"> --}}
 
                             <div class="form-group mb-2 row">
-                                <label for="detail" class="col-sm-2 col-form-label">Detail :</label>
-                                <div class="col-sm-9">
-                                    <textarea readonly class="form-control-plaintext fw-bold" id="detail" name="detail" rows="3" style="text-align: justify;">{{ $aset->detail }}</textarea>
+                                <label for="detail" class="col-md-4 col-form-label">Detail :</label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control-plaintext fw-bold" id="detail" name="detail" style="text-align: justify; height: auto;" rows="3">{{ $aset->detail }}</textarea>
+                                    {{-- <textarea class="form-control-plaintext fw-bold" id="detail" name="detail" style="text-align: justify; overflow-y: hidden;" oninput="autoExpand(this)">{{ $aset->detail }}</textarea> --}}
                                 </div>
                             </div>
 

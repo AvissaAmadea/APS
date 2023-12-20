@@ -3,57 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aset;
+use App\Models\Dinas;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Support\Renderable;
 
 class PeminjamanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-     public function index(): Renderable|RedirectResponse
-     {
-         if (Auth::check()) {
-             $role_id = Auth::user()->role_id;
-
-             if ($role_id == 1) {
-                 return $this->superadmin();
-             } elseif ($role_id == 2) {
-                 return $this->sekda();
-             } elseif ($role_id == 3) {
-                 return $this->opd();
-             }
-         }
-
-         return back()->with('error', 'Anda tidak memiliki akses yang sesuai.');
-     }
-
-     protected function superadmin()
+    protected function getUserRole()
     {
-        // Lakukan pengecekan apakah pengguna memiliki peran superadmin
-        if(Auth::user()->role_id != 1) {
-            // Redirect atau tampilkan pesan error jika pengguna bukan superadmin
-            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Superadmin');
-        }
+        return Auth::check() ? Auth::user()->role_id : null;
+    }
 
+    protected function getIndexData($role)
+    {
         $userId = Auth::id();
 
         $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-            $query->where('role_id', 1)->where('id', $userId);
+            $query->where('id', $userId);
         })->with(['asets.dinas'])->paginate(5);
 
         $nama_aset = [];
         $nama_dinas_aset = [];
 
         foreach ($pinjams as $peminjaman) {
-            // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
             if ($peminjaman->asets) {
                 $nama_aset[] = $peminjaman->asets->nama_aset;
                 $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
@@ -63,251 +41,42 @@ class PeminjamanController extends Controller
             }
         }
 
-        // Jika pengguna memiliki peran superadmin, tampilkan halaman peminjaman superadmin
-        return view('peminjaman.superadmin.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
+        $view = 'peminjaman.' . $role . '.index';
+        return view($view, compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
     }
 
-    protected function sekda()
+    public function superadminIndex()
     {
-        // Lakukan pengecekan apakah pengguna memiliki peran sekda
-        if(Auth::user()->role_id != 2) {
-            // Redirect atau tampilkan pesan error jika pengguna bukan sekda
-            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Sekda');
+        $role = $this->getUserRole();
+
+        if ($role != 1) {
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        $userId = Auth::id();
-
-        $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-            $query->where('role_id', 2)->where('id', $userId);
-        })->with(['asets.dinas'])->paginate(5);
-
-        $nama_aset = [];
-        $nama_dinas_aset = [];
-
-        foreach ($pinjams as $peminjaman) {
-            // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-            if ($peminjaman->asets) {
-                $nama_aset[] = $peminjaman->asets->nama_aset;
-                $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-            } else {
-                $nama_aset[] = null;
-                $nama_dinas_aset[] = null;
-            }
-        }
-
-        // Jika pengguna memiliki peran sekda, tampilkan halaman peminjaman sekda
-        return view('peminjaman.sekda.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
+        return $this->getIndexData('superadmin');
     }
 
-    protected function opd()
+    public function sekdaIndex()
     {
-        // Lakukan pengecekan apakah pengguna memiliki peran opd
-        if(Auth::user()->role_id != 3) {
-            // Redirect atau tampilkan pesan error jika pengguna bukan opd
-            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai OPD');
+        $role = $this->getUserRole();
+
+        if ($role != 2) {
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        $userId = Auth::id();
-
-        $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-            $query->where('role_id', 3)->where('id', $userId);
-        })->with(['asets.dinas'])->paginate(5);
-
-        $nama_aset = [];
-        $nama_dinas_aset = [];
-
-        foreach ($pinjams as $peminjaman) {
-            // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-            if ($peminjaman->asets) {
-                $nama_aset[] = $peminjaman->asets->nama_aset;
-                $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-            } else {
-                $nama_aset[] = null;
-                $nama_dinas_aset[] = null;
-            }
-        }
-
-            // Jika pengguna memiliki peran opd, tampilkan halaman peminjaman opd
-            return view('peminjaman.opd.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
+        return $this->getIndexData('sekda');
     }
 
-    //  protected function superadmin()
-    //  {
-    //      if (Auth::user()->role_id != 1) {
-    //          return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Superadmin');
-    //      }
+    public function opdIndex()
+    {
+        $role = $this->getUserRole();
 
-    //      $userId = Auth::id();
+        if ($role != 3) {
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
+        }
 
-    //      $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-    //          $query->where('role_id', 1)->where('id', $userId);
-    //      })->with(['asets.dinas'])->paginate(5);
-
-    //      return $this->renderPeminjaman('peminjaman.superadmin.index', $pinjams);
-    //  }
-
-    //  protected function sekda()
-    //  {
-    //      if (Auth::user()->role_id != 2) {
-    //          return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai Sekda');
-    //      }
-
-    //      $userId = Auth::id();
-
-    //      $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-    //          $query->where('role_id', 2)->where('id', $userId);
-    //      })->with(['asets.dinas'])->paginate(5);
-
-    //      if ($pinjams->isEmpty()) {
-    //         // Jika tidak ada data, kembalikan halaman tanpa data
-    //         return view('peminjaman.sekda.index')->with('pinjams', collect()); // Mengirim collection kosong
-    //     }
-
-    //      return $this->renderPeminjaman('peminjaman.sekda.index', $pinjams);
-    //  }
-
-    //  protected function opd()
-    //  {
-    //      if (Auth::user()->role_id != 3) {
-    //          return redirect()->route('login')->with('error', 'Anda tidak memiliki akses sebagai OPD');
-    //      }
-
-    //      $userId = Auth::id();
-
-    //      $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-    //          $query->where('role_id', 3)->where('id', $userId);
-    //      })->with(['asets.dinas'])->paginate(5);
-
-    //      return $this->renderPeminjaman('peminjaman.opd.index', $pinjams);
-    //  }
-
-    //  protected function renderPeminjaman($view, $pinjams)
-    //  {
-    //      $nama_aset = [];
-    //      $nama_dinas_aset = [];
-
-    //      foreach ($pinjams as $peminjaman) {
-    //          if ($peminjaman->asets) {
-    //              $nama_aset[] = $peminjaman->asets->nama_aset;
-    //              $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-    //          } else {
-    //              $nama_aset[] = null;
-    //              $nama_dinas_aset[] = null;
-    //          }
-    //      }
-
-    //      return view($view, compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    //  }
-
-    // public function superadminIndex()
-    // {
-    //     if (Auth::check()) {
-    //         $user = Auth::user();
-
-    //         if ($user->role_id == 1) {
-    //             $userId = Auth::id();
-
-    //             $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-    //                 $query->where('id', $userId);
-    //             })->with(['asets.dinas'])->paginate(5);
-
-    //             $nama_aset = [];
-    //             $nama_dinas_aset = [];
-
-    //             foreach ($pinjams as $peminjaman) {
-    //                 // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-    //                 if ($peminjaman->asets) {
-    //                     $nama_aset[] = $peminjaman->asets->nama_aset;
-    //                     $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-    //                 } else {
-    //                     $nama_aset[] = null;
-    //                     $nama_dinas_aset[] = null;
-    //                 }
-    //             }
-
-    //             return view('peminjaman.superadmin.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    //         } else {
-    //             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    //         }
-    //     }
-
-    //     return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    // }
-
-    // public function sekdaIndex()
-    // {
-    //     if (Auth::check()) {
-    //         $user = Auth::user();
-
-    //         if ($user->role_id == 2) {
-    //             $userId = Auth::id();
-
-    //             $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-    //                 $query->where('id', $userId);
-    //             })->with(['asets.dinas'])->paginate(5);
-
-    //             $nama_aset = [];
-    //             $nama_dinas_aset = [];
-
-    //             foreach ($pinjams as $peminjaman) {
-    //                 // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-    //                 if ($peminjaman->asets) {
-    //                     $nama_aset[] = $peminjaman->asets->nama_aset;
-    //                     $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-    //                 } else {
-    //                     $nama_aset[] = null;
-    //                     $nama_dinas_aset[] = null;
-    //                 }
-    //             }
-
-    //             return view('peminjaman.sekda.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    //         } else {
-    //             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    //         }
-    //     }
-
-    //     return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    // }
-
-    // public function opdIndex()
-    // {
-    //     if (Auth::check()) {
-    //         $user = Auth::user();
-
-    //         if ($user->role_id == 3) {
-    //             $userId = Auth::id();
-
-    //             $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-    //                 $query->where('id', $userId);
-    //             })->with(['asets.dinas'])->paginate(5);
-
-    //             $nama_aset = [];
-    //             $nama_dinas_aset = [];
-
-    //             foreach ($pinjams as $peminjaman) {
-    //                 // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-    //                 if ($peminjaman->asets) {
-    //                     $nama_aset[] = $peminjaman->asets->nama_aset;
-    //                     $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-    //                 } else {
-    //                     $nama_aset[] = null;
-    //                     $nama_dinas_aset[] = null;
-    //                 }
-    //             }
-
-    //             return view('peminjaman.opd.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    //         } else {
-    //             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    //         }
-    //     }
-
-    //     return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    // }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
+        return $this->getIndexData('opd');
+    }
     public function create()
     {
         $user = Auth::user();
@@ -325,56 +94,6 @@ class PeminjamanController extends Controller
         }
 
     }
-
-    // public function index()
-    // {
-    //     if (Auth::check()) {
-    //         $user = Auth::user();
-    //         $pinjams = Peminjaman::with(['users','asets'])->paginate(5);
-    //         $nama_aset = [];
-    //         $nama_dinas_aset = [];
-
-    //         foreach ($pinjams as $peminjaman) {
-    //             // Pastikan bahwa aset tidak null sebelum mencoba mengakses dinas
-    //             if ($peminjaman->asets) {
-    //                 $nama_aset[] = $peminjaman->asets->nama_aset;
-    //                 $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-    //             } else {
-    //                 $nama_aset[] = null;
-    //                 $nama_dinas_aset[] = null;
-    //             }
-    //         }
-
-    //         if ($user->role_id == 1) {
-    //             return view('peminjaman.superadmin.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    //         } elseif ($user->role_id == 2) {
-    //             return view('peminjaman.sekda.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    //         } elseif ($user->role_id == 3) {
-    //             return view('peminjaman.opd.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    //         }
-    //     }
-
-    //     return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    // }
-
-    // protected function validator(Request $request)
-    // {
-    //     return $request->validate([
-    //         'kode_pinjam' => 'required|unique:peminjaman,kode_pinjam',
-    //         'user_id' => 'required|exists:users,id',
-    //         'aset_id' => 'required|exists:asets,id',
-    //         'tgl_pinjam' => 'required|date',
-    //         'tgl_kembali' => 'required|date|after_or_equal:tgl_pinjam',
-    //         'tujuan' => 'required',
-    //         'surat_pinjam' => 'required|file|mimes:jpg,jpeg,png,doc,docx,pdf|max:2048',
-    //         // 'status_pinjam' => [
-    //         //     'required',
-    //         //     Rule::in(['Diterima', 'Menunggu Verifikasi', 'Ditolak']),
-    //         // ],
-    //     ]);
-    // }
-
-
     public function store(Request $request)
     {
         // Melakukan validasi input dari form
@@ -423,25 +142,25 @@ class PeminjamanController extends Controller
                     }
                 }
 
-                // if ($role_id == 1) {
-                //     return view('dashboard.superadmin', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
-                // } elseif ($role_id == 2) {
-                //     return view('dashboard.sekda', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
-                // } elseif ($role_id == 3) {
-                //     return view('dashboard.opd', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
-                // }
-
-                if (Auth::check()) {
-                    $role_id = Auth::user()->role_id;
-
-                    if ($role_id == 1) {
-                        return $this->superadmin();
-                    } elseif ($role_id == 2) {
-                        return $this->sekda();
-                    } elseif ($role_id == 3) {
-                        return $this->opd();
-                    }
+                if ($role_id == 1) {
+                    return view('dashboard.superadmin', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                } elseif ($role_id == 2) {
+                    return view('dashboard.sekda', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                } elseif ($role_id == 3) {
+                    return view('dashboard.opd', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 }
+
+                // if (Auth::check()) {
+                //     $role_id = Auth::user()->role_id;
+
+                //     if ($role_id == 1) {
+                //         return $this->superadmin();
+                //     } elseif ($role_id == 2) {
+                //         return $this->sekda();
+                //     } elseif ($role_id == 3) {
+                //         return $this->opd();
+                //     }
+                // }
             } else {
                 return back()->with('error', 'Gagal menyimpan data.');
             }
@@ -452,12 +171,109 @@ class PeminjamanController extends Controller
         return back()->with('error', 'Anda tidak memiliki akses untuk mengajukan peminjaman aset.');
     }
 
+    protected function getPeminjamanData($role, $id)
+    {
+        $userId = Auth::id();
+
+        $pinjams = Peminjaman::where('id', $id)
+            ->whereHas('users', function ($query) use ($userId) {
+                $query->where('id', $userId);
+        })->with(['users','asets.kategoris','asets.dinas'])->findOrFail($id);
+
+        // Mengambil data dari objek tunggal $pinjaman, bukan dari array $pinjams
+        $nama = $pinjams->users ? $pinjams->users->nama : null;
+        $nama_aset = $pinjams->asets ? $pinjams->asets->nama_aset : null;
+        $jenis = $pinjams->asets->kategoris ? $pinjams->asets->kategoris->jenis : null;
+        $nama_dinas_aset = $pinjams->asets && $pinjams->asets->dinas ? $pinjams->asets->dinas->nama_dinas : null;
+
+        // $nama = [];
+        // $nama_aset = [];
+        // $jenis = [];
+        // $nama_dinas_aset = [];
+
+        // foreach ($pinjams as $peminjaman) {
+        //     if ($peminjaman->users && $peminjaman->asets) {
+        //         $nama[] = $peminjaman->users->nama;
+        //         $nama_aset[] = $peminjaman->asets->nama_aset;
+        //         $jenis[] = $peminjaman->asets->kategoris->jenis;
+        //         $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
+        //     } else {
+        //         $nama[] = null;
+        //         $nama_aset[] = null;
+        //         $jenis[] = null;
+        //         $nama_dinas_aset[] = null;
+        //     }
+        // }
+
+        $view = 'peminjaman.' . $role . '.show';
+        return view($view, compact('pinjams','nama', 'nama_aset', 'jenis', 'nama_dinas_aset'));
+    }
+
+    public function superadminShow($id)
+    {
+        $role = $this->getUserRole();
+
+        if ($role != 1) {
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
+        }
+
+        return $this->getPeminjamanData('superadmin', $id);
+    }
+
+    public function sekdaShow($id)
+    {
+        $role = $this->getUserRole();
+
+        if ($role != 2) {
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
+        }
+
+        return $this->getPeminjamanData('sekda', $id);
+    }
+
+    public function opdShow($id)
+    {
+        $role = $this->getUserRole();
+
+        if ($role != 3) {
+            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
+        }
+
+        return $this->getPeminjamanData('opd', $id);
+    }
+
+    // public function showSekda($id)
+    // {
+    //     $pinjams = Peminjaman::with(['asets.dinas', 'users'])->findOrFail($id);
+
+    //     $nama = $pinjams->users ? $pinjams->users->nama : null;
+    //     $nama_aset = $pinjams->asets ? $pinjams->asets->nama_aset : null;
+    //     $nama_dinas_aset = $pinjams->asets && $pinjams->asets->dinas ? $pinjams->asets->dinas->nama_dinas : null;
+
+    //     return view('peminjaman.sekda.show', compact('pinjams', 'nama', 'nama_aset', 'nama_dinas_aset'));
+    // }
+
     /**
      * Display the specified resource.
      */
-    public function show(Peminjaman $peminjaman)
+    public function showList()
     {
-        //
+        $pinjams = Peminjaman::with(['asets.dinas', 'users'])->paginate(5);
+
+        $nama = [];
+        $nama_aset = [];
+        $nama_dinas_aset = [];
+
+        foreach ($pinjams as $peminjaman) {
+            // Menggunakan kondisi jika data tidak ada, maka tampilkan null
+            $nama[] = $peminjaman->users ? $peminjaman->users->nama : null;
+            $nama_aset[] = $peminjaman->asets ? $peminjaman->asets->nama_aset : null;
+
+            // Pastikan properti yang mungkin null diakses dengan aman
+            $nama_dinas_aset[] = $peminjaman->asets && $peminjaman->asets->dinas ? $peminjaman->asets->dinas->nama_dinas : null;
+        }
+
+        return view('peminjaman.sekda.list', compact('pinjams', 'nama', 'nama_aset', 'nama_dinas_aset'));
     }
 
     /**

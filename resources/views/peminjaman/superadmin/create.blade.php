@@ -2,8 +2,12 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row my-1">
-        <h6><strong>{{ __('Pengajuan Peminjaman') }}</strong></h6>
+    <div class="row mt-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
+            {{-- <li class="breadcrumb-item"><a href="{{ route('peminjaman.superadmin.index') }}">Riwayat Peminjaman</a></li> --}}
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Form Pengajuan Peminjaman</li>
+        </ol>
     </div>
     <div class="row">
         @if (session('status'))
