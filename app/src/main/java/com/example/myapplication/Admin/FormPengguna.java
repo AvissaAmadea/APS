@@ -71,8 +71,6 @@ public class FormPengguna extends AppCompatActivity {
         SpinRole.setAdapter(adapter);
 
         fetchDinas(SpinDinas);
-        fetchJabat(SpinJabat);
-        fetchBid(SpinBid);
 
         simpan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,69 +92,7 @@ public class FormPengguna extends AppCompatActivity {
         });
     }
 
-    private void fetchBid(Spinner spinBid) {
-        RequestQueue rq = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Db.getBidang, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("bidang");
-                            bidangList.add("Pilih Bidang");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                String namaBidang = jsonObject.optString("nama_bidang");
-                                bidangList.add(namaBidang);
-                                bidangAdapter = new ArrayAdapter<>(FormPengguna.this,
-                                        android.R.layout.simple_spinner_item, bidangList);
-                                bidangAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                SpinBid.setAdapter(bidangAdapter);
-                            }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        rq.add(jsonObjectRequest);
-    }
-
-
-        private void fetchJabat(Spinner spinJabat) {
-          RequestQueue queue = Volley.newRequestQueue(this);
-          JsonObjectRequest js = new JsonObjectRequest(Request.Method.POST, Db.getJabatan, null,
-                  new Response.Listener<JSONObject>() {
-                      @Override
-                      public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("bidang");
-                            jabatanList.add("Pilih Bidang");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                String namaJabatan = jsonObject.optString("nama_jabatan");
-                                jabatanList.add(namaJabatan);
-                                jabatanAdapter = new ArrayAdapter<>(FormPengguna.this,
-                                        android.R.layout.simple_spinner_item, jabatanList);
-                                jabatanAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                SpinJabat.setAdapter(jabatanAdapter);
-                            }
-                        } catch (JSONException e) {
-                           e.printStackTrace();
-                        }
-                      }
-                  }, new Response.ErrorListener() {
-              @Override
-              public void onErrorResponse(VolleyError error) {
-
-              }
-          });
-          queue.add(js);
-    }
 
     private void simpanDataUser(String nama, String username, String email, String nip, String dinas, String bidang, String jabatan, String role) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,18 +42,11 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.allUser>{
 
     private AdapterView.OnItemClickListener onItemClickListener;
 
-    public userAdapter(List<userModel> userModelList, AdapterView.OnItemClickListener onItemClickListener) {
-        this.context = context;
-        this.userModelList = userModelList;
-        this.onItemClickListener = onItemClickListener;
-    }
 
-
-    public userAdapter(List<userModel> userModelList) {
+    public userAdapter(Context context,List<userModel> userModelList) {
         this.context = context;
         this.userModelList = userModelList;
     }
-
 
     @NonNull
     @Override
@@ -66,66 +58,13 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.allUser>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull userAdapter.allUser holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull userAdapter.allUser holder, int position) {
         userModel model = userModelList.get(position);
-        holder.nama.setText(model.getNama());
+        holder.nama.setText(model.getUsername());
         holder.nip.setText(model.getNip());
         holder.dinas.setText(model.getDinas());
         holder.role.setText(model.getRole());
         holder.create_at.setText(model.getCreate_at());
-        holder.hapus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Menghapus User");
-                builder.setMessage("Hapus User"+model.getNama());
-                builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.deleteUser,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            String check = jsonObject.getString("state");
-                                            if (check.equals("delete")){
-                                                Delete(position);
-                                                Toast.makeText(context, "Delete successfull", Toast.LENGTH_SHORT).show();
-                                            }else {
-                                                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-                                            }
-                                        } catch (JSONException e) {
-                                            throw new RuntimeException(e);
-                                        }
-
-                                    }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        }){
-                            @Nullable
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                HashMap<String, String> delete = new HashMap<>();
-                                delete.put("username", model.getUsername());
-                                return super.getParams();
-                            }
-                        };
-                        RequestQueue queue = Volley.newRequestQueue(context);
-                        queue.add(stringRequest);
-                    }
-                });
-            }
-        });
 
 
     }
@@ -142,18 +81,19 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.allUser>{
     }
 
     public class allUser extends RecyclerView.ViewHolder {
-        TextView nama, dinas, nip, role, create_at,status;
+        TextView nama, dinas, nip, role, create_at;
         ImageButton hapus, edit;
 
         public allUser(@NonNull View itemView) {
             super(itemView);
             nama = itemView.findViewById(R.id.nm_user_user);
-            dinas = itemView.findViewById(R.id.asal_dinas);
+            dinas = itemView.findViewById(R.id.asal_dinas_user);
             nip =itemView.findViewById(R.id.nip_user);
             role =itemView.findViewById(R.id.roles);
-            create_at = itemView.findViewById(R.id.create_at);
-            hapus = itemView.findViewById(R.id.imageButtonDelete);
-            edit = itemView.findViewById(R.id.imageButtonEdit);
+            create_at = itemView.findViewById(R.id.create_at_user);
+            hapus = itemView.findViewById(R.id.deleteAsetAdmin);
+            edit = itemView.findViewById(R.id.editAsetAdmin);
+
         }
 
 

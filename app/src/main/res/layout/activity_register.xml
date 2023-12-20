@@ -35,7 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:elevation="10dp"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="20dp"
             android:background="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +44,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily=""
@@ -53,80 +54,63 @@
                     android:textSize="30dp"
                     android:textStyle="bold"
                     tools:fontFamily="@font/poppins_bold" />
-                <TextView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nama"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
-
                 <EditText
-
+                    android:layout_marginTop="20dp"
+                    android:drawableLeft="@drawable/baseline_person_24"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/rounded_square"
                     android:id="@+id/nama_regist"
+                    android:hint="Nama Anda"
+                    android:padding="10dp"
                     android:inputType="textPersonName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black" />
-                <TextView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Username"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
+
 
                 <EditText
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/baseline_person_24"
+                    android:padding="10dp"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/rounded_square"
+                    android:hint="Username Anda"
                     android:id="@+id/username_regist"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="12dp"
                     android:inputType="textPersonName"
                     android:layout_marginRight="12dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black" />
-                <TextView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="NIP"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
-
                 <EditText
+                    android:hint="NIP"
+                    android:drawableLeft="@drawable/baseline_badge_24"
+                    android:padding="10dp"
+                    android:drawablePadding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_square"
                     android:id="@+id/nip_regist"
                     android:inputType="textPersonName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black" />
-                <TextView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Asal Dinas"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
 
-                <Spinner
-                    android:id="@+id/asal_dinas"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/asal_dinas_aset_user"
                     android:layout_width="match_parent"
-                    android:layout_height ="50dp"
+                    android:layout_height ="60dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
+                    android:background="@drawable/rounded_square"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black" />
                 <ProgressBar
@@ -135,72 +119,62 @@
                     android:visibility="gone"
                     android:id="@+id/pg1"/>
 
-                <TextView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
-
                 <EditText
+                    android:hint="Email"
+                    android:padding="10dp"
+                    android:drawableLeft="@drawable/baseline_email_24"
+                    android:drawablePadding="10dp"
+                    android:layout_marginTop="10dp"
                     android:id="@+id/email"
+                    android:background="@drawable/rounded_square"
                     android:inputType="textEmailAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black" />
 
-                <TextView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="password"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
-
                 <EditText
+                    android:drawableRight="@drawable/outline_visibility_off_24"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/baseline_password_24"
+                    android:background="@drawable/rounded_square"
+                    android:hint="Password"
                     android:id="@+id/password_regist"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:inputType="textPassword"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Konfirmasi password"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
-
                 <EditText
+                    android:drawableRight="@drawable/outline_visibility_off_24"
+                    android:background="@drawable/rounded_square"
+                    android:drawableLeft="@drawable/baseline_password_24"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:hint="Konfirmasi Password"
                     android:id="@+id/konf_pass"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
                     android:inputType="textPassword"/>
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_regist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="12dp"
+                    app:cornerRadius="20dp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="DAFTAR"
                     android:textSize="20dp"

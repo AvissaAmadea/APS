@@ -1,12 +1,10 @@
 package com.example.myapplication.Admin;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -34,10 +32,10 @@ import java.util.List;
 public class ListPengguna extends AppCompatActivity {
 
     ProgressBar progressBar;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView2;
 
-    private List<userModel> userModelList = new ArrayList<>();
-    private com.example.myapplication.Adapter.userAdapter userAdapter;
+    private List<userModel> userModelList;
+    userAdapter UserAdapter;
     FloatingActionButton fab;
 
     ImageView back;
@@ -49,21 +47,21 @@ public class ListPengguna extends AppCompatActivity {
         back = findViewById(R.id.backToMenu1);
         progressBar = findViewById(R.id.load_pengguna);
         fab = findViewById(R.id.btn_tambah);
-        recyclerView = findViewById(R.id.list_pengguna);
+        recyclerView2 = findViewById(R.id.list_pengguna);
 
         fetchUserData();
 
-
+        userModelList = new ArrayList<>();
 
         fab.setOnClickListener(view -> startActivity(new Intent(ListPengguna.this, FormPengguna.class)));
 
-        RecyclerView recyclerView = findViewById(R.id.list_pengguna);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userAdapter = new userAdapter(userModelList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(userAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        RecyclerView recyclerView2 = findViewById(R.id.list_pengguna);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this));
+        UserAdapter = new userAdapter(ListPengguna.this, userModelList);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setAdapter(UserAdapter);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView2.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
             private void fetchUserData() {
@@ -80,14 +78,17 @@ public class ListPengguna extends AppCompatActivity {
                                 JSONObject object = array.getJSONObject(i);
                                 userModelList.add(new userModel(
                                         object.getString("nama"),
-                                        object.getString("dinas"),
                                         object.getString("nip"),
+                                        object.getString("dinas"),
                                         object.getString("role"),
-                                        object.getString("create_at")
-
+                                        object.getString("create_at"),
+                                        object.getString("email"),
+                                        object.getString("status"),
+                                        object.getString("username"),
+                                        object.getInt("id_user")
                                 ));
                             }
-                            userAdapter.notifyDataSetChanged();
+                            UserAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(ListPengguna.this, "Error parsing JSON data", Toast.LENGTH_SHORT).show();

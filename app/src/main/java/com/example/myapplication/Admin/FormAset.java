@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Db;
 import com.example.myapplication.FormPeminjaman;
+import com.example.myapplication.LoadDialog;
 import com.example.myapplication.R;
 
 import org.json.JSONArray;
@@ -44,6 +46,7 @@ public class FormAset extends AppCompatActivity {
     ArrayAdapter<String> kategoriAdapter;
     ArrayAdapter<String> dinasAdapter;
     Button simpan;
+    LoadDialog loadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +79,28 @@ public class FormAset extends AppCompatActivity {
             String kategori = kategoriAset.getSelectedItem().toString();
             String dinas = dinasPemilik.getSelectedItem().toString();
             String status1 = status.getSelectedItem().toString();
-            simpanDataAset(nama, detail, kategori, dinas, status1);
+            if (nama.equals("") || detail.equals("")){
+                Toast.makeText(this, "isi dengan benar", Toast.LENGTH_SHORT).show();
+            }else{
+                simpanDataAset(nama, detail, kategori, dinas, status1);
+            }
+
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle("Simpan Data");
+//            builder.setMessage("Yakin Menyimpan Data?");
+//            builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    dialogInterface.dismiss();
+//                }
+//            });
+//            builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//
+//
+//                }
+//            });
         });
 
 
@@ -84,15 +108,16 @@ public class FormAset extends AppCompatActivity {
 
     private void fetchKategoriList(Spinner kategoriAset) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Db.getKat, null,
-                new Response.Listener<JSONObject>() {
+        StringRequest jsonObjectRequest = new StringRequest( Db.getKat,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("kategori");
+                            JSONObject jsonResponse = new JSONObject(response);
+                            JSONArray array = jsonResponse.getJSONArray("kategori");
                             kategoriList.add("Pilih Kategori");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject jsonObject = array.getJSONObject(i);
                                 String namaKategori = jsonObject.optString("nama_kategori");
                                 kategoriList.add(namaKategori);
                                 kategoriAdapter = new ArrayAdapter<>(FormAset.this,
@@ -109,6 +134,7 @@ public class FormAset extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Toast.makeText(FormAset.this, "error", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
@@ -149,13 +175,7 @@ public class FormAset extends AppCompatActivity {
 
 
     private void simpanDataAset(String nama, String detail, String kategori, String dinas, String status1) {
-        if (nama.equals(null)){
-            namaAset.setError("Masukkan nama Aset");
-            namaAset.requestFocus();
-        } else if (detail.equals(null)) {
-            detailAset.setError("Masukkan detail Aset");
-            detailAset.requestFocus();
-        } else if (kategori.equals("Pilih Kategori")||status1.equals("Pilih Status")||kategori.equals("Pilih Kategori")) {
+         if (kategori.equals("Pilih Kategori")||status1.equals("Pilih Status")||kategori.equals("Pilih Kategori")) {
             Toast.makeText(FormAset.this,"Isi dengan benar", Toast.LENGTH_LONG).show();
         } else {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -224,6 +244,9 @@ public class FormAset extends AppCompatActivity {
             public void onClick(View view) {
                 alertDialog.dismiss();
                 Toast.makeText(FormAset.this, "DONE", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), ListAsetAdmin.class);
+                startActivity(intent);
+                finish();
             }
         });
 

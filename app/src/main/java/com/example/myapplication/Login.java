@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +37,8 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     EditText etUsername, etPassword;
     TextView link, forgot_password;
-
+    LoadDialog loadDialog;
+    boolean passwordVisible;
     Button login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +49,36 @@ public class Login extends AppCompatActivity {
         link = findViewById(R.id.to_register);
         forgot_password = findViewById(R.id.lupa_password);
         login = findViewById(R.id.btn_login);
-        progressBar = findViewById(R.id.load_login);
 
         link.setOnClickListener(view -> {
             startActivity(new Intent(Login.this, Register.class));
         });
+
+        etPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int Right =2;
+                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    if (motionEvent.getRawX()>=etPassword.getRight()-etPassword.getCompoundDrawables()[Right].getBounds().width()){
+                        int selection = etPassword.getSelectionEnd();
+                        if (passwordVisible){
+
+                            etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.baseline_password_24, 0, R.drawable.outline_visibility_off_24, 0);
+                            etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible=false;
+                        }else{
+                            etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.baseline_password_24, 0, R.drawable.outline_visibility_24, 0);
+                            etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible=true;
+                        }
+                        etPassword.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +89,7 @@ public class Login extends AppCompatActivity {
                 if (username.isEmpty() || password.isEmpty()){
                     Toast.makeText(Login.this, "Masukkan Data dengan Benar", Toast.LENGTH_SHORT).show();
                 }else{
+
                     performLogin(username, password);
                 }
             }
@@ -67,7 +97,6 @@ public class Login extends AppCompatActivity {
     }
 
     private void performLogin(String username, String password) {
-        progressBar.setVisibility(View.VISIBLE);
         StringRequest sq = new StringRequest(
                 Request.Method.POST,
                 Db.urlLogin,
@@ -75,40 +104,39 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            progressBar.setVisibility(View.GONE);
                             JSONObject jsonResponse = new JSONObject(response);
                             if (jsonResponse.has("error")) {
                                 String errorMassage = jsonResponse.getString("error");
                                 Toast.makeText(Login.this, errorMassage, Toast.LENGTH_SHORT).show();
                             }else {
                                 int id_role = jsonResponse.getInt("id_role");
-                                String nama = jsonResponse.getString("nama");
+                                int id_user = jsonResponse.getInt("id_user");
                                 if (id_role == 1) {
                                    Intent intent = new Intent(Login.this, AdminActivity.class);
                                     startActivity(intent);
-                                    Intent AdminIntent = new Intent(Login.this,HomeFragmentAdmin.class);
-                                    AdminIntent.putExtra("namaUser", nama);
+                                    //intent.putExtra("namaUser", nama);
                                 } else if (id_role == 2) {
                                     Intent intent = new Intent(Login.this, OpdActivity.class);
                                     startActivity(intent);
-                                    intent.putExtra("namaUser", nama);
+                                    //intent.putExtra("namaUser", nama);
                                 } else if (id_role == 3) {
                                     Intent intent = new Intent(Login.this, SekreActivity.class);
                                     startActivity(intent);
-                                    intent.putExtra("namaUser", nama);
+                                    //intent.putExtra("namaUser", nama);
                                 } else {
                                     Toast.makeText(Login.this, "Unvalid Roles", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressBar.setVisibility(View.GONE);
+
                         Log.e("Volley Error", "Error: " + error.getMessage());
                         Toast.makeText(Login.this, "Error occurred", Toast.LENGTH_SHORT).show();
                     }

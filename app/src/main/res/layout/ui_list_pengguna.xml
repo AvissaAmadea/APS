@@ -10,101 +10,132 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/nm_user_user"
-            android:layout_width="wrap_content"
+        <GridLayout
+            android:id="@+id/gt"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppins_bold"
+            android:columnCount="2"
+            android:orientation="vertical"
+            android:rowCount="2">
 
-            android:text="NamaUser"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/nm_user_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="NamaUser"
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/nip_user"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/roles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_gravity="end"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Role User"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_at" />
+
+            <TextView
+                android:id="@+id/nip_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="NIP"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/create_at_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_gravity="end"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Create at"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/gf"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="NIP"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nm_user_user" />
-
-        <TextView
-            android:id="@+id/roles"
-            android:layout_width="wrap_content"
+            android:rowCount="1"
+            android:columnCount="1"
+            android:layout_below="@+id/gt">
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:id="@+id/asal_dinas_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Asal Dinas"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nm_aset_aset" />
+        </GridLayout>
+        <GridLayout
+            android:layout_below="@+id/gf"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="31dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Role User"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/create_at" />
+            android:rowCount="1"
+            android:columnCount="1">
 
-        <TextView
-            android:id="@+id/asal_dinas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Asal Dinas"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nip_user"
-            app:layout_constraintVertical_bias="0.0" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_gravity="end"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp">
 
-        <TextView
-            android:id="@+id/create_at"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="28dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Create at"
-            android:textColor="@color/black"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/editAsetAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:backgroundTint="@color/kuning"
+                    android:src="@drawable/baseline_mode_edit_24" />
 
-        <ImageButton
-            android:id="@+id/imageButtonEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="180dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="12dp"
-            android:backgroundTint="@color/kuning"
-            android:src="@drawable/baseline_mode_edit_24"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonDelete"
-            app:layout_constraintStart_toEndOf="@+id/asal_dinas"
-            app:layout_constraintTop_toBottomOf="@+id/roles" />
+                <ImageButton
+                    android:id="@+id/deleteAsetAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/red"
+                    android:src="@drawable/outline_delete_24" />
+            </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/imageButtonDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/red"
-            android:src="@drawable/outline_delete_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roles" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </GridLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

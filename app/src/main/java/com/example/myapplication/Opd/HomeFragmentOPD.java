@@ -21,18 +21,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Db;
+import com.example.myapplication.Admin.ListAsetAdmin;
 import com.example.myapplication.ListAset;
 import com.example.myapplication.PelaporanKerusakanKehilangan;
 import com.example.myapplication.R;
 import com.example.myapplication.Riwayat;
-import com.example.myapplication.transaksi;
+import com.example.myapplication.TransaksiUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class HomeFragmentOPD extends Fragment {
-    CardView daftar, transaksi, lapor, riwayat;
+    CardView daftar, transaksi, lapor, riwayat, setting;
 
     TextView nama;
 
@@ -42,12 +43,13 @@ public class HomeFragmentOPD extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_opd, container, false);
-        nama = view.findViewById(R.id.nm_user2);
+        nama = view.findViewById(R.id.nm_userMain);
         daftar = view.findViewById(R.id.imgAsetMain);
         transaksi = view.findViewById(R.id.imgTransMain);
         lapor = view.findViewById(R.id.imgLaporMain);
         riwayat = view.findViewById(R.id.imgRiwayatMain);
         recyclerView = view.findViewById(R.id.list_peminjamanOPD);
+        setting = view.findViewById(R.id.settingMain);
 
         fetchNama(nama);
 
@@ -58,7 +60,7 @@ public class HomeFragmentOPD extends Fragment {
             startActivity(intent);
         });
         transaksi.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), transaksi.class));
+            startActivity(new Intent(requireContext(), TransaksiUser.class));
         });
         lapor.setOnClickListener(view1 -> {
             startActivity(new Intent(requireContext(), PelaporanKerusakanKehilangan.class));

@@ -9,10 +9,10 @@
     android:background="@color/grey">
 
     <LinearLayout
-        android:background="@drawable/square"
+        android:background="@color/white"
         android:id="@+id/judul"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -25,6 +25,8 @@
             android:layout_marginLeft="5dp"/>
 
         <TextView
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
@@ -33,11 +35,26 @@
             android:textColor="@color/black"
             android:textSize="25sp" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/blm"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Belum Ada"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins_bold"/>
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/pga"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        tools:listitem="@layout/ui_list_verif"/>
+        android:id="@+id/verifList"
+        tools:listitem="@layout/ui_list_peminjaman"/>
 
 
 

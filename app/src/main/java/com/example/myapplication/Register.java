@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,7 +27,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myapplication.Admin.FormAset;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,8 @@ public class Register extends AppCompatActivity {
     ArrayAdapter<String> dinasAdapter;
 
     private ProgressBar progressBar;
+    boolean passwordVisible;
+    LoadDialog loadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,7 @@ public class Register extends AppCompatActivity {
         etPass = findViewById(R.id.password_regist);
         etKonf = findViewById(R.id.konf_pass);
         etNip = findViewById(R.id.nip_regist);
-        etDinas = findViewById(R.id.asal_dinas);
+        etDinas = findViewById(R.id.asal_dinas_aset_user);
         bnt = findViewById(R.id.btn_regist);
         toLogin = findViewById(R.id.to_login);
         progressBar = findViewById(R.id.pg1);
@@ -66,12 +69,55 @@ public class Register extends AppCompatActivity {
         toLogin.setOnClickListener(view -> {
             startActivity(new Intent(Register.this, Login.class));
         });
-
+        etPass.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int Right =2;
+                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    if (motionEvent.getRawX()>=etPass.getRight()-etPass.getCompoundDrawables()[Right].getBounds().width()){
+                        int selection = etPass.getSelectionEnd();
+                        if (passwordVisible){
+                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_visibility_off_24, 0);
+                            etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible=false;
+                        }else{
+                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_visibility_24, 0);
+                            etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible=true;
+                        }
+                        etPass.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        etKonf.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int Right =2;
+                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    if (motionEvent.getRawX()>=etKonf.getRight()-etKonf.getCompoundDrawables()[Right].getBounds().width()){
+                        int selection = etKonf.getSelectionEnd();
+                        if (passwordVisible){
+                            etKonf.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.baseline_password_24, 0, R.drawable.outline_visibility_off_24, 0);
+                            etKonf.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible=false;
+                        }else{
+                            etKonf.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.baseline_password_24, 0, R.drawable.outline_visibility_24, 0);
+                            etKonf.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible=true;
+                        }
+                        etKonf.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
         bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                progressBar.setVisibility(View.VISIBLE);
 
                 String username = etUsername.getText().toString();
                 String nama = etNama.getText().toString();
@@ -81,8 +127,8 @@ public class Register extends AppCompatActivity {
                 String konf = etKonf.getText().toString();
                 String dinas = etDinas.getSelectedItem().toString();
                 if (!konf.equals(pass)){
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(Register.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
+
+                    etKonf.setError("Password Tidak Sama");
                 }else {
                     if (!(username.isEmpty()||nama.isEmpty()||email.isEmpty()||nip.isEmpty())||dinas.equals("Pilih Dinas")){
                         registerUser(username, nama, email, nip, dinas, pass);
@@ -135,7 +181,6 @@ public class Register extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressBar.setVisibility(View.GONE);
                         showSuccessDialog();
                         Toast.makeText(Register.this, "Berhasil", Toast.LENGTH_SHORT).show();
 
@@ -143,7 +188,7 @@ public class Register extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.GONE);
+                loadDialog.HideDialog();
                 showFailedDialog();
             }
         }){

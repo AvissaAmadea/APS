@@ -15,17 +15,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.myapplication.ListAset;
 import com.example.myapplication.PelaporanKerusakanKehilangan;
 import com.example.myapplication.R;
 import com.example.myapplication.Riwayat;
-import com.example.myapplication.transaksi;
+import com.example.myapplication.SettingFragment;
+import com.example.myapplication.TransaksiUser;
+import com.example.myapplication.riwayatRequest;
 
 import java.util.ArrayList;
 
 public class HomeFragmentAdmin extends Fragment {
 
-    CardView daftar, transaksi, lapor, riwayat, kelola, laporan;
+    CardView daftar, transaksi, lapor, riwayat, kelola, laporan, setting;
 
     TextView nama1;
 
@@ -33,29 +34,28 @@ public class HomeFragmentAdmin extends Fragment {
     ArrayAdapter<String> peminjamanAdapter;
 
     RecyclerView recyclerView;
+   riwayatRequest request;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_admin, container, false);
-        nama1 = view.findViewById(R.id.nm_user);
-        daftar = view.findViewById(R.id.imgAset);
-        transaksi = view.findViewById(R.id.imgTrans);
-        lapor = view.findViewById(R.id.imgLapor);
-        riwayat = view.findViewById(R.id.imgRiwayat);
-        kelola = view.findViewById(R.id.Kelola);
-        laporan = view.findViewById(R.id.lapor);
+        nama1 = view.findViewById(R.id.nm_user2);
+        daftar = view.findViewById(R.id.imgAsetAdmin);
+        transaksi = view.findViewById(R.id.imgTransAdmin);
+        lapor = view.findViewById(R.id.imgLaporAdmin);
+        riwayat = view.findViewById(R.id.imgRiwayatAdmin);
+        kelola = view.findViewById(R.id.kelolaAdmin);
+        laporan = view.findViewById(R.id.laporanAdmin);
+        setting = view.findViewById(R.id.settingAdmin);
 
-        Intent i = getActivity().getIntent();
-        String namaUser = i.getStringExtra("namaUser");
-        nama1.setText(namaUser);
 
 
         daftar.setOnClickListener(view1 -> {
-            Intent intent = new Intent(requireContext(), ListAset.class);
+            Intent intent = new Intent(requireContext(), ListAsetAdmin.class);
             startActivity(intent);
         });
         transaksi.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), transaksi.class));
+            startActivity(new Intent(requireContext(), TransaksiUser.class));
         });
         lapor.setOnClickListener(view1 -> {
             startActivity(new Intent(requireContext(), PelaporanKerusakanKehilangan.class));
@@ -66,6 +66,9 @@ public class HomeFragmentAdmin extends Fragment {
         kelola.setOnClickListener(view1 -> {
             startActivity(new Intent(requireContext(), ListPengguna.class));
         });
+        setting.setOnClickListener(view1 -> {
+            startActivity(new Intent(requireContext(), SettingFragment.class));
+        });
 
 
         return view;
@@ -73,6 +76,9 @@ public class HomeFragmentAdmin extends Fragment {
 
 
     }
+
+
+
 
 
 }

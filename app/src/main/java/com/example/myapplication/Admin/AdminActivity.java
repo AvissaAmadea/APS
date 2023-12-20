@@ -31,6 +31,7 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.activity_admin);
 
 
+
         Toolbar toolbar = findViewById(R.id.toolbar2); //Ignore red line errors
         setSupportActionBar(toolbar);
 
@@ -86,4 +87,5 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
             super.onBackPressed();
         }
     }
+
 }
