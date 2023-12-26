@@ -77,7 +77,6 @@
                     android:inputType="textPersonName"
                     android:textColor="@color/black" />
 
-
                 <EditText
                     android:drawableRight="@drawable/outline_visibility_off_24"
                     android:textSize="20dp"

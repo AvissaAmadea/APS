@@ -36,11 +36,12 @@
                         android:textSize="15dp" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card"
                         android:layout_width="match_parent"
-                        app:cardCornerRadius="15dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/square_dialog">
+                        app:cardCornerRadius="10dp">
                         <LinearLayout
+                            android:padding="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -50,33 +51,33 @@
                                 android:orientation="vertical">
                                 <TextView
                                     android:drawableRight="@drawable/baseline_navigate_next_24"
-                                    android:drawablePadding="15dp"
-                                    android:padding="10dp"
-                                    android:layout_marginTop="5dp"
-                                    android:id="@+id/nm_user2"
-                                    android:textSize="15dp"
+                                    android:padding="5dp"
+                                    android:id="@+id/NamaUser"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_medium"
-                                    android:text="Nama_User"
-                                    android:textColor="@color/black" />
+                                    android:text="Nama User"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:textSize="16dp"
+                                    android:textColor="@color/black"/>
                                 <TextView
-                                    android:textSize="15dp"
-                                    android:padding="10dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:id="@+id/nipMain"
+                                    android:padding="5dp"
+                                    android:id="@+id/nipUser"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="NIP"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/inter_medium"
+                                    android:textSize="15dp"
                                     android:textColor="@color/black"/>
                             </LinearLayout>
                         </LinearLayout>
+
+
                     </androidx.cardview.widget.CardView>
 
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -351,15 +352,17 @@
                 android:layout_marginRight="15dp"
                 android:fontFamily="@font/poppins_bold"
                 android:textSize="18dp"/>
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_peminjamanOPD"
+                android:id="@+id/list_peminjamanAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 tools:listitem="@layout/ui_list_peminjaman">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+
 
         </LinearLayout>
     </ScrollView>

@@ -108,34 +108,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:rowCount="1"
-            android:columnCount="1">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:layout_gravity="end"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="10dp">
-
-                <ImageButton
-                    android:id="@+id/editAsetAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:backgroundTint="@color/kuning"
-                    android:src="@drawable/baseline_mode_edit_24" />
-
-                <ImageButton
-                    android:id="@+id/deleteAsetAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/red"
-                    android:src="@drawable/outline_delete_24" />
-            </LinearLayout>
-
-        </GridLayout>
+            android:columnCount="1"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

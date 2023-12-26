@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,33 +22,37 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class FormPeminjaman extends AppCompatActivity {
-
+int position;
     private int tahun,bulan,tanggal;
     private int tahun2,bulan2,tanggal2;
     EditText namaPeminjam, aset, tujuanPinjam, tglPinjam, tglKembali, upload;
     Button simpan;
+
+    LoadDialog loadDialog = new LoadDialog(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_peminjaman);
         namaPeminjam = findViewById(R.id.namaPeminjam);
-        aset = findViewById(R.id.nama_aset);
+        aset = findViewById(R.id.nama_aset_pinjam);
         tujuanPinjam = findViewById(R.id.Tujuan);
         tglPinjam = findViewById(R.id.tglPinjam);
         tglKembali = findViewById(R.id.tglKembali);
         simpan = findViewById(R.id.simpanPinjam);
         upload = findViewById(R.id.surat);
 
-
+        Intent intent2 = getIntent();
+        position = intent2.getExtras().getInt("position");
+        aset.setText(intent2.getStringExtra("nama_aset"));
 
         tglPinjam.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
@@ -62,7 +67,8 @@ public class FormPeminjaman extends AppCompatActivity {
                     bulan = month;
                     tanggal = dayOfMonth;
 
-                    tglPinjam.setText(tahun + " / " + bulan + " / " + tanggal);
+
+                    tglPinjam.setText(String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth));
                 }
             },tahun,bulan,tanggal);
             dialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-1000);
@@ -80,12 +86,14 @@ public class FormPeminjaman extends AppCompatActivity {
                     tahun2 = year;
                     bulan2 = month;
                     tanggal2 = dayOfMonth;
+                    String tgl1 = String.format("%04d-%02d-%02d", tahun2, bulan2 + 1, tanggal2);
+                    tglKembali.setText(tgl1);
 
-                    tglKembali.setText(String.valueOf(tahun2) + " / " +String.valueOf(bulan2) + " / " + String.valueOf(tanggal2));
                 }
             },tahun2,bulan2,tanggal2);
             dialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-1000);
             dialog.show();
+
         });
 
         simpan.setOnClickListener(view -> {
@@ -97,6 +105,7 @@ public class FormPeminjaman extends AppCompatActivity {
            if (nama.equals(null)||tujuan.equals(null)||tglPin.equals(null)||tglKem.equals(null)||namaAset.equals(null)){
                Toast.makeText(FormPeminjaman.this, "Harap diisi dengan benar", Toast.LENGTH_SHORT).show();
            }else {
+               loadDialog.ShowDialog("Menyimpan....");
                simpanFormPeminjaman(nama, tujuan, tglPin, tglKem, namaAset);
            }
         });
@@ -106,16 +115,19 @@ public class FormPeminjaman extends AppCompatActivity {
 
     private void simpanFormPeminjaman(String nama, String tujuan, String tglPin, String tglKem, String namaAset) {
         RequestQueue queue = Volley.newRequestQueue(this);
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.addPinjam,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(FormPeminjaman.this, "Berhasil Menyimpan", Toast.LENGTH_LONG).show();
+                        loadDialog.HideDialog();
+                        Toast.makeText(FormPeminjaman.this, "response"+response, Toast.LENGTH_LONG).show();
                         showSuccessDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadDialog.HideDialog();
                 showFailedDialog();
             }
         }){

@@ -3,9 +3,9 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,7 +26,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 public class FormPengembalian extends AppCompatActivity {
@@ -34,6 +34,8 @@ public class FormPengembalian extends AppCompatActivity {
 
     Spinner spinner;
     private int tahun,bulan,tanggal;
+    LinearLayout linearLayout;
+    EditText detailKej, detailKer, bukti;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,9 @@ public class FormPengembalian extends AppCompatActivity {
         kode = findViewById(R.id.kdPeminjaman);
         simpan = findViewById(R.id.simpanKembali);
         spinner = findViewById(R.id.keadaanAset);
+        linearLayout = findViewById(R.id.lapor);
+        detailKej = findViewById(R.id.detailKej);
+        detailKer = findViewById(R.id.detailKer);
 
         String[] data = {"Pilih Keadaan Aset", "Baik", "Rusak", "Hilang"};
 
@@ -53,6 +58,10 @@ public class FormPengembalian extends AppCompatActivity {
 
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        Intent intent = getIntent();
+        String kodeP = intent.getStringExtra("kodePeminjaman");
+        kode.setText(kodeP);
 
         tgl.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
@@ -67,29 +76,44 @@ public class FormPengembalian extends AppCompatActivity {
                     bulan = month;
                     tanggal = dayOfMonth;
 
-                    tgl.setText(tanggal + " / " + bulan + " / " + tahun);
+                    tgl.setText(tahun + " / " + (bulan+1) + " / " + tanggal);
                 }
             },tahun,bulan,tanggal);
+            dialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-1000);
             dialog.show();
         });
 
         simpan.setOnClickListener(view -> {
             String kodePinjam = kode.getText().toString();
             String tglKembali = tgl.getText().toString();
+            String keadaan = spinner.getSelectedItem().toString();
            if(kodePinjam.isEmpty()){
                Toast.makeText(FormPengembalian.this, "Harap diisi", Toast.LENGTH_LONG).show();
            } else if (tglKembali.isEmpty()) {
                Toast.makeText(FormPengembalian.this, "Harap diisi", Toast.LENGTH_LONG).show();
            }else {
-               insertData(kodePinjam, tglKembali);
+               insertData(kodePinjam, tglKembali, keadaan);
+               if (keadaan.equals("Rusak")||keadaan.equals("Hilang")){
+                  linearLayout.setVisibility(View.VISIBLE);
+                  String detail = detailKej.getText().toString();
+                  String detailk = detailKer.getText().toString();
+                  inputLaporan(detail, detailk);
+               }else {
+                   Intent intent1 = new Intent(FormPengembalian.this, Riwayat.class);
+                   startActivity(intent1);
+               }
            }
         });
 
     }
 
-    private void insertData(String kodePinjam, String tglKembali) {
+    private void inputLaporan(String detail, String detailk) {
+        
+    }
+
+    private void insertData(String kodePinjam, String tglKembali, String keadaan) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest rq = new StringRequest(Request.Method.GET, Db.addKembali,
+        StringRequest rq = new StringRequest(Request.Method.POST, Db.addKembali,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -103,8 +127,9 @@ public class FormPengembalian extends AppCompatActivity {
         }){
             protected HashMap<String, String> getParams(){
                 HashMap<String, String> map = new HashMap<>();
-                map.put("kodePengembalian", kodePinjam);
+                map.put("kodePeminjaman", kodePinjam);
                 map.put("tgl_kembali", tglKembali);
+                map.put("keadaanAset", keadaan);
                 return map;
             }
         };

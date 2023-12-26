@@ -35,13 +35,15 @@
             android:textColor="@color/black"
             android:textSize="25sp" />
     </LinearLayout>
+
     <TextView
+       android:layout_marginTop="50dp"
         android:id="@+id/blm"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Belum Ada"
-        android:textSize="25dp"
+        android:text="Belum Ada Pengajuan"
+        android:textSize="30dp"
         android:textAlignment="center"
         android:fontFamily="@font/poppins_bold"/>
     <ProgressBar

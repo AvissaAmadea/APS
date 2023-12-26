@@ -65,5 +65,4 @@
         android:clickable="true"
         app:srcCompat="@drawable/round_add_24" />
 
-
 </RelativeLayout>

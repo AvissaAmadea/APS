@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -26,7 +25,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Db;
-import com.example.myapplication.FormPeminjaman;
 import com.example.myapplication.LoadDialog;
 import com.example.myapplication.R;
 
@@ -45,8 +43,9 @@ public class FormAset extends AppCompatActivity {
     ArrayList<String> dinasList = new ArrayList<>();
     ArrayAdapter<String> kategoriAdapter;
     ArrayAdapter<String> dinasAdapter;
-    Button simpan;
-    LoadDialog loadDialog;
+    Button simpan, simpanPer;
+    int position;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class FormAset extends AppCompatActivity {
         dinasPemilik = findViewById(R.id.dinasPemilik);
         simpan = findViewById(R.id.simpan);
         status = findViewById(R.id.spinnerStatus);
+        simpanPer = findViewById(R.id.simpanPerubahan);
         fetchDinasList(dinasPemilik);
         fetchKategoriList(kategoriAset);
 
@@ -73,38 +73,114 @@ public class FormAset extends AppCompatActivity {
         // Apply the adapter to the spinner
         status.setAdapter(adapter);
 
-        simpan.setOnClickListener(view -> {
-            String nama = namaAset.getText().toString();
-            String detail = detailAset.getText().toString();
-            String kategori = kategoriAset.getSelectedItem().toString();
-            String dinas = dinasPemilik.getSelectedItem().toString();
-            String status1 = status.getSelectedItem().toString();
-            if (nama.equals("") || detail.equals("")){
-                Toast.makeText(this, "isi dengan benar", Toast.LENGTH_SHORT).show();
-            }else{
-                simpanDataAset(nama, detail, kategori, dinas, status1);
-            }
+        Intent intent2 = getIntent();
+        if (intent2 != null) {
+            id = Integer.parseInt(String.valueOf(intent2.getIntExtra("id",-1)));
+            namaAset.setText(intent2.getStringExtra("nama_aset"));
+            detailAset.setText(intent2.getStringExtra("detail"));
+            Log.d("FormAset", "Received id: " + id);
+//            String namaDinas = intent2.getStringExtra("nama_dinas");
+//            int pos = dinasAdapter.getPosition(namaDinas);
+//            dinasPemilik.setSelection(pos);
+//            String namaStatus = intent2.getStringExtra("status");
+//            int pos1 = dinasAdapter.getPosition(namaStatus);
+//            status.setSelection(pos1);
+//            String kate = intent2.getStringExtra("nama_kategori");
+//            int pos2 = dinasAdapter.getPosition(kate);
+//            kategoriAset.setSelection(pos2);
+        }
+        if(id>=0){
+            simpanPer.setVisibility(View.VISIBLE);
+            simpanPer.setOnClickListener(view -> {
+                String nama = namaAset.getText().toString();
+                String detail = detailAset.getText().toString();
+                String kategori = kategoriAset.getSelectedItem().toString();
+                String dinas = dinasPemilik.getSelectedItem().toString();
+                String status1 = status.getSelectedItem().toString();
+                if (nama.equals("") || detail.equals("") || kategori.equals("Pilih Kategori")||status1.equals("Pilih Status")||dinas.equals("Pilih Dinas")) {
+                    Toast.makeText(this, "isi dengan benar", Toast.LENGTH_SHORT).show();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Simpan Data");
+                    builder.setMessage("Yakin Simpan Perubahan Data?");
+                    builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            EditDataAset(nama, detail, kategori, dinas, status1);
+                        }
+                    });
+                    builder.create().show();
+                }
+            });
+        }else {
+            simpan.setVisibility(View.VISIBLE);
+            simpan.setOnClickListener(view -> {
+                String nama = namaAset.getText().toString();
+                String detail = detailAset.getText().toString();
+                String kategori = kategoriAset.getSelectedItem().toString();
+                String dinas = dinasPemilik.getSelectedItem().toString();
+                String status1 = status.getSelectedItem().toString();
+                if (nama.equals("") || detail.equals("")) {
+                    Toast.makeText(this, "isi dengan benar", Toast.LENGTH_SHORT).show();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Simpan Data");
+                    builder.setMessage("Yakin Simpan Data?");
+                    builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            simpanDataAset(nama, detail, kategori, dinas, status1);
+                        }
+                    });
+                    builder.create().show();
+                }
+            });
+        }
+        }
 
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("Simpan Data");
-//            builder.setMessage("Yakin Menyimpan Data?");
-//            builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    dialogInterface.dismiss();
-//                }
-//            });
-//            builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//
-//
-//                }
-//            });
-        });
-
+    private void EditDataAset(String nama, String detail, String kategori, String dinas, String status1) {
+        if (kategori.equals("Pilih Kategori")||status1.equals("Pilih Status")||dinas.equals("Pilih Dinas")) {
+            Toast.makeText(FormAset.this, "Isi dengan benar", Toast.LENGTH_LONG).show();
+        }else{
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.updateAset, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    showSuccessDialog();
+                    Toast.makeText(FormAset.this, "Data Berhasil Diubah", Toast.LENGTH_SHORT).show();
+                }
+            }, error -> {
+                showFailedDialog();
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+            }) {
+                protected HashMap<String, String> getParams() {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("id_aset", String.valueOf(id));
+                    map.put("nama_aset", nama);
+                    map.put("detail", detail);
+                    map.put("nama_kategori", kategori);
+                    map.put("nama_dinas", dinas);
+                    map.put("status_aset", status1);
+                    return map;
+                }
+            };
+            RequestQueue queue = Volley.newRequestQueue(FormAset.this);
+            queue.add(stringRequest);
+        }
 
     }
+
 
     private void fetchKategoriList(Spinner kategoriAset) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -175,7 +251,7 @@ public class FormAset extends AppCompatActivity {
 
 
     private void simpanDataAset(String nama, String detail, String kategori, String dinas, String status1) {
-         if (kategori.equals("Pilih Kategori")||status1.equals("Pilih Status")||kategori.equals("Pilih Kategori")) {
+         if (kategori.equals("Pilih Kategori")||status1.equals("Pilih Status")||dinas.equals("Pilih Dinas")) {
             Toast.makeText(FormAset.this,"Isi dengan benar", Toast.LENGTH_LONG).show();
         } else {
             RequestQueue requestQueue = Volley.newRequestQueue(this);

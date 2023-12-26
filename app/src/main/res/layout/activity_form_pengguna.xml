@@ -107,6 +107,24 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <Spinner
+                        android:inputType="textPersonName"
+                        android:id="@+id/etStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Status"
+                        android:layout_marginTop="5dp"
+                        android:minHeight="50dp"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Email"
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black"
@@ -155,7 +173,30 @@
                         android:minHeight="50dp"
                         android:layout_marginTop="5dp"
                         android:textSize="15dp"/>
+                    <TextView
+                        android:id="@+id/tvPass"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Password"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"/>
+
+                    <EditText
+                        android:visibility="gone"
+                        android:id="@+id/etPasswordUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Password"
+                        android:layout_marginTop="5dp"
+                        android:inputType="textPassword"
+                        android:drawableRight="@drawable/outline_visibility_off_24"
+                        android:minHeight="50dp"
+                        android:textSize="15dp"/>
                     <Button
+                        android:visibility="gone"
                         android:id="@+id/btn_form_pengguna"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
@@ -164,6 +205,18 @@
                         android:layout_marginRight="25dp"
                         android:layout_marginLeft="25dp"
                         android:text="simpan"
+                        android:fontFamily="@font/poppins_bold"
+                        android:backgroundTint="@color/hijau"/>
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/btn_edit_pengguna"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:text="simpan perubahan"
                         android:fontFamily="@font/poppins_bold"
                         android:backgroundTint="@color/hijau"/>
 

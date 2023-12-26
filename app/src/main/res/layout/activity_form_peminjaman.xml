@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
-            android:background="@drawable/square"
+            android:background="@color/white"
             android:id="@+id/judul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                     android:minHeight="50dp"
                     android:inputType="textPersonName"
                     android:hint="Nama Aset"
-                    android:id="@+id/nama_aset"
+                    android:id="@+id/nama_aset_pinjam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"

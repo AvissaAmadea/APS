@@ -20,12 +20,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.Admin.ListPengguna;
 import com.example.myapplication.Db;
 import com.example.myapplication.Admin.ListAsetAdmin;
+import com.example.myapplication.FormPeminjaman;
 import com.example.myapplication.ListAset;
 import com.example.myapplication.PelaporanKerusakanKehilangan;
 import com.example.myapplication.R;
 import com.example.myapplication.Riwayat;
+import com.example.myapplication.SettingFragment;
 import com.example.myapplication.TransaksiUser;
 
 import org.json.JSONException;
@@ -43,7 +46,6 @@ public class HomeFragmentOPD extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_opd, container, false);
-        nama = view.findViewById(R.id.nm_userMain);
         daftar = view.findViewById(R.id.imgAsetMain);
         transaksi = view.findViewById(R.id.imgTransMain);
         lapor = view.findViewById(R.id.imgLaporMain);
@@ -51,58 +53,43 @@ public class HomeFragmentOPD extends Fragment {
         recyclerView = view.findViewById(R.id.list_peminjamanOPD);
         setting = view.findViewById(R.id.settingMain);
 
-        fetchNama(nama);
+        if (getArguments() != null) {
+            String receivedValue = getArguments().getString("nama");
+            String nip = getArguments().getString("nip");
+            int id = getArguments().getInt("id",0);
+            TextView textView = view.findViewById(R.id.NamaUserOPD);
+            TextView textView1 = view.findViewById(R.id.nipUserOPD);
+            textView.setText(receivedValue);
+            textView1.setText(nip);
+            daftar.setOnClickListener(view1 -> {
+                Intent intent = new Intent(requireContext(), ListAsetAdmin.class);
+                startActivity(intent);
+            });
+            transaksi.setOnClickListener(view1 -> {
+                startActivity(new Intent(requireContext(), FormPeminjaman.class));
+            });
+            lapor.setOnClickListener(view1 -> {
+                startActivity(new Intent(requireContext(), PelaporanKerusakanKehilangan.class));
+            });
+            riwayat.setOnClickListener(view1 -> {
+                Intent intent = new Intent(requireContext(), Riwayat.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+                getActivity().finish();
+            });
 
-        fetchListPeminjaman(recyclerView);
+            setting.setOnClickListener(view1 -> {
+                startActivity(new Intent(requireContext(), SettingFragment.class));
+            });
 
-        daftar.setOnClickListener(view1 -> {
-            Intent intent = new Intent(requireContext(), ListAset.class);
-            startActivity(intent);
-        });
-        transaksi.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), TransaksiUser.class));
-        });
-        lapor.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), PelaporanKerusakanKehilangan.class));
-        });
-        riwayat.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), Riwayat.class));
-        });
+        }
+
+
 
 
 
         return view;
     }
-
-    private void fetchListPeminjaman(RecyclerView recyclerView) {
-
-    }
-
-    private void fetchNama(TextView nama) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.urlLogin,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            String userName = jsonResponse.getString("nama");
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Cannot Fetch user name", Toast.LENGTH_SHORT).show();
-            }
-        });
-        Volley.newRequestQueue(requireContext()).add(stringRequest);
-
-    }
-
 
 
 }

@@ -8,6 +8,7 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/aps"
         android:label="@string/app_name"
@@ -15,6 +16,24 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".FormKategori"
+            android:exported="false" />
+        <activity
+            android:name=".ListPengembalian"
+            android:exported="false" />
+        <activity
+            android:name=".ListPelaporan"
+            android:exported="false" />
+        <activity
+            android:name=".FormVerif"
+            android:exported="false" />
+        <activity
+            android:name=".kategori"
+            android:exported="false" />
+        <activity
+            android:name=".DetailAset"
+            android:exported="false" />
         <activity
             android:name=".ListAset"
             android:exported="false" />

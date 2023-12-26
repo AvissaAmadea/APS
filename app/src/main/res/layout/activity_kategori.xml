@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".kategori">
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/judul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:id="@+id/backToMenu2"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Daftar Kategori"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/next"
+        android:background="@color/white"
+        android:layout_below="@+id/judul"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+        <GridLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="1">
+            <TextView
+                android:id="@+id/dft_user"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:drawablePadding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_gravity="center_vertical"
+                android:text="Daftar Pengguna"
+                android:textColor="@color/black"
+                android:drawableLeft="@drawable/baseline_arrow_back_24"/>
+            <TextView
+                android:layout_column="1"
+                android:layout_row="0"
+                android:id="@+id/dft_ast"
+                android:drawablePadding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_gravity="end"
+                android:text="Daftar Aset"
+                android:textColor="@color/black"
+                android:drawableRight="@drawable/baseline_arrow_forward_24"/>
+        </GridLayout>
+    </LinearLayout>
+    <ProgressBar
+        android:layout_below="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pgKat"
+        android:visibility="gone"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/pgKat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/ui_layout_kat"
+        android:id="@+id/recl">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddKat"
+        android:layout_width="100dp"
+        android:layout_height="175dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:layout_marginBottom="45dp"
+        android:backgroundTint="@color/green_pea"
+        android:clickable="true"
+        android:src="@drawable/round_add_24" />
+
+</RelativeLayout>

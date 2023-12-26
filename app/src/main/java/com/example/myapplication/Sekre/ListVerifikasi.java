@@ -77,12 +77,15 @@ public class ListVerifikasi extends AppCompatActivity {
                                         object.getString("tgl_pinjam"),
                                         object.getString("tgl_kembali"),
                                         object.getString("status"),
-                                        object.getString("kode")
+                                        object.getString("kode"),
+                                        object.getString("tujuan")
                                 ));
                             }
+                            adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(ListVerifikasi.this, "error", Toast.LENGTH_SHORT).show();
+                            blm.setVisibility(View.VISIBLE);
+                            Toast.makeText(ListVerifikasi.this, "Belum Ada Pengajuan" +response, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -94,7 +97,7 @@ public class ListVerifikasi extends AppCompatActivity {
             }
         });
         requestQueue.add(stringRequest);
-
     }
+
 
 }

@@ -1,15 +1,25 @@
 package com.example.myapplication.Model;
 
 public class verifModel {
-    String nama, aset, tglPinjam, tglKembali, status, kode;
+    String nama, aset, tglPinjam, tglKembali, status, kode, tujuan;
 
-    public verifModel(String nama, String nama_aset, String tgl_pinjam, String tgl_kembali, String status, String kode) {
+    public verifModel(String nama, String nama_aset, String tgl_pinjam, String tgl_kembali, String status, String kode, String tujuan) {
         this.nama = nama;
         this.aset = nama_aset;
         this.tglPinjam = tgl_pinjam;
         this.tglKembali = tgl_kembali;
         this.status = status;
         this.kode = kode;
+        this.tujuan = tujuan;
+    }
+
+    public String getTujuan() {
+        return tujuan;
+    }
+
+    public verifModel setTujuan(String tujuan) {
+        this.tujuan = tujuan;
+        return this;
     }
 
     public String getKode() {

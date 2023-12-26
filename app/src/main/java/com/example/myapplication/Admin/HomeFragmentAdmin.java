@@ -15,31 +15,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.myapplication.FormPeminjaman;
+import com.example.myapplication.ListPelaporan;
+import com.example.myapplication.NotifFragment;
 import com.example.myapplication.PelaporanKerusakanKehilangan;
 import com.example.myapplication.R;
 import com.example.myapplication.Riwayat;
 import com.example.myapplication.SettingFragment;
-import com.example.myapplication.TransaksiUser;
-import com.example.myapplication.riwayatRequest;
 
 import java.util.ArrayList;
 
 public class HomeFragmentAdmin extends Fragment {
+    TextView nama, nip;
 
     CardView daftar, transaksi, lapor, riwayat, kelola, laporan, setting;
-
-    TextView nama1;
 
     ArrayList<String> peminjamanList = new ArrayList<>();
     ArrayAdapter<String> peminjamanAdapter;
 
-    RecyclerView recyclerView;
-   riwayatRequest request;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_admin, container, false);
-        nama1 = view.findViewById(R.id.nm_user2);
         daftar = view.findViewById(R.id.imgAsetAdmin);
         transaksi = view.findViewById(R.id.imgTransAdmin);
         lapor = view.findViewById(R.id.imgLaporAdmin);
@@ -47,28 +43,42 @@ public class HomeFragmentAdmin extends Fragment {
         kelola = view.findViewById(R.id.kelolaAdmin);
         laporan = view.findViewById(R.id.laporanAdmin);
         setting = view.findViewById(R.id.settingAdmin);
+        RecyclerView recyclerView = view.findViewById(R.id.list_peminjamanAdmin);
 
 
+        if (getArguments() != null) {
+            int id = getArguments().getInt("id");
+            String receivedValue = getArguments().getString("nama");
+            String nip = getArguments().getString("nip");
+            TextView textView = view.findViewById(R.id.NamaUser);
+            TextView textView1 = view.findViewById(R.id.nipUser);
+            textView.setText(receivedValue);
+            textView1.setText(nip);
+            daftar.setOnClickListener(view1 -> {
+                startActivity(new Intent(requireContext(), ListAsetAdmin.class));
+            });
+            transaksi.setOnClickListener(view1 -> {
+                startActivity(new Intent(requireContext(), FormPeminjaman.class));
+            });
+            lapor.setOnClickListener(view1 -> {
+                Intent intent = new Intent(requireContext(), ListPelaporan.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            });
+            riwayat.setOnClickListener(view1 -> {
+                Intent intent = new Intent(requireContext(), Riwayat.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            });
+            kelola.setOnClickListener(view1 -> {
+                startActivity(new Intent(requireContext(), ListPengguna.class));
+            });
+            setting.setOnClickListener(view1 -> {
+                startActivity(new Intent(requireContext(), SettingFragment.class));
+            });
 
-        daftar.setOnClickListener(view1 -> {
-            Intent intent = new Intent(requireContext(), ListAsetAdmin.class);
-            startActivity(intent);
-        });
-        transaksi.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), TransaksiUser.class));
-        });
-        lapor.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), PelaporanKerusakanKehilangan.class));
-        });
-        riwayat.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), Riwayat.class));
-        });
-        kelola.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), ListPengguna.class));
-        });
-        setting.setOnClickListener(view1 -> {
-            startActivity(new Intent(requireContext(), SettingFragment.class));
-        });
+        }
+
 
 
         return view;
@@ -76,7 +86,6 @@ public class HomeFragmentAdmin extends Fragment {
 
 
     }
-
 
 
 

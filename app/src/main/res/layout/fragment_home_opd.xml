@@ -15,17 +15,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardUser"
-                android:layout_marginTop="5dp"
+                android:id="@+id/cardUserOPD"
                 android:backgroundTint="@color/hijau"
+                android:background="@drawable/square"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp">
+                android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="vertical">
+
 
                     <TextView
                         android:layout_width="match_parent"
@@ -36,12 +36,11 @@
                         android:textSize="15dp" />
 
                     <androidx.cardview.widget.CardView
-                        android:layout_marginBottom="10dp"
                         android:layout_width="match_parent"
-                        app:cardCornerRadius="20dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/square_dialog">
+                        app:cardCornerRadius="10dp">
                         <LinearLayout
+                            android:padding="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -50,29 +49,28 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
-                                    android:padding="10dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginTop="5dp"
-                                    android:id="@+id/nm_userMain"
                                     android:drawableRight="@drawable/baseline_navigate_next_24"
-                                    android:textSize="15dp"
+                                    android:padding="5dp"
+                                    android:id="@+id/NamaUserOPD"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_medium"
-                                    android:text="Nama_User"
-                                    android:textColor="@color/black" />
+                                    android:text="Nama User"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:textSize="16dp"
+                                    android:textColor="@color/black"/>
                                 <TextView
-                                    android:padding="10dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:id="@+id/nipMain"
+                                    android:padding="5dp"
+                                    android:id="@+id/nipUserOPD"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
                                     android:text="NIP"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/inter_medium"
+                                    android:textSize="15dp"
                                     android:textColor="@color/black"/>
                             </LinearLayout>
                         </LinearLayout>
+
+
                     </androidx.cardview.widget.CardView>
 
 

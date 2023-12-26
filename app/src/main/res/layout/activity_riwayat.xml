@@ -37,7 +37,7 @@
   </LinearLayout>
 
   <ProgressBar
-      android:id="@+id/load_aset_admin"
+      android:id="@+id/load_riw"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/judul"
@@ -47,8 +47,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       tools:listitem="@layout/ui_list_peminjaman"
-      android:id="@+id/list_aset_Admin"
-      android:layout_below="@id/load_aset_admin">
+      android:id="@+id/list_user_riw"
+      android:layout_below="@id/load_riw">
 
   </androidx.recyclerview.widget.RecyclerView>
 

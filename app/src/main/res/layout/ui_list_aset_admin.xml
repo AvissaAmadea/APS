@@ -18,6 +18,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:textSize="19dp"
             android:layout_row="0"
             android:layout_column="0"
             android:id="@+id/nm_aset_aset"
@@ -40,9 +41,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins_medium"
             android:text="Kategori"
+            android:textSize="16dp"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/asal_dinas_aset_user" />
@@ -58,37 +60,19 @@
             android:text="Status_aset"
             android:textStyle="bold|italic"
            android:layout_gravity="end" />
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="end"
+        <TextView
+            android:layout_column="0"
+            android:layout_row="2"
+            android:id="@+id/ddetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="2">
-            <ImageButton
-                android:id="@+id/editAsetAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/kuning"
-                android:src="@drawable/baseline_mode_edit_24"
-                app:layout_constraintTop_toBottomOf="@+id/status_aset_user"
-                tools:layout_editor_absoluteX="260dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Detail"
+            android:textSize="16dp"/>
 
-            <ImageButton
-                android:id="@+id/deleteAsetAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/red"
-                android:src="@drawable/outline_delete_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/editAsetAdmin"
-                app:layout_constraintTop_toBottomOf="@+id/status_aset_user" />
-
-        </LinearLayout>
     </GridLayout>
 </androidx.cardview.widget.CardView>
