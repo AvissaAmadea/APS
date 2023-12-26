@@ -5,7 +5,7 @@
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('kategori/') }}">Kelola Kategori</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('kategori.index') }}">Kelola Kategori</a></li>
             <li class="breadcrumb-item active fw-bold" aria-current="page">Tambah Kategori</li>
         </ol>
     </div>
@@ -14,11 +14,11 @@
             <h6 class="card-header d-flex justify-content-between align-items-center">
                 Tambah Jenis Kategori
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-secondary btn-sm" href="{{ url('kategori/') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('kategori.index') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
                 </div>
             </h6>
             <div class="card-body mx-2">
-                <form class="form text-end" method="POST" action="{{ url('kategori') }}">
+                <form class="form text-end" method="POST" action="{{ route('kategori.index') }}">
                     @csrf
 
                     <div class="form-group mb-2 row">

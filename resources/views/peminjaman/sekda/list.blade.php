@@ -50,7 +50,7 @@
                         @if ($pinjams->count() > 0)
                             @foreach ($pinjams as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $pinjams->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $pinjams->firstItem() + $key ) }}</th>
                                     {{-- <td>{{ ( $item->kode_pinjam ) }}</td> --}}
                                     @if(isset($nama[$key]))
                                         <td>{{ $nama[$key] }}</td>
@@ -67,16 +67,16 @@
                                         <td>-</td>
                                     @endif
 
-                                    <td>{{ ( $item->tgl_pinjam ) }}</td>
-                                    <td>{{ ( $item->tgl_kembali ) }}</td>
+                                    <td style="width: 8rem">{{ ( $item->tgl_pinjam ) }}</td>
+                                    <td style="width: 8rem">{{ ( $item->tgl_kembali ) }}</td>
                                     {{-- <td>{{ ( $item->status_pinjam ) }}</td> --}}
                                     <td style="width: 5rem">
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
-                                    <td class="text-center" style="width: 6rem">
-                                        <a class="btn btn-info btn-sm" href="{{ route('peminjaman.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                    <td class="text-center" style="width: 8rem">
+                                        <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-file-signature pe-1"></i>Verifikasi</a>
                                         {{-- <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/seePinjam', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a> --}}
-                                        <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a>
+                                        {{-- <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a> --}}
                                     </td>
                                 </tr>
                             @endforeach

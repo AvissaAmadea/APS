@@ -52,7 +52,7 @@
                             <div class="form-group mb-2 row">
                                 <label for="detail" class="col-md-4 col-form-label">Detail :</label>
                                 <div class="col-md-8">
-                                    <textarea readonly class="form-control-plaintext fw-bold" id="detail" name="detail" style="text-align: justify; height: auto; min-height: 30px;">{{ $aset->detail }}</textarea>
+                                    <textarea readonly class="form-control-plaintext fw-bold" id="detail" name="detail" style="text-align: justify; height: auto;" rows="3">{{ $aset->detail }}</textarea>
                                 </div>
                             </div>
                         </div>

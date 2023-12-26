@@ -5,7 +5,7 @@
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.sekda') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('peminjaman.sekda.index') }}">Riwayat Peminjaman</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('peminjaman.sekda.list') }}">Daftar Pengajuan Peminjaman</a></li>
             <li class="breadcrumb-item active fw-bold" aria-current="page">Detail Peminjaman</li>
         </ol>
     </div>
@@ -14,7 +14,7 @@
             <h6 class="card-header d-flex justify-content-between align-items-center">
                 Detail Peminjaman
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.sekda.index') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.sekda.list') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
                 </div>
             </h6>
             <div class="card-body mx-2">
@@ -25,6 +25,13 @@
                                 <label for="kode_pinjam" class="col-md-4 col-form-label">Kode Peminjaman :</label>
                                 <div class="col-md-8">
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="kode_pinjam" name="kode_pinjam" value="{{ $pinjams->kode_pinjam }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="nama_aset" class="col-md-4 col-form-label">Peminjam :</label>
+                                <div class="col-md-8">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="nama_aset" name="nama_aset" value="{{ $pinjams->users->nama }}">
                                 </div>
                             </div>
 
@@ -43,7 +50,7 @@
                             </div>
 
                             <div class="form-group mb-2 row">
-                                <label for="dinas_id" class="col-md-4 col-form-label">Dinas :</label>
+                                <label for="dinas_id" class="col-md-4 col-form-label">Asal Aset :</label>
                                 <div class="col-md-8">
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="dinas_id" name="dinas_id" value="{{ $pinjams->asets->dinas->nama_dinas }}">
                                 </div>
@@ -71,11 +78,56 @@
                             </div>
 
                             <div class="form-group mb-2 row">
+                                <label for="surat_pinjam" class="col-md-4 col-form-label">Surat Peminjaman :</label>
+                                <div class="col-md-8 text-start mt-2">
+                                    @if($pinjams->surat_pinjam)
+                                        @php
+                                            $extension = pathinfo($pinjams->surat_pinjam, PATHINFO_EXTENSION);
+                                            $isPDF = $extension === 'pdf';
+                                            $isImage = in_array($extension, ['jpg', 'jpeg', 'png', 'gif']);
+                                            $fileName = pathinfo($pinjams->surat_pinjam, PATHINFO_FILENAME);
+                                            $filePath = 'uploads/' . $pinjams->surat_pinjam;
+                                        @endphp
+
+                                        @if($isPDF)
+                                            <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }} (PDF)</a>
+                                        @elseif($isImage)
+                                            <a href="{{ asset($filePath) }}" target="_blank">
+                                                <img src="{{ asset($filePath) }}" alt="Surat Peminjaman" style="max-width: 100%">
+                                            </a>
+                                        @else
+                                            <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }}</a>
+                                        @endif
+                                    @else
+                                        <p>Tidak ada file surat peminjaman terlampir.</p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
                                 <label for="status_pinjam" class="col-md-4 col-form-label">Status :</label>
                                 <div class="col-auto mt-1">
                                     <span class="status-badge @if ($pinjams->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($pinjams->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $pinjams->status_pinjam }}</span>
                                 </div>
                             </div>
+
+                            @if ($pinjams->status_pinjam === 'Menunggu Verifikasi')
+                                <div class="form-group mb-2 row">
+                                    <label for="status_pinjam" class="col-md-4 col-form-label">Verifikasi :</label>
+                                    <div class="col-md-8 text-start">
+                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $pinjams->id]) }}" method="POST">
+                                            @csrf
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-md-12">
+                                                    <button type="submit" name="status_pinjam" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
+                                                    <button type="submit" name="status_pinjam" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>

@@ -50,7 +50,7 @@
                         @if ($pinjams->count() > 0)
                             @foreach ($pinjams as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $pinjams->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $pinjams->firstItem() + $key ) }}</th>
                                     <td>{{ ( $item->kode_pinjam ) }}</td>
 
                                     {{-- Tampilkan nama aset dan nama dinas aset --}}

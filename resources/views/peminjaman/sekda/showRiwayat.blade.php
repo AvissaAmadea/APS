@@ -1,11 +1,11 @@
-@extends('sidebar.superadmin')
+@extends('sidebar.sekda')
 
 @section('content')
 <div class="container-fluid">
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('peminjaman.superadmin.list') }}">Daftar Pengajuan Peminjaman</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.sekda') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('peminjaman.sekda.riwayat') }}">Riwayat Peminjaman</a></li>
             <li class="breadcrumb-item active fw-bold" aria-current="page">Detail Peminjaman</li>
         </ol>
     </div>
@@ -14,7 +14,7 @@
             <h6 class="card-header d-flex justify-content-between align-items-center">
                 Detail Peminjaman
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.superadmin.list') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.sekda.riwayat') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
                 </div>
             </h6>
             <div class="card-body mx-2">
@@ -25,6 +25,13 @@
                                 <label for="kode_pinjam" class="col-md-4 col-form-label">Kode Peminjaman :</label>
                                 <div class="col-md-8">
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="kode_pinjam" name="kode_pinjam" value="{{ $pinjams->kode_pinjam }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="nama_aset" class="col-md-4 col-form-label">Peminjam :</label>
+                                <div class="col-md-8">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="nama_aset" name="nama_aset" value="{{ $pinjams->users->nama }}">
                                 </div>
                             </div>
 
@@ -66,7 +73,7 @@
                             <div class="form-group mb-2 row">
                                 <label for="tujuan" class="col-md-4 col-form-label">Keperluan :</label>
                                 <div class="col-md-8">
-                                    <textarea readonly class="form-control-plaintext fw-bold" id="tujuan" name="tujuan" style="text-align: justify; height: auto; min-height: 30px;">{{ $pinjams->tujuan }}</textarea>
+                                    <textarea class="form-control-plaintext fw-bold" id="tujuan" name="tujuan" style="text-align: justify; height: auto; min-height: 30px;">{{ $pinjams->tujuan }}</textarea>
                                 </div>
                             </div>
 

@@ -19,7 +19,7 @@
                 Data Pengguna
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a class="btn btn-success btn-sm" href="{{ route('user.create') }}" role="button" style="width: fit-content"><i class="fa-solid fa-plus pe-2"></i>{{ __('Tambah') }}</a>
-                    <a class="btn btn-danger btn-sm" href="{{ url('user/trash') }}" role="button" style="width: fit-content"><i class="fa-solid fa-trash pe-2"></i>{{ __('Trash') }}</a>
+                    <a class="btn btn-danger btn-sm" href="{{ route('user.trash') }}" role="button" style="width: fit-content"><i class="fa-solid fa-trash pe-2"></i>{{ __('Trash') }}</a>
                     <form class="form-search d-flex" method="GET" action="#">
                         <div class="input-group">
                             <input type="search" id="inputSearch" class="form-control" placeholder="Cari" style="max-width: 15rem; height: 33px"/>
@@ -61,7 +61,7 @@
                         @if ($users->count() > 0)
                             @foreach ($users as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $users->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $users->firstItem() + $key ) }}</th>
                                     <td>{{ ( $item->nama ) }}</td>
                                     <td>{{ ( $item->dinas->nama_dinas ) }}</td>
                                     <td>{{ ( $item->roles->name ) }}</td>
@@ -75,7 +75,7 @@
                                     <td class="text-center">
                                         <a class="btn btn-info btn-sm" href="{{ route('user.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
                                         <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
-                                        <form action="{{ url('user/destroy/', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
+                                        <form action="{{ route('user.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
                                             @csrf
                                             @method('delete')
 

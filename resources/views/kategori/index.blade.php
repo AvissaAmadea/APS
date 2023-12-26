@@ -63,7 +63,7 @@
                                     <td class="text-center">
                                         {{-- <a class="btn btn-info btn-sm" href="{{ route('kategori.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a> --}}
                                         <a class="btn btn-warning btn-sm" href="{{ route('kategori.edit', $item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
-                                        <form action="{{ url('kategori/destroy/', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
+                                        <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
                                             @csrf
                                             @method('delete')
 

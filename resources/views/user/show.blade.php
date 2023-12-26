@@ -8,7 +8,7 @@
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('user/') }}">Kelola Pengguna</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Kelola Pengguna</a></li>
             <li class="breadcrumb-item active fw-bold" aria-current="page">Detail Pengguna</li>
         </ol>
     </div>
@@ -18,7 +18,7 @@
                 Detail Pengguna
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $user->id) }}" role="button"><i class="fa-solid fa-pen pe-2"></i>Edit</a>
-                    <a class="btn btn-secondary btn-sm" href="{{ url('user/') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('user.index') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
                 </div>
             </h6>
             <div class="card-body mx-2">
@@ -74,10 +74,17 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mb-2 row">
+                            {{-- <div class="form-group mb-2 row">
                                 <label for="role_id" class="col-md-4 col-form-label">Status :</label>
                                 <div class="col-md-8">
                                     <input type="text" readonly class="form-control-plaintext fw-bold" id="status" name="status" value="{{ $user->status }}">
+                                </div>
+                            </div> --}}
+
+                            <div class="form-group mb-2 row">
+                                <label for="role_id" class="col-md-4 col-form-label">Status :</label>
+                                <div class="col-auto mt-1">
+                                    <span class="status-badge @if ($user->status == 1) text-white bg-primary  @elseif($user->status == 0) text-white bg-danger @endif" id="status" name="status" readonly>{{ $user->status == 1 ? 'Active' : 'Inactive' }}</span>
                                 </div>
                             </div>
 

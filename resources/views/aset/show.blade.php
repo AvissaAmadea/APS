@@ -5,7 +5,7 @@
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('aset/') }}">Kelola Aset</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('aset.index') }}">Kelola Aset</a></li>
             <li class="breadcrumb-item active fw-bold" aria-current="page">Detail Aset</li>
         </ol>
     </div>
@@ -15,7 +15,7 @@
                 Detail Aset
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a class="btn btn-warning btn-sm" href="{{ route('aset.edit', $aset->id) }}" role="button"><i class="fa-solid fa-pen pe-2"></i>Edit</a>
-                    <a class="btn btn-secondary btn-sm" href="{{ url('aset/') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('aset.index') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
                 </div>
             </h6>
             <div class="card-body mx-2">

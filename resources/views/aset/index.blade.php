@@ -83,7 +83,7 @@
                                     <td class="text-center">
                                         <a class="btn btn-info btn-sm" href="{{ route('aset.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
                                         <a class="btn btn-warning btn-sm" href="{{ route('aset.edit', $item->id) }}" role="button"><i class="fa-solid fa-pen"></i></a>
-                                        <form action="{{ url('aset/destroy/', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
+                                        <form action="{{ route('aset.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin akan hapus data ini?')">
                                             @csrf
                                             @method('delete')
 

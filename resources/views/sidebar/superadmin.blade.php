@@ -55,44 +55,52 @@
                                 </a>
                                 <ul id="kelolaAset" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        <a href="{{ url('kategori/') }}" class="sidebar-link">{{ __('Kategori') }}</a>
+                                        <a href="{{ route('kategori.index') }}" class="sidebar-link">{{ __('Kategori') }}</a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="{{ url('aset/') }}" class="sidebar-link">{{ __('Aset') }}</a>
+                                        <a href="{{ route('aset.index') }}" class="sidebar-link">{{ __('Aset') }}</a>
                                     </li>
                                 </ul>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ url('user/') }}" class="sidebar-link">
+                                <a href="{{ route('user.index') }}" class="sidebar-link">
                                     <i class="fa-solid fa-user-pen pe-2"></i>{{ __('Kelola Pengguna') }}
                                 </a>
-                                {{-- <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#kelolaUser" aria-expanded="false">
-                                    <i class="fa-solid fa-user-pen pe-2"></i>{{ __('Kelola Pengguna') }}
-                                </a>
-                                <ul id="kelolaUser" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Super Admin') }}</a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Sekretaris Daerah') }}</a>
-                                    </li>
-                                    <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('OPD') }}</a>
-                                    </li>
-                                </ul> --}}
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ url('peminjaman/superadmin/create/') }}" class="sidebar-link">
+                                {{-- <a href="{{ route('peminjaman.superadmin.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-file-circle-plus pe-2"></i>{{ __('Peminjaman') }}
+                                </a> --}}
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#peminjaman" aria-expanded="false">
+                                    <i class="fa-solid fa-file-signature pe-2"></i>{{ __('Peminjaman') }}
                                 </a>
+                                <ul id="peminjaman" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('peminjaman.superadmin.list') }}" class="sidebar-link">{{ __('Daftar Peminjaman') }}</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('peminjaman.superadmin.create') }}" class="sidebar-link">{{ __('Form Peminjaman') }}</a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                {{-- <a href="#" class="sidebar-link">
                                     <i class="fa-solid fa-file-export pe-2"></i>{{ __('Pengembalian') }}
+                                </a> --}}
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#pengembalian" aria-expanded="false">
+                                    <i class="fa-solid fa-file-signature pe-2"></i>{{ __('Pengembalian') }}
                                 </a>
+                                <ul id="pengembalian" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                                    <li class="sidebar-item">
+                                        <a href="#" class="sidebar-link">{{ __('Daftar Pengembalian') }}</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="#" class="sidebar-link">{{ __('Form Pengembalian') }}</a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="sidebar-item">
@@ -119,7 +127,7 @@
                                 <ul id="riwayat" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
                                         @if(Auth::check() && Auth::user()->role_id == 1)
-                                            <a href="{{ route('peminjaman.superadmin.index') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
+                                            <a href="{{ route('peminjaman.superadmin.riwayat') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
                                         @endif
                                     </li>
                                     <li class="sidebar-item">

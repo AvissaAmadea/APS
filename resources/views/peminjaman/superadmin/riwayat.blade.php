@@ -1,10 +1,11 @@
-@extends('sidebar.sekda')
+@extends('sidebar.superadmin')
 
 @section('content')
 <div class="container-fluid">
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active fw-bold" aria-current="page">Dashboard</li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Riwayat Peminjaman</li>
         </ol>
     </div>
     <div class="row">
@@ -49,7 +50,7 @@
                         @if ($pinjams->count() > 0)
                             @foreach ($pinjams as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $pinjams->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $pinjams->firstItem() + $key ) }}</th>
                                     <td>{{ ( $item->kode_pinjam ) }}</td>
 
                                     {{-- Tampilkan nama aset dan nama dinas aset --}}
@@ -68,7 +69,7 @@
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
                                     <td class="text-center" style="width: 6rem">
-                                        <a class="btn btn-info btn-sm" href="{{ route('peminjaman.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-info btn-sm" href="{{ route('peminjaman.sekda.showRiwayat', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
                                         <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
                                     </td>
                                 </tr>
@@ -83,7 +84,6 @@
                 <!-- </div> -->
             </div>
             <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{-- {{ $pinjams->links('pagination::bootstrap-5') }} --}}
                 {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>

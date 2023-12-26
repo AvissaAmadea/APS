@@ -44,7 +44,7 @@
                         @if ($asets->count() > 0)
                             @foreach ($asets as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $asets->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $asets->firstItem() + $key ) }}</th>
                                     <td>{{ ( $item->nama_aset ) }}</td>
                                     <td>{{ ( $item->kategoris->jenis ) }}</td>
                                     <td>{{ ( $item->dinas->nama_dinas ) }}</td>

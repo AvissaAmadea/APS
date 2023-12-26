@@ -77,7 +77,7 @@
                                 <ul id="riwayat" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
                                         @if(Auth::check() && Auth::user()->role_id == 3)
-                                            <a href="{{ route('peminjaman.opd.index') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
+                                            <a href="{{ route('peminjaman.opd.riwayat') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
                                         @endif
                                     </li>
                                     <li class="sidebar-item">
