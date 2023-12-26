@@ -31,15 +31,15 @@
                     </form>
                 </div>
             </h6>
-            <div class="card-body p-0 d-flex flex-fill mx-2 mt-2">
+            <div class="card-body p-0 d-flex flex-fill mx-2 mt-3">
                 <!-- <div class="table-responsive"> -->
                   <table class="table table-bordered border-dark align-middle">
                       <thead >
                           <tr class="text-center table-dark">
                               <th scope="col">No.</th>
                               <th scope="col">Peminjam</th>
+                              <th scope="col">Asal Peminjam</th>
                               <th scope="col">Nama Aset</th>
-                              <th scope="col">Asal Aset</th>
                               <th scope="col">Waktu Pinjam</th>
                               <th scope="col">Waktu Kembali</th>
                               <th scope="col">Status</th>
@@ -52,19 +52,21 @@
                                 <tr class="text-center">
                                     <th style="width: 3rem">{{ ( $pinjams->firstItem() + $key ) }}</th>
                                     {{-- <td>{{ ( $item->kode_pinjam ) }}</td> --}}
-                                    @if(isset($nama[$key]))
+                                    @if(isset($nama[$key]) && isset($asal_peminjam[$key]))
                                         <td>{{ $nama[$key] }}</td>
+                                        <td>{{ $asal_peminjam[$key] }}</td>
                                     @else
+                                        <td>-</td>
                                         <td>-</td>
                                     @endif
 
                                     {{-- Tampilkan nama aset dan nama dinas aset --}}
                                     @if(isset($nama_aset[$key]) && isset($nama_dinas_aset[$key]))
                                         <td>{{ $nama_aset[$key] }}</td>
-                                        <td style="width: 13rem">{{ $nama_dinas_aset[$key] }}</td>
+                                        {{-- <td style="width: 13rem">{{ $nama_dinas_aset[$key] }}</td> --}}
                                     @else
                                         <td>-</td>
-                                        <td>-</td>
+                                        {{-- <td>-</td> --}}
                                     @endif
 
                                     <td style="width: 8rem">{{ ( $item->tgl_pinjam ) }}</td>
@@ -73,7 +75,7 @@
                                     <td style="width: 5rem">
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
-                                    <td class="text-center" style="width: 8rem">
+                                    <td class="text-center" style="width: 4rem">
                                         <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-file-signature pe-1"></i>Verifikasi</a>
                                         {{-- <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/seePinjam', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a> --}}
                                         {{-- <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a> --}}
@@ -89,7 +91,7 @@
                   </table>
                 <!-- </div> -->
             </div>
-            <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
+            <div class="card-footer mb-0 pb-0">
                 {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>

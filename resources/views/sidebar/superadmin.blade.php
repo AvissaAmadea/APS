@@ -78,7 +78,7 @@
                                 </a>
                                 <ul id="peminjaman" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        <a href="{{ route('peminjaman.superadmin.list') }}" class="sidebar-link">{{ __('Daftar Peminjaman') }}</a>
+                                        <a href="{{ route('peminjaman.superadmin.index') }}" class="sidebar-link">{{ __('Daftar Peminjaman') }}</a>
                                     </li>
                                     <li class="sidebar-item">
                                         <a href="{{ route('peminjaman.superadmin.create') }}" class="sidebar-link">{{ __('Form Peminjaman') }}</a>
@@ -95,12 +95,18 @@
                                 </a>
                                 <ul id="pengembalian" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Daftar Pengembalian') }}</a>
+                                        <a href="{{ route('pengembalian.superadmin.index') }}" class="sidebar-link">{{ __('Daftar Pengembalian') }}</a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Form Pengembalian') }}</a>
+                                        <a href="{{ route('pengembalian.superadmin.create') }}" class="sidebar-link">{{ __('Form Pengembalian') }}</a>
                                     </li>
                                 </ul>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-money-bill-transfer pe-2"></i>{{ __('Pembayaran') }}
+                                </a>
                             </li>
 
                             <li class="sidebar-item">
@@ -118,9 +124,6 @@
                             </li>
 
                             <li class="sidebar-item">
-                                {{-- <a href="#" class="sidebar-link">
-                                    <i class="fas fa-history pe-2"></i></i>{{ __('Riwayat') }}
-                                </a> --}}
                                 <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#riwayat" aria-expanded="false">
                                     <i class="fa-solid fa-file-signature pe-2"></i>{{ __('Riwayat') }}
                                 </a>
@@ -131,7 +134,7 @@
                                         @endif
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        <a href="{{ route('pengembalian.superadmin.riwayat') }}" class="sidebar-link">{{ __('Pengembalian') }}</a>
                                     </li>
                                 </ul>
                             </li>

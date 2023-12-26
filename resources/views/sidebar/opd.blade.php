@@ -50,20 +50,26 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ url('seeAset/opd') }}" class="sidebar-link">
+                                <a href="{{ route('seeAset.opd') }}" class="sidebar-link">
                                     <i class="fa-solid fa-clipboard-list pe-2"></i></i></i>{{ __(' Lihat Aset') }}
                                 </a>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ url('peminjaman/opd/create/') }}" class="sidebar-link">
+                                <a href="{{ route('peminjaman.opd.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-file-circle-plus pe-2"></i>{{ __('Peminjaman') }}
                                 </a>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ route('pengembalian.opd.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-file-export pe-2"></i>{{ __('Pengembalian') }}
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-money-bill-transfer pe-2"></i>{{ __('Pembayaran') }}
                                 </a>
                             </li>
 
@@ -81,7 +87,9 @@
                                         @endif
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        @if(Auth::check() && Auth::user()->role_id == 3)
+                                            <a href="{{ route('pengembalian.opd.riwayat') }}" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        @endif
                                     </li>
                                 </ul>
                             </li>

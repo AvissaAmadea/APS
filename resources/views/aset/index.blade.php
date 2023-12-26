@@ -61,7 +61,7 @@
                         @if ($asets->count() > 0)
                             @foreach ($asets as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $asets->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $asets->firstItem() + $key ) }}</th>
                                     <td>{{ ( $item->nama_aset ) }}</td>
                                     <td>{{ ( $item->kategoris->jenis ) }}</td>
                                     <td>{{ ( $item->dinas->nama_dinas ) }}</td>
@@ -102,8 +102,8 @@
 
                 <!-- </div> -->
             </div>
-            <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{ $asets->links('pagination::bootstrap-5') }}
+            <div class="card-footer mb-0 pb-0">
+                {{ $asets->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

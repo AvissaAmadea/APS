@@ -5,6 +5,51 @@ sidebarToggle.addEventListener("click", function() {
     document.querySelector(".main").classList.toggle("expanded");
 });
 
+// pada form pengembalian untuk melaporkan rusak/hilang
+function showKeteranganRusakBukti() {
+    showKeteranganRusak();
+    showBukti();
+}
+
+function hideKeteranganRusakBukti() {
+    hideKeteranganRusak();
+    hideBukti();
+}
+
+function showKeteranganHilangBukti() {
+    showKeteranganHilang();
+    showBukti();
+}
+
+function hideKeteranganHilangBukti() {
+    hideKeteranganHilang();
+    hideBukti();
+}
+
+function showKeteranganRusak() {
+    document.getElementById('keteranganRusak').style.display = 'flex';
+}
+
+function hideKeteranganRusak() {
+    document.getElementById('keteranganRusak').style.display = 'none';
+}
+
+function showKeteranganHilang() {
+    document.getElementById('keteranganHilang').style.display = 'flex';
+}
+
+function hideKeteranganHilang() {
+    document.getElementById('keteranganHilang').style.display = 'none';
+}
+
+function showBukti() {
+    document.getElementById('bukti').style.display = 'flex';
+}
+
+function hideBukti() {
+    document.getElementById('bukti').style.display = 'none';
+}
+
     // Dapatkan elemen textarea
     // var textarea1 = document.getElementById('detail');
     // var textarea2 = document.getElementById('tujuan');

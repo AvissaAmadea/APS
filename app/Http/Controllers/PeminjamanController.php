@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Aset;
 use App\Models\Dinas;
 use App\Models\Peminjaman;
@@ -15,83 +16,65 @@ use Illuminate\Contracts\Support\Renderable;
 
 class PeminjamanController extends Controller
 {
+    // cek dan mendapatkan role user
     protected function getUserRole()
     {
         return Auth::check() ? Auth::user()->role_id : null;
     }
 
-    protected function getIndexData($role)
+    //index blm kepake
+    public function index()
     {
-        // $userId = Auth::id();
+        $role = $this->getUserRole();
 
-        // $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
-        //     $query->where('id', $userId);
-        // })->with(['asets.dinas'])->paginate(5);
+        if ($role === 1) { // Role ID Superadmin
+            $pinjams = Peminjaman::with(['asets.dinas', 'users'])->paginate(5);
+        } elseif ($role === 2) { // Role ID Sekda
+            // Ambil id dinas yang terkait dengan user yang login
+            $dinasId = Auth::user()->dinas_id;
 
-        $pinjams = Peminjaman::with(['asets.dinas']);
-
-        if ($role === 'opd') {
-            $userId = Auth::id();
-            $pinjams->whereHas('users', function ($query) use ($userId) {
-                $query->where('id', $userId);
-            });
+            $pinjams = Peminjaman::whereHas('asets.dinas', function ($query) use ($dinasId) {
+                    $query->where('id', $dinasId);
+                })
+                ->with(['asets.dinas', 'users'])
+                ->paginate(5);
+        } else {
+            // Return halaman default untuk role selain Superadmin dan Sekda
+            return back();
         }
 
-        $pinjams = $pinjams->paginate(5);
-
+        $nama = [];
+        $asal_peminjam = [];
         $nama_aset = [];
         $nama_dinas_aset = [];
 
         foreach ($pinjams as $peminjaman) {
-            if ($peminjaman->asets) {
-                $nama_aset[] = $peminjaman->asets->nama_aset;
-                $nama_dinas_aset[] = $peminjaman->asets->dinas->nama_dinas;
-            } else {
-                $nama_aset[] = null;
-                $nama_dinas_aset[] = null;
-            }
+            // Menggunakan kondisi jika data tidak ada, maka tampilkan null
+            $nama[] = $peminjaman->users ? $peminjaman->users->nama : null;
+            $asal_peminjam[] = $peminjaman->users && $peminjaman->users->dinas ? $peminjaman->users->dinas->nama_dinas : null;
+
+            $nama_aset[] = $peminjaman->asets ? $peminjaman->asets->nama_aset : null;
+
+            // Pastikan properti yang mungkin null diakses dengan aman
+            $nama_dinas_aset[] = $peminjaman->asets && $peminjaman->asets->dinas ? $peminjaman->asets->dinas->nama_dinas : null;
         }
 
-        $view = 'peminjaman.' . $role . '.index';
-        return view($view, compact('pinjams', 'nama_aset', 'nama_dinas_aset'));
-    }
+        if ($role === 1) { // Role ID Superadmin
+            return view('peminjaman.superadmin.index', compact('pinjams', 'nama', 'asal_peminjam', 'nama_aset', 'nama_dinas_aset'));
+        } elseif ($role === 2) { // Role ID Sekda
+            return view('peminjaman.sekda.index', compact('pinjams', 'nama', 'asal_peminjam', 'nama_aset', 'nama_dinas_aset'));
+        } else {
 
-    public function superadminIndex()
-    {
-        $role = $this->getUserRole();
-
-        if ($role != 1) {
-            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
+        // Return halaman default untuk role selain Superadmin dan Sekda
+        return back();
         }
-
-        return $this->getIndexData('superadmin');
     }
 
-    public function sekdaIndex()
-    {
-        $role = $this->getUserRole();
-
-        if ($role != 2) {
-            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-        }
-
-        return $this->getIndexData('sekda');
-    }
-
-    public function opdIndex()
-    {
-        $role = $this->getUserRole();
-
-        if ($role != 3) {
-            return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-        }
-
-        return $this->getIndexData('opd');
-    }
+    // fungsi insert peminjaman
     public function create()
     {
         $user = Auth::user();
-        $asets = Aset::all();
+        $asets = Aset::where('status_aset', 'Tersedia')->get();
         // $pinjams = [];
 
         if ($user->role_id == 1) {
@@ -105,6 +88,8 @@ class PeminjamanController extends Controller
         }
 
     }
+
+    // fungsi menyimpan data dari insert peminjaman
     public function store(Request $request)
     {
         // Melakukan validasi input dari form
@@ -168,18 +153,6 @@ class PeminjamanController extends Controller
                 } elseif ($role_id == 3) {
                     return view('dashboard.opd', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 }
-
-                // if (Auth::check()) {
-                //     $role_id = Auth::user()->role_id;
-
-                //     if ($role_id == 1) {
-                //         return $this->superadmin();
-                //     } elseif ($role_id == 2) {
-                //         return $this->sekda();
-                //     } elseif ($role_id == 3) {
-                //         return $this->opd();
-                //     }
-                // }
             } else {
                 return back()->with('error', 'Gagal menyimpan data.');
             }
@@ -190,15 +163,12 @@ class PeminjamanController extends Controller
         return back()->with('error', 'Anda tidak memiliki akses untuk mengajukan peminjaman aset.');
     }
 
+    // fungsi menampilkan daftar peminjaman dalam tabel peminjaman
+
+
+    // Fungsi menampilkan data peminjaman yang dilakukan oleh semua user
     protected function getPeminjamanData($role, $id)
     {
-        // $userId = Auth::id();
-
-        // $pinjams = Peminjaman::where('id', $id)
-        //     ->whereHas('users', function ($query) use ($userId) {
-        //         $query->where('id', $userId);
-        // })->with(['users','asets.kategoris','asets.dinas'])->findOrFail($id);
-
         $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id);
 
         // Mengambil data dari objek tunggal $pinjaman, bukan dari array $pinjams
@@ -244,37 +214,8 @@ class PeminjamanController extends Controller
         return $this->getPeminjamanData('opd', $id);
     }
 
-    public function showList()
-    {
-        $role = $this->getUserRole();
-        $pinjams = Peminjaman::with(['asets.dinas', 'users'])->paginate(5);
 
-        $nama = [];
-        $nama_aset = [];
-        $nama_dinas_aset = [];
-
-        foreach ($pinjams as $peminjaman) {
-            // Menggunakan kondisi jika data tidak ada, maka tampilkan null
-            $nama[] = $peminjaman->users ? $peminjaman->users->nama : null;
-            $nama_aset[] = $peminjaman->asets ? $peminjaman->asets->nama_aset : null;
-
-            // Pastikan properti yang mungkin null diakses dengan aman
-            $nama_dinas_aset[] = $peminjaman->asets && $peminjaman->asets->dinas ? $peminjaman->asets->dinas->nama_dinas : null;
-        }
-
-        if ($role === 1) { // Role ID Superadmin
-            return view('peminjaman.superadmin.list', compact('pinjams', 'nama', 'nama_aset', 'nama_dinas_aset'));
-        } elseif ($role === 2) { // Role ID Sekda
-            return view('peminjaman.sekda.list', compact('pinjams', 'nama', 'nama_aset', 'nama_dinas_aset'));
-        } else {
-
-        // Return halaman default untuk role selain Superadmin dan Sekda
-        return back();
-        }
-    }
-
-
-    // riwayat peminjaman
+    // fungsi mendapatkan beberapa data peminjaman yang akan ditampilkan di tampilan riwayat peminjaman berdasarkan role user dengan id user yang digunakan
     public function riwayatPeminjamanByRole($role, $viewName)
     {
         $userRole = $this->getUserRole();
@@ -322,15 +263,9 @@ class PeminjamanController extends Controller
         return $this->riwayatPeminjamanByRole(3, 'peminjaman.opd.riwayat');
     }
 
+    // fungsi mendapatkan semua data peminjaman yang akan ditampilkan di tampilan detail riwayat peminjaman berdasarkan role user dengan id user yang digunakan
     protected function getRiwayatPeminjamanData($role, $id)
     {
-        // $userId = Auth::id();
-
-        // $pinjams = Peminjaman::where('id', $id)
-        //     ->whereHas('users', function ($query) use ($userId) {
-        //         $query->where('id', $userId);
-        // })->with(['users','asets.kategoris','asets.dinas'])->findOrFail($id);
-
         $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id);
 
         // Mengambil data dari objek tunggal $pinjaman, bukan dari array $pinjams
@@ -376,7 +311,6 @@ class PeminjamanController extends Controller
         return $this->getRiwayatPeminjamanData('opd', $id);
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -388,7 +322,7 @@ class PeminjamanController extends Controller
         }
 
         $peminjaman = Peminjaman::findOrFail($id);
-        $asets = Aset::all();
+        $asets = Aset::where('status_aset', 'Tersedia')->get();
 
         return view('peminjaman.superadmin.edit', compact('peminjaman', 'asets'));
     }
@@ -398,7 +332,7 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, Peminjaman $peminjaman)
     {
-        // Sekda hanya bisa mengubah status_pinjam
+        // Superadmin dapat mengupdate data
         if (Auth::user()->role_id != 1) {
             return back()->with('error', 'Anda tidak memiliki izin untuk mengubah data.');
         }
@@ -426,6 +360,14 @@ class PeminjamanController extends Controller
                     $aset->status_aset = 'Tidak Tersedia';
                     $aset->save();
                 }
+            } elseif ($validatedData['status_pinjam'] === 'Menunggu Verifikasi') {
+                // Jika status peminjaman berubah menjadi "Menunggu Verifikasi"
+                $aset = Aset::find($peminjaman->aset_id);
+                if ($aset) {
+                    // Ubah status aset menjadi "Tidak Tersedia"
+                    $aset->status_aset = 'Tidak Tersedia Tersedia';
+                    $aset->save();
+                }
             } elseif ($validatedData['status_pinjam'] === 'Ditolak') {
                 // Jika status peminjaman berubah menjadi "Ditolak"
                 $aset = Aset::find($peminjaman->aset_id);
@@ -434,7 +376,6 @@ class PeminjamanController extends Controller
                     $aset->status_aset = 'Tersedia';
                     $aset->save();
                 }
-            }
 
             $message = 'Permohonan Peminjaman Aset berhasil diperbarui.';
 
@@ -453,8 +394,9 @@ class PeminjamanController extends Controller
                 }
             }
             return view('peminjaman.superadmin.list', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
-        } else {
-            return back()->with('error', 'Gagal menyimpan data.');
+            } else {
+                return back()->with('error', 'Gagal menyimpan data.');
+            }
         }
     }
 
@@ -476,32 +418,74 @@ class PeminjamanController extends Controller
         // Update status peminjaman
         $peminjaman->status_pinjam = $validatedData['status_pinjam'];
 
-        // Simpan perubahan pada status_pinjam
         if ($peminjaman->save()) {
-            // Jika status peminjaman berubah menjadi "Diterima" atau "Ditolak"
-            if ($validatedData['status_pinjam'] === 'Diterima' || $validatedData['status_pinjam'] === 'Ditolak') {
+            // Jika status peminjaman berubah menjadi "Diterima" atau "Ditolak" atau "Menunggu Verifikasi"
+            if ($validatedData['status_pinjam'] === 'Diterima' || $validatedData['status_pinjam'] === 'Ditolak' || $validatedData['status_pinjam'] === 'Menunggu Verifikasi') {
                 // Temukan aset yang terlibat dalam peminjaman
                 $aset = Aset::find($peminjaman->aset_id);
                 if ($aset) {
                     // Ubah status aset sesuai dengan status peminjaman
-                    $aset->status_aset = $validatedData['status_pinjam'] === 'Diterima' ? 'Tidak Tersedia' : 'Tersedia';
+                    $status_aset = $validatedData['status_pinjam'] === 'Diterima' ? 'Tidak Tersedia' : 'Tersedia';
+
+                    // Jika status peminjaman menjadi "Menunggu Verifikasi"
+                    if ($validatedData['status_pinjam'] === 'Menunggu Verifikasi') {
+                        $status_aset = 'Tidak Tersedia';
+                    }
+
+                    $aset->status_aset = $status_aset;
                     $aset->save();
                 }
             }
-
             return redirect()->route('peminjaman.sekda.list')->with('status', 'Status peminjaman berhasil diperbarui.');
         } else {
             return back()->with('error', 'Gagal menyimpan perubahan status peminjaman.');
         }
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Peminjaman $peminjaman)
+    public function destroy($id)
     {
-        //
+        $pinjams = Peminjaman::findOrFail($id);
+
+        // Hanya bisa menghapus jika status pinjam adalah "Menunggu Verifikasi"
+        if ($pinjams->status_pinjam === 'Menunggu Verifikasi') {
+            // Mendapatkan waktu pinjam dari data peminjaman
+            $waktuPinjam = Carbon::createFromFormat('Y-m-d', $pinjams->tgl_pinjam)->startOfDay();
+
+            // Menghitung H-1 dari waktu pinjam
+            $batasWaktuCancel = Carbon::now()->subDays(1)->startOfDay();
+
+            // Memeriksa apakah masih dalam batas H-1 dari waktu pinjam
+            if (Carbon::now()->lessThanOrEqualTo($waktuPinjam) && Carbon::now()->greaterThanOrEqualTo($batasWaktuCancel)) {
+                $aset = Aset::find($pinjams->aset_id);
+
+                // Jika status pinjam adalah "Menunggu Verifikasi", hapus peminjaman
+                if ($pinjams->delete()) {
+                    // Ubah status aset menjadi "Tersedia" setelah penghapusan berhasil
+                    if ($aset) {
+                        $aset->status_aset = 'Tersedia';
+                        $aset->save();
+                    }
+
+                    // Redirect ke halaman riwayat peminjaman sesuai dengan role pengguna
+                    $userRole = $this->getUserRole();
+                    if ($userRole === 1) {
+                        return redirect()->route('peminjaman.superadmin.riwayat')->with('status', 'Data peminjaman berhasil dihapus.');
+                    } elseif ($userRole === 2) {
+                        return redirect()->route('peminjaman.sekda.riwayat')->with('status', 'Data peminjaman berhasil dihapus.');
+                    } elseif ($userRole === 3) {
+                        return redirect()->route('peminjaman.opd.riwayat')->with('status', 'Data peminjaman berhasil dihapus.');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Gagal menghapus data peminjaman.');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Hanya bisa melakukan pembatalan peminjaman H-1 dari waktu pinjam.');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Hanya peminjaman dengan status "Menunggu Verifikasi" yang dapat dihapus.');
+        }
     }
 }

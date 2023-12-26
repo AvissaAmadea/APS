@@ -58,7 +58,7 @@
                         @if ($kategoris->count() > 0)
                             @foreach ($kategoris as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $kategoris->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $kategoris->firstItem() + $key ) }}</th>
                                     <td>{{ ( $item->jenis ) }}</td>
                                     <td class="text-center">
                                         {{-- <a class="btn btn-info btn-sm" href="{{ route('kategori.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a> --}}
@@ -83,8 +83,8 @@
 
                 <!-- </div> -->
             </div>
-            <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{ $kategoris->links('pagination::bootstrap-5') }}
+            <div class="card-footer mb-0 pb-0">
+                {{ $kategoris->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

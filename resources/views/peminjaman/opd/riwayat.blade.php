@@ -31,7 +31,7 @@
                     </form>
                 </div>
             </h6>
-            <div class="card-body p-0 d-flex flex-fill mx-2 mt-2">
+            <div class="card-body p-0 d-flex flex-fill mx-2 mt-3">
                 <!-- <div class="table-responsive"> -->
                   <table class="table table-bordered border-dark align-middle">
                       <thead >
@@ -69,8 +69,8 @@
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
                                     <td class="text-center" style="width: 6rem">
-                                        <a class="btn btn-info btn-sm" href="{{ route('peminjaman.opd.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
-                                        <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
+                                        <a class="btn btn-info btn-sm" href="{{ route('peminjaman.opd.showRiwayat', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-warning btn-sm" href="{{ route('pengembalian.opd.create', $item->id) }}" role="button"><i class="fa-solid fa-file-export"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -83,7 +83,7 @@
                   </table>
                 <!-- </div> -->
             </div>
-            <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
+            <div class="card-footer mb-0 pb-0">
                 {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>

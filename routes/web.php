@@ -55,17 +55,29 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('aset', App\Http\Controllers\AsetController::class);
 
         // Routing Peminjaman Aset
-        Route::get('peminjaman/superadmin/index', [App\Http\Controllers\PeminjamanController::class, 'superadminIndex'])->name('peminjaman.superadmin.index');
+        Route::get('peminjaman/superadmin/index', [App\Http\Controllers\PeminjamanController::class, 'index'])->name('peminjaman.superadmin.index');
         Route::get('/peminjaman/superadmin/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.superadmin.create');
         Route::post('/peminjaman/superadmin', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.superadmin.store');
         Route::get('peminjaman/superadmin/show/{id}', [App\Http\Controllers\PeminjamanController::class, 'superadminShow'])->name('peminjaman.superadmin.show');
+        Route::get('peminjaman/edit/{id}', [App\Http\Controllers\PeminjamanController::class, 'edit'])->name('peminjaman.superadmin.edit');
         Route::get('peminjaman/superadmin/riwayat', [App\Http\Controllers\PeminjamanController::class, 'riwayatPinjamSuperadmin'])->name('peminjaman.superadmin.riwayat');
         Route::get('peminjaman/superadmin/showRiwayat/{id}', [App\Http\Controllers\PeminjamanController::class, 'superadminShowRiwayat'])->name('peminjaman.superadmin.showRiwayat');
-        Route::get('peminjaman/superadmin/list', [App\Http\Controllers\PeminjamanController::class, 'showList'])->name('peminjaman.superadmin.list');
-        Route::get('peminjaman/edit/{id}', [App\Http\Controllers\PeminjamanController::class, 'edit'])->name('peminjaman.superadmin.edit');
+        Route::get('peminjaman/superadmin/destroy/{id}', [App\Http\Controllers\PeminjamanController::class, 'destroy'])->name('peminjaman.superadmin.destroy');
+        // Route::get('peminjaman/superadmin/list', [App\Http\Controllers\PeminjamanController::class, 'showList'])->name('peminjaman.superadmin.list');
+
+        Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class);
+
+        // Routing Pengembalian Aset
+        Route::get('pengembalian/superadmin/index', [App\Http\Controllers\PengembalianController::class, 'index'])->name('pengembalian.superadmin.index');
+        Route::get('pengembalian/superadmin/create', [App\Http\Controllers\PengembalianController::class, 'create'])->name('pengembalian.superadmin.create');
+        Route::post('pengembalian/superadmin', [App\Http\Controllers\PengembalianController::class, 'store'])->name('pengembalian.superadmin.store');
+        Route::get('pengembalian/superadmin/show/{id}', [App\Http\Controllers\PengembalianController::class, 'superadminShow'])->name('pengembalian.superadmin.show');
+        Route::get('pengembalian/edit/{id}', [App\Http\Controllers\PengembalianController::class, 'edit'])->name('pengembalian.superadmin.edit');
+        Route::get('pengembalian/superadmin/riwayat', [App\Http\Controllers\PengembalianController::class, 'riwayatKembaliSuperadmin'])->name('pengembalian.superadmin.riwayat');
+        Route::get('pengembalian/superadmin/showRiwayat/{id}', [App\Http\Controllers\PengembalianController::class, 'superadminShowRiwayat'])->name('pengembalian.superadmin.showRiwayat');
 
 
-        Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
+        Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
             'destroy',
         ]);
     });
@@ -83,20 +95,31 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/seeAset/sekda/show/{id}', [App\Http\Controllers\SeeAsetController::class, 'show'])->name('seeAset.sekda.show');
 
         // Routing Peminjaman Aset
-        Route::get('peminjaman/sekda/index', [App\Http\Controllers\PeminjamanController::class, 'sekdaIndex'])->name('peminjaman.sekda.index');
+        Route::get('peminjaman/sekda/index', [App\Http\Controllers\PeminjamanController::class, 'index'])->name('peminjaman.sekda.index');
         Route::get('/peminjaman/sekda/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.sekda.create');
         Route::post('/peminjaman/sekda', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.sekda.store');
         Route::get('peminjaman/sekda/show/{id}', [App\Http\Controllers\PeminjamanController::class, 'sekdaShow'])->name('peminjaman.sekda.show');
-        Route::get('peminjaman/sekda/list', [App\Http\Controllers\PeminjamanController::class, 'showList'])->name('peminjaman.sekda.list');
+        Route::post('/peminjaman/{id}/verifikasi', [App\Http\Controllers\PeminjamanController::class, 'updateStatus'])->name('peminjaman.verifikasi');
+        // Route::get('peminjaman/sekda/list', [App\Http\Controllers\PeminjamanController::class, 'showList'])->name('peminjaman.sekda.list');
         Route::get('peminjaman/sekda/riwayat', [App\Http\Controllers\PeminjamanController::class, 'riwayatPinjamSekda'])->name('peminjaman.sekda.riwayat');
         Route::get('peminjaman/sekda/showRiwayat/{id}', [App\Http\Controllers\PeminjamanController::class, 'sekdaShowRiwayat'])->name('peminjaman.sekda.showRiwayat');
-        Route::post('/peminjaman/{id}/verifikasi', [App\Http\Controllers\PeminjamanController::class, 'updateStatus'])->name('peminjaman.verifikasi');
-
 
         Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
             'destroy',
         ]);
 
+        // Routing Pengembalian Aset
+        Route::get('pengembalian/sekda/index', [App\Http\Controllers\PengembalianController::class, 'index'])->name('pengembalian.sekda.index');
+        Route::get('pengembalian/sekda/create', [App\Http\Controllers\PengembalianController::class, 'create'])->name('pengembalian.sekda.create');
+        Route::post('pengembalian/sekda', [App\Http\Controllers\PengembalianController::class, 'store'])->name('pengembalian.sekda.store');
+        Route::get('pengembalian/sekda/show/{id}', [App\Http\Controllers\PengembalianController::class, 'sekdaShow'])->name('pengembalian.sekda.show');
+        Route::post('pengembalian/{id}/verifikasi', [App\Http\Controllers\PengembalianController::class, 'updateStatus'])->name('pengembalian.verifikasi');
+        Route::get('pengembalian/sekda/riwayat', [App\Http\Controllers\PengembalianController::class, 'riwayatKembaliSekda'])->name('pengembalian.sekda.riwayat');
+        Route::get('pengembalian/sekda/showRiwayat/{id}', [App\Http\Controllers\PengembalianController::class, 'sekdaShowRiwayat'])->name('pengembalian.sekda.showRiwayat');
+
+        Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
+            'destroy',
+        ]);
     });
 
 
@@ -112,16 +135,26 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/seeAset/opd/show/{id}', [App\Http\Controllers\SeeAsetController::class, 'show'])->name('seeAset.opd.show');
 
          // Routing Peminjaman Aset
-         Route::get('peminjaman/opd/index', [App\Http\Controllers\PeminjamanController::class, 'opdIndex'])->name('peminjaman.opd.index');
+         Route::get('peminjaman/opd/index', [App\Http\Controllers\PeminjamanController::class, 'index'])->name('peminjaman.opd.index');
          Route::get('/peminjaman/opd/create', [App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.opd.create');
          Route::post('/peminjaman/opd', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.opd.store');
          Route::get('peminjaman/opd/show/{id}', [App\Http\Controllers\PeminjamanController::class, 'opdShow'])->name('peminjaman.opd.show');
          Route::get('peminjaman/opd/riwayat', [App\Http\Controllers\PeminjamanController::class, 'riwayatPinjamOpd'])->name('peminjaman.opd.riwayat');
 
-
          Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
              'destroy',
          ]);
+
+         // Routing Pengembalian Aset
+        Route::get('pengembalian/opd/index', [App\Http\Controllers\PengembalianController::class, 'index'])->name('pengembalian.opd.index');
+        Route::get('pengembalian/opd/create', [App\Http\Controllers\PengembalianController::class, 'create'])->name('pengembalian.opd.create');
+        Route::post('pengembalian/opd', [App\Http\Controllers\PengembalianController::class, 'store'])->name('pengembalian.opd.store');
+        Route::get('pengembalian/opd/riwayat', [App\Http\Controllers\PengembalianController::class, 'riwayatKembaliOpd'])->name('pengembalian.opd.riwayat');
+        Route::get('pengembalian/opd/showRiwayat/{id}', [App\Http\Controllers\PengembalianController::class, 'opdShowRiwayat'])->name('pengembalian.opd.showRiwayat');
+
+        Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
+            'destroy',
+        ]);
     });
 });
 

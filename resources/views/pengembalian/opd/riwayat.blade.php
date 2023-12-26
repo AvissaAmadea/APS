@@ -4,7 +4,8 @@
 <div class="container-fluid">
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active fw-bold" aria-current="page">Dashboard</li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.opd') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Riwayat Pengembalian</li>
         </ol>
     </div>
     <div class="row">
@@ -20,7 +21,7 @@
 
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header d-flex justify-content-between align-items-center">
-                Riwayat Peminjaman
+                Riwayat Pengembalian
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <form class="form-search d-flex" method="GET" action="#">
                         <div class="input-group">
@@ -30,13 +31,13 @@
                     </form>
                 </div>
             </h6>
-            <div class="card-body p-0 d-flex flex-fill mx-2 mt-2">
+            <div class="card-body p-0 d-flex flex-fill mx-2 mt-3">
                 <!-- <div class="table-responsive"> -->
                   <table class="table table-bordered border-dark align-middle">
                       <thead >
                           <tr class="text-center table-dark">
                               <th scope="col">No.</th>
-                              <th scope="col">Kode</th>
+                              <th scope="col">Peminjam</th>
                               <th scope="col">Nama Aset</th>
                               <th scope="col">Asal Aset</th>
                               <th scope="col">Waktu Pinjam</th>
@@ -46,30 +47,43 @@
                           </tr>
                       </thead>
                       <tbody>
-                        @if ($pinjams->count() > 0)
-                            @foreach ($pinjams as $key => $item)
+                        @if ($kembali->count() > 0)
+                            @foreach ($kembali as $key => $item)
                                 <tr class="text-center">
-                                    <th>{{ ( $pinjams->firstItem() + $key ) }}</th>
-                                    <td>{{ ( $item->kode_pinjam ) }}</td>
+                                    <th style="width: 3rem">{{ ( $kembali->firstItem() + $key ) }}</th>
+                                    {{-- <td>{{ ( $item->kode_pinjam ) }}</td> --}}
+                                    @if(isset($nama[$key]))
+                                        <td>{{ $nama[$key] }}</td>
+                                    @else
+                                        <td>-</td>
+                                    @endif
 
                                     {{-- Tampilkan nama aset dan nama dinas aset --}}
                                     @if(isset($nama_aset[$key]) && isset($nama_dinas_aset[$key]))
                                         <td>{{ $nama_aset[$key] }}</td>
-                                        <td>{{ $nama_dinas_aset[$key] }}</td>
+                                        <td style="width: 13rem">{{ $nama_dinas_aset[$key] }}</td>
                                     @else
                                         <td>-</td>
                                         <td>-</td>
                                     @endif
 
-                                    <td>{{ ( $item->tgl_pinjam ) }}</td>
-                                    <td>{{ ( $item->tgl_kembali ) }}</td>
+                                    @if(isset($tglPinjam[$key]) && isset($tglKembali[$key]))
+                                        <td style="width: 8rem">{{ ( $tglPinjam[$key] ) }}</td>
+                                        <td style="width: 8rem">{{ ( $tglKembali[$key] ) }}</td>
+                                    @else
+                                        <td>-</td>
+                                        <td>-</td>
+                                    @endif
+
                                     {{-- <td>{{ ( $item->status_pinjam ) }}</td> --}}
                                     <td style="width: 5rem">
-                                        <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
+                                        <span class="status-badge @if ($item->status_kembali === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_kembali === 'Diterima') text-white bg-success @elseif ($item->status_kembali === 'Menunggu Pembayaran') text-white bg-primary @else text-white bg-danger @endif">{{ $item->status_kembali }}</span>
                                     </td>
                                     <td class="text-center" style="width: 6rem">
-                                        <a class="btn btn-info btn-sm" href="{{ route('peminjaman.opd.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
-                                        <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
+                                        <a class="btn btn-info btn-sm" href="{{ route('pengembalian.opd.showRiwayat', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-money-bill-transfer"></i></a>
+                                        {{-- {{ route('pengembalian.superadmin.bayar', $item->id) }} --}}
+                                        {{-- <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -83,8 +97,7 @@
                 <!-- </div> -->
             </div>
             <div class="card-footer mb-0 pb-0">
-                {{-- {{ $pinjams->links('pagination::bootstrap-5') }} --}}
-                {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
+                {{ $kembali->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

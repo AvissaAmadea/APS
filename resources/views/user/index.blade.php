@@ -95,8 +95,8 @@
 
                 <!-- </div> -->
             </div>
-            <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
-                {{ $users->links('pagination::bootstrap-5') }}
+            <div class="card-footer mb-0 pb-0">
+                {{ $users->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

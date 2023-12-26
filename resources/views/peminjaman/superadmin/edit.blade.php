@@ -5,7 +5,7 @@
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.superadmin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('peminjaman.superadmin.list') }}">Daftar Pengajuan Peminjaman</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('peminjaman.superadmin.index') }}">Daftar Pengajuan Peminjaman</a></li>
             <li class="breadcrumb-item active fw-bold" aria-current="page">Edit Pengajuan Peminjaman</li>
         </ol>
     </div>
@@ -24,7 +24,7 @@
             <h6 class="card-header d-flex justify-content-between align-items-center">
                 Edit Pengajuan Peminjaman
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.superadmin.list') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.superadmin.index') }}" role="button" style="width: fit-content"><i class="fa-solid fa-chevron-left pe-2"></i>Kembali</a>
                 </div>
             </h6>
             <div class="card-body mx-2">
@@ -106,8 +106,27 @@
                     <div class="form-group mb-2 row">
                         <label for="surat_pinjam" class="col-sm-3 col-form-label">Surat Peminjaman</label>
                         <div class="col-sm-9 text-start mt-2">
-                            <!-- Display current file name -->
-                            <h6>{{ $peminjaman->surat_pinjam }}</h6>
+                            @if($peminjaman->surat_pinjam)
+                                @php
+                                    $extension = pathinfo($peminjaman->surat_pinjam, PATHINFO_EXTENSION);
+                                    $isPDF = $extension === 'pdf';
+                                    $isImage = in_array($extension, ['jpg', 'jpeg', 'png', 'gif']);
+                                    $fileName = pathinfo($peminjaman->surat_pinjam, PATHINFO_FILENAME);
+                                    $filePath = 'uploads/' . $peminjaman->surat_pinjam;
+                                @endphp
+
+                                @if($isPDF)
+                                    <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }} (PDF)</a>
+                                @elseif($isImage)
+                                    <a href="{{ asset($filePath) }}" target="_blank">
+                                        <img src="{{ asset($filePath) }}" alt="Surat Peminjaman" style="max-width: 100%">
+                                    </a>
+                                @else
+                                    <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }}</a>
+                                @endif
+                            @else
+                                <p>Tidak ada file surat peminjaman terlampir.</p>
+                            @endif
                         </div>
                     </div>
 
@@ -132,37 +151,30 @@
                         </div>
                     </div>
 
-                    @if ($peminjaman->status_pinjam === 'Menunggu Verifikasi')
-                        <div class="form-group mb-2 row">
-                            <label for="status_pinjam" class="col-sm-3 col-form-label">Ubah Status Peminjaman</label>
-                            <div class="col-sm-9 text-start">
-                                <form action="{{ route('peminjaman.verifikasi', ['id' => $peminjaman->id]) }}" method="POST">
-                                    @csrf
-                                    <div class="form-group mb-2 row">
-                                        <div class="col-md-12">
+                    <div class="form-group mb-2 row">
+                        <label for="status_pinjam" class="col-sm-3 col-form-label">Ubah Status Peminjaman</label>
+                        <div class="col-sm-9 text-start">
+                            <form action="{{ route('peminjaman.verifikasi', ['id' => $peminjaman->id]) }}" method="POST">
+                                @csrf
+                                <div class="form-group mb-2 row">
+                                    <div class="col-md-12">
+                                        @if($peminjaman->status_pinjam === 'Diterima')
+                                            <button type="submit" name="status_pinjam" value="Menunggu Verifikasi" class="btn btn-sm btn-warning">Menunggu Verifikasi</button>
+                                            <button type="submit" name="status_pinjam" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                        @elseif($peminjaman->status_pinjam === 'Menunggu Verifikasi')
                                             <button type="submit" name="status_pinjam" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
                                             <button type="submit" name="status_pinjam" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
-                                        </div>
+                                        @elseif($peminjaman->status_pinjam === 'Ditolak')
+                                            <button type="submit" name="status_pinjam" value="Menunggu Verifikasi" class="btn btn-sm btn-warning">Menunggu Verifikasi</button>
+                                            <button type="submit" name="status_pinjam" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
+                                        @endif
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
-                    @endif
+                    </div>
 
-
-                    {{-- <div class="form-group mb-2 row">
-                        <label for="surat_pinjam" class="col-sm-2 col-form-label">Surat Peminjaman</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control @error('surat_pinjam') is-invalid @enderror" id="surat_pinjam" name="surat_pinjam" accept=".jpg,.jpeg,.png,.doc,.docx,.pdf" value="{{ $peminjaman->surat_pinjam }}" required autofocus>
-                        </div>
-                        @error('surat_pinjam')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div> --}}
-
-                    <button type="submit" class="btn btn-success btn-sm float-right mb-0 mt-2" name="submit">Update</button>
+                    <button type="submit" class="btn btn-success btn-sm float-end mb-0 mt-2" name="submit">Update</button>
 
                 </form>
             </div>

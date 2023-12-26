@@ -109,7 +109,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-sm float-right mb-0 mt-2" name="submit">Tambah</button>
+                    <button type="submit" class="btn btn-success btn-sm float-end mb-0 mt-2" name="submit">Submit</button>
 
                 </form>
             </div>

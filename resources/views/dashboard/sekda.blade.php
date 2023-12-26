@@ -82,7 +82,7 @@
                   </table>
                 <!-- </div> -->
             </div>
-            <div class="col d-flex flex-fill mx-2 align-items-center justify-content-end">
+            <div class="card-footer mb-0 pb-0">
                 {{-- {{ $pinjams->links('pagination::bootstrap-5') }} --}}
                 {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>

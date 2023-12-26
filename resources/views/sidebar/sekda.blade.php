@@ -50,20 +50,26 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ url('seeAset/sekda') }}" class="sidebar-link">
+                                <a href="{{ route('seeAset.sekda') }}" class="sidebar-link">
                                     <i class="fa-solid fa-clipboard-list pe-2"></i>{{ __('   Lihat Aset') }}
                                 </a>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{{ url('peminjaman/sekda/create/') }}" class="sidebar-link">
+                                <a href="{{ route('peminjaman.sekda.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-file-circle-plus pe-2"></i>{{ __('Peminjaman') }}
                                 </a>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ route('pengembalian.sekda.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-file-export pe-2"></i>{{ __('Pengembalian') }}
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="fa-solid fa-money-bill-transfer pe-2"></i>{{ __('Pembayaran') }}
                                 </a>
                             </li>
 
@@ -73,10 +79,10 @@
                                 </a>
                                 <ul id="verifikasi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        <a href="{{ route('peminjaman.sekda.list') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
+                                        <a href="{{ route('peminjaman.sekda.index') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        <a href="{{ route('pengembalian.sekda.index') }}" class="sidebar-link">{{ __('Pengembalian') }}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -109,7 +115,9 @@
                                         @endif
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        @if(Auth::check() && Auth::user()->role_id == 2)
+                                            <a href="{{ route('pengembalian.sekda.riwayat') }}" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        @endif
                                     </li>
                                 </ul>
                             </li>
