@@ -14,6 +14,7 @@ public class Db {
     public static final String getUser = "http://"+ip+"/aps1/User/getUser.php";
     public static final String updateKat = "http://"+ip+"/aps1/kategori/updateKategori.php";
     public static final String addKat = "http://"+ip+"/aps1/kategori/addKategori.php";
+    public static final String getLapor = "http://"+ip+"/aps1/Pengembalian/getPelaporan.php";
     public static final String urlLogin = "http://"+ip+"/aps1/login.php";
 
     public static final String urlRegist = "http://"+ip+"/aps1/register.php";
@@ -26,8 +27,12 @@ public class Db {
     public static final String addPinjam = "http://"+ip+"/aps1/Peminjaman/addPinjamUser.php";
     public static final String addKembali = "http://"+ip+"/aps1/Pengembalian/addPengembalian.php";
     public static final String getVerif = "http://"+ip+"/aps1/peminjaman/getVerifikasi.php";
-    public static final String getBidang = "http://"+ip+"/aps1/getBidang.php";
     public static final String addUser ="http://"+ip+"/aps1/User/addUser.php";
     public static final String deleteUser ="http://"+ip+"/aps1/User/deleteUser.php";
     public static final String verifPinjam = "http://"+ip+"/aps1/Peminjaman/VerifikasiPeminjaman.php";
+    public static final String verifKem = "http://"+ip+"/aps1/Pengembalian/addVerif.php";
+    public static final String getPengembalian = "http://"+ip+"/aps1/Pengembalian/verifPengembalian.php";
+    public static final String editProfil = "http://"+ip+"/aps1/editProfile.php";
+    public static final String LaporanPem = "http://"+ip+"/aps1/Peminjaman/listPeminjaman.php";
+    public static final String LaporanPeng = "http://"+ip+"/aps1/Pengembalian/listPengembalian.php";
 }

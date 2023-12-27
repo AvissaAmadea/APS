@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Opd;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,11 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,11 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myapplication.Adapter.RiwayatAdapter;
-import com.example.myapplication.Adapter.verifAdapter;
-import com.example.myapplication.Model.RiwayatModel;
-import com.example.myapplication.Model.verifModel;
-import com.example.myapplication.Sekre.ListVerifikasi;
+import com.example.myapplication.Adapter.LaporanAdapter;
+import com.example.myapplication.Db;
+import com.example.myapplication.FormPengembalian;
+import com.example.myapplication.Model.LaporanModel;
+import com.example.myapplication.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,82 +34,73 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Riwayat extends AppCompatActivity {
-    LoadDialog loadDialog;
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
+public class ListPelaporan extends AppCompatActivity {
 
-    TextView blm, kem, pem;
-    private List<RiwayatModel> riwayatModelList;
-    RiwayatAdapter adapter;
-    ImageView back;
+    List<LaporanModel> laporanModelList;
+    LaporanAdapter adapter;
+    ProgressBar progressBar;
+    FloatingActionButton floatingActionButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_riwayat);
-        recyclerView = findViewById(R.id.list_user_riw);
-        progressBar = findViewById(R.id.load_riw);
-        kem = findViewById(R.id.riw_kem);
-        pem = findViewById(R.id.riw_pem);
-
+        setContentView(R.layout.activity_list_pelaporan);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id",0);
-
-        kem.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton = findViewById(R.id.btn_add_laporan);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Riwayat.this, PelaporanKerusakanKehilangan.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
+                Intent intent1 = new Intent(ListPelaporan.this, FormPengembalian.class);
+                startActivity(intent1);
             }
         });
 
         fetchData(id);
-        riwayatModelList = new ArrayList<>();
-        RecyclerView recyclerView1 = findViewById(R.id.list_user_riw);
+        progressBar = findViewById(R.id.pg);
+        laporanModelList = new ArrayList<>();
+        RecyclerView recyclerView1 = findViewById(R.id.lapor);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RiwayatAdapter(Riwayat.this, riwayatModelList);
+        adapter = new LaporanAdapter(ListPelaporan.this, laporanModelList);
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(adapter);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView1.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        RecyclerView.ItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
     }
 
     private void fetchData(int id) {
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.getPinjam,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.getLapor,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            progressBar.setVisibility(View.GONE);
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray array = jsonObject.getJSONArray("peminjaman_aset");
-                            for (int i = 0; i<array.length();i++){
+//                            progressBar.setVisibility(View.GONE);
+                            JSONObject jsonResponse = new JSONObject(response);
+                            JSONArray array = jsonResponse.getJSONArray("kembali");
+                            for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
-                                riwayatModelList.add(new RiwayatModel(
+                                laporanModelList.add(new LaporanModel(
+                                        object.getString("kodePeminjaman"),
                                         object.getString("nama"),
                                         object.getString("nama_aset"),
-                                        object.getString("tgl_pinjam"),
-                                        object.getString("tgl_kembali"),
-                                        object.getString("kode"),
+                                        object.getString("keadaan"),
                                         object.getString("status"),
-                                        object.getString("tujuan"),
-                                        object.getInt("id_pinjam")
+                                        object.getInt("id_kembali")
                                 ));
                             }
-                            Log.d("response", "response"+response);
                             adapter.notifyDataSetChanged();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
+                            Toast.makeText(ListPelaporan.this, response, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(Riwayat.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListPelaporan.this, "error", Toast.LENGTH_SHORT).show();
             }
         }){
             @Nullable
@@ -123,6 +112,7 @@ public class Riwayat extends AppCompatActivity {
             }
         };
         queue.add(stringRequest);
+
     }
 
 }

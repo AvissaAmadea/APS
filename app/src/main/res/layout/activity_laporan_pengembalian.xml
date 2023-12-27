@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Sekre.ListVerifikasi"
+    tools:context=".Sekre.ListPengembalian"
     android:orientation="vertical"
     android:background="@color/grey">
-
     <LinearLayout
         android:background="@color/white"
         android:id="@+id/judul"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_back_24"
-            android:id="@+id/backToMenu1"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"/>
-
         <TextView
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Verifikasi"
+            android:text="Laporan Pengembalian"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textSize="30sp" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/next"
@@ -50,7 +41,7 @@
             android:columnCount="2"
             android:rowCount="1">
             <TextView
-                android:id="@+id/dft_kem"
+                android:id="@+id/laporPinjam"
                 android:layout_column="0"
                 android:layout_row="0"
                 android:drawablePadding="10dp"
@@ -58,45 +49,23 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:layout_gravity="center_vertical"
-                android:text="Verifikasi Pengembalian"
+                android:text="Laporan Peminjaman"
                 android:textColor="@color/black"
                 android:drawableLeft="@drawable/baseline_arrow_back_24"/>
-            <TextView
-                android:layout_column="1"
-                android:layout_row="0"
-                android:id="@+id/dft_kat"
-                android:drawablePadding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:layout_gravity="end"
-                android:text="Verifikasi Pembayaran"
-                android:textColor="@color/black"
-                android:drawableRight="@drawable/baseline_arrow_forward_24"/>
         </GridLayout>
     </LinearLayout>
-    <TextView
-       android:layout_marginTop="50dp"
-        android:id="@+id/blm"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Belum Ada Pengajuan"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        android:fontFamily="@font/poppins_bold"/>
     <ProgressBar
+        android:id="@+id/pgL"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:id="@+id/pga"/>
+        android:layout_below="@id/next"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:id="@+id/verifList"
-        tools:listitem="@layout/ui_list_peminjaman"/>
+        android:layout_below="@id/pgL"
+        android:id="@+id/listpengem"
+        tools:listitem="@layout/ui_lapor"/>
 
 
-
-</LinearLayout>
+</RelativeLayout>

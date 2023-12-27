@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Sekre;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +25,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myapplication.Admin.FormAset;
-import com.example.myapplication.Admin.ListAsetAdmin;
-import com.example.myapplication.Sekre.ListVerifikasi;
+import com.example.myapplication.Db;
+import com.example.myapplication.LoadDialog;
+import com.example.myapplication.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,10 +62,12 @@ public class FormVerif extends AppCompatActivity {
                 String status = radioButton.getText().toString();
                 String kodePem = kode.getText().toString();
                 String alasanT = alasan.getText().toString();
+                String tangglP = tglP.getText().toString();
+                String tanggalK = tglK.getText().toString();
                 if (alasanT.isEmpty()){
                     alasan.setError("Harap diisi");
                 }else {
-                    verifData(status, kodePem, alasanT);
+                    verifData(status, kodePem, alasanT, tangglP, tanggalK);
                 }
             }
         });
@@ -83,7 +86,7 @@ public class FormVerif extends AppCompatActivity {
 
     }
 
-    private void verifData(String status, String kodePem, String alasanT) {
+    private void verifData(String status, String kodePem, String alasanT, String tangglP, String tanggalK) {
         RequestQueue q = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.verifPinjam,
                 new Response.Listener<String>() {
@@ -91,6 +94,7 @@ public class FormVerif extends AppCompatActivity {
                     public void onResponse(String response) {
                         showSuccessDialog();
                         Toast.makeText(FormVerif.this, "response" +response, Toast.LENGTH_SHORT).show();
+                        Log.d("response", "response" +response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -106,18 +110,12 @@ public class FormVerif extends AppCompatActivity {
                 map.put("kodePeminjaman", kodePem);
                 map.put("status_peminjaman", status);
                 map.put("alasan_penolakan", alasanT);
+                map.put("tgl_peminjaman", tangglP);
+                map.put("tgl_kembali", tanggalK);
                 return map;
             }
         };
         q.add(stringRequest);
-
-    }
-
-    public void checkButton(View view){
-        int radioId = verif.getCheckedRadioButtonId();
-        radioButton =findViewById(radioId);
-
-        Toast.makeText(this, "selected" +radioButton, Toast.LENGTH_SHORT).show();
 
     }
     private void showFailedDialog() {

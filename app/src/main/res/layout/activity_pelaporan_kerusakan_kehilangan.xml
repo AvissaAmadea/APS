@@ -31,105 +31,28 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="25dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Form Laporan"
+            android:text="Riwayat Pengembalian"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp" />
     </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
+    <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp">
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Kode Peminjaman"/>
-            <EditText
-                android:id="@+id/kode"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="kode Peminjaman"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:id="@+id/pb"
+        android:visibility="gone"/>
+    <TextView
+        android:visibility="gone"
         android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:fontFamily="@font/poppins_bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp">
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Detail Kejadian"/>
-            <EditText
-                android:id="@+id/detailKej"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="detail kejadian"/>
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Detail Kerusakan"/>
-            <EditText
-                android:id="@+id/detailKer"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="detail Kerusakan"/>
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bukti Kerusakan"/>
-            <EditText
-                android:id="@+id/upRusak"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Upload Bukti Kerusakan"
-                android:drawableRight="@drawable/baseline_upload_24"/>
-
-
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
+        android:text="BELUM ADA PENGEMBALIAN"/>
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       tools:listitem="@layout/ui_lapor"
+       android:id="@+id/recycle"/>
 </LinearLayout>

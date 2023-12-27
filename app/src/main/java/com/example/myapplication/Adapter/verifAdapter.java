@@ -1,7 +1,6 @@
 package com.example.myapplication.Adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,11 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.FormVerif;
+import com.example.myapplication.Sekre.FormVerif;
 import com.example.myapplication.Model.verifModel;
 import com.example.myapplication.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

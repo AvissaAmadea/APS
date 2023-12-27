@@ -2,12 +2,14 @@ package com.example.myapplication.Opd;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,7 +17,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Admin.AdminActivity;
 import com.example.myapplication.Admin.HomeFragmentAdmin;
+import com.example.myapplication.Login;
 import com.example.myapplication.NotifFragment;
 import com.example.myapplication.Opd.HomeFragmentOPD;
 import com.example.myapplication.ProfilFragment;
@@ -123,7 +127,21 @@ public class OpdActivity extends AppCompatActivity implements NavigationView.OnN
                 break;
 
             case R.id.logout:
-                Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Keluar");
+                builder.setMessage("Yakin Keluar?");
+                builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(OpdActivity.this, Login.class));
+                    }
+                });
                 break;
         }
 

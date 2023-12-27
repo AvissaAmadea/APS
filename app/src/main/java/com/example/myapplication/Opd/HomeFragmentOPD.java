@@ -69,7 +69,9 @@ public class HomeFragmentOPD extends Fragment {
                 startActivity(new Intent(requireContext(), FormPeminjaman.class));
             });
             lapor.setOnClickListener(view1 -> {
-                startActivity(new Intent(requireContext(), PelaporanKerusakanKehilangan.class));
+                Intent intent = new Intent(requireContext(), ListPelaporan.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
             });
             riwayat.setOnClickListener(view1 -> {
                 Intent intent = new Intent(requireContext(), Riwayat.class);

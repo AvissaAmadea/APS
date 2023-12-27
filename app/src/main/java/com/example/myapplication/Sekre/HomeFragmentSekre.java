@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.myapplication.ListAset;
 import com.example.myapplication.R;
 import com.example.myapplication.Riwayat;
+import com.example.myapplication.SettingFragment;
 
 public class HomeFragmentSekre extends Fragment {
     CardView aset, transaksi, verifikasi, riwayat, laporan, lapor, setting;
@@ -52,9 +53,13 @@ public class HomeFragmentSekre extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
             });
+            laporan.setOnClickListener(view1 -> {
+
+            });
+            setting.setOnClickListener(view1 -> {
+                startActivity(new Intent(getContext(), SettingFragment.class));
+            });
         }
-
-
 
         return view;
 

@@ -1,32 +1,21 @@
 package com.example.myapplication.Model;
 
-public class LaporanModel {
-    String kode, nama, aset, keadaan, status;
-    int id;
+public class kembaliModel {
+    String kode, nama, aset,keadaan,status;
 
-    public LaporanModel(String kode, String nama, String aset, String keadaan, String status, int id) {
+    public kembaliModel(String kode, String nama, String aset, String keadaan, String status) {
         this.kode = kode;
         this.nama = nama;
         this.aset = aset;
         this.keadaan = keadaan;
         this.status = status;
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public LaporanModel setId(int id) {
-        this.id = id;
-        return this;
     }
 
     public String getKode() {
         return kode;
     }
 
-    public LaporanModel setKode(String kode) {
+    public kembaliModel setKode(String kode) {
         this.kode = kode;
         return this;
     }
@@ -35,7 +24,7 @@ public class LaporanModel {
         return nama;
     }
 
-    public LaporanModel setNama(String nama) {
+    public kembaliModel setNama(String nama) {
         this.nama = nama;
         return this;
     }
@@ -44,7 +33,7 @@ public class LaporanModel {
         return aset;
     }
 
-    public LaporanModel setAset(String aset) {
+    public kembaliModel setAset(String aset) {
         this.aset = aset;
         return this;
     }
@@ -53,7 +42,7 @@ public class LaporanModel {
         return keadaan;
     }
 
-    public LaporanModel setKeadaan(String keadaan) {
+    public kembaliModel setKeadaan(String keadaan) {
         this.keadaan = keadaan;
         return this;
     }
@@ -62,7 +51,7 @@ public class LaporanModel {
         return status;
     }
 
-    public LaporanModel setStatus(String status) {
+    public kembaliModel setStatus(String status) {
         this.status = status;
         return this;
     }

@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -8,6 +11,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +46,7 @@ int position;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_peminjaman);
+
         namaPeminjam = findViewById(R.id.namaPeminjam);
         aset = findViewById(R.id.nama_aset_pinjam);
         tujuanPinjam = findViewById(R.id.Tujuan);
@@ -53,6 +58,11 @@ int position;
         Intent intent2 = getIntent();
         position = intent2.getExtras().getInt("position");
         aset.setText(intent2.getStringExtra("nama_aset"));
+
+        upload.setOnClickListener(view -> {
+
+
+        });
 
         tglPinjam.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();

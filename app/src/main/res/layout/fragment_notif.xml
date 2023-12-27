@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NotifFragment">
 
+    <TextView
+        android:textSize="30dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_bold"
+        android:textAlignment="center"
+        android:id="@+id/notif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BELUM ADA NOTIF"/>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/notif"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/ui_list_notif"
         android:id="@+id/recNotif"/>
 
-</FrameLayout>
+</RelativeLayout>

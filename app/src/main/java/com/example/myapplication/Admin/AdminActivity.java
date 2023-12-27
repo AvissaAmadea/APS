@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.Admin.HomeFragmentAdmin;
+import com.example.myapplication.Login;
 import com.example.myapplication.NotifFragment;
 import com.example.myapplication.Opd.HomeFragmentOPD;
 import com.example.myapplication.ProfilFragment;
@@ -140,6 +142,18 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Keluar");
                 builder.setMessage("Yakin Keluar?");
+                builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(AdminActivity.this, Login.class));
+                    }
+                });
                 break;
         }
 

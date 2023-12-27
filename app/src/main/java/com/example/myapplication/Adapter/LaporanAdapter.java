@@ -1,6 +1,7 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Model.LaporanModel;
 import com.example.myapplication.R;
+import com.example.myapplication.Sekre.VerifPengembalian;
 
 import java.util.List;
 
@@ -39,6 +41,18 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.allLapor
         holder.kode.setText(model.getKode());
         holder.nama.setText(model.getNama());
         holder.aset.setText(model.getAset());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, VerifPengembalian.class);
+                intent.putExtra("kode", model.getKode());
+                intent.putExtra("keadaan", model.getKeadaan());
+                intent.putExtra("nama", model.getNama());
+                intent.putExtra("aset", model.getAset());
+                intent.putExtra("id", model.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

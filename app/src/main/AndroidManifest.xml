@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,16 +18,25 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".LaporanPengembalian"
+            android:exported="false" />
+        <activity
+            android:name=".LaporanPeminjaman"
+            android:exported="false" />
+        <activity
+            android:name=".Sekre.VerifPengembalian"
+            android:exported="false" />
+        <activity
             android:name=".FormKategori"
             android:exported="false" />
         <activity
-            android:name=".ListPengembalian"
+            android:name=".Sekre.ListPengembalian"
             android:exported="false" />
         <activity
-            android:name=".ListPelaporan"
+            android:name=".Opd.ListPelaporan"
             android:exported="false" />
         <activity
-            android:name=".FormVerif"
+            android:name=".Sekre.FormVerif"
             android:exported="false" />
         <activity
             android:name=".kategori"
@@ -93,9 +103,6 @@
             android:exported="false" />
         <activity
             android:name=".Peminjaman"
-            android:exported="false" />
-        <activity
-            android:name=".Pengembalian"
             android:exported="false" />
         <activity
             android:name=".Admin.FormPengguna"

@@ -122,6 +122,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -129,55 +130,9 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Tanggal Peminjaman"
+                    android:text="Keadaan Aset"
                     android:textColor="@color/black"
                     android:textSize="20dp"
-                    tools:ignore="TextSizeCheck"/>
-                <EditText
-                    android:textColor="@color/black"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:minHeight="50dp"
-                    android:hint="YYYY/MM/DD"
-                    android:id="@+id/tglPinjam"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:drawableRight="@drawable/baseline_calendar_month_24"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Tanggal Pengembalian"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    tools:ignore="TextSizeCheck"/>
-                <EditText
-                    android:textColor="@color/black"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:minHeight="50dp"
-                    android:hint="YYYY/MM/DD"
-                    android:id="@+id/tglKembali"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"
-                    android:drawableRight="@drawable/baseline_calendar_month_24"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Tujuan"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
                     tools:ignore="TextSizeCheck" />
 
                 <TextView
@@ -185,7 +140,7 @@
                     android:fontFamily="@font/poppins"
                     android:textSize="15dp"
                     android:text="Tujuan Peminjaman"
-                    android:id="@+id/Tujuan"
+                    android:id="@+id/Keadaan"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -199,9 +154,9 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Surat Permohonan"
+                    android:text="Bukti Kerusakan"
                     android:textColor="@color/black"
-                    android:textSize="15dp"
+                    android:textSize="20dp"
                     tools:ignore="TextSizeCheck" />
                 <TextView
                     android:layout_marginRight="15dp"
@@ -225,7 +180,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="Verifikasi"
                         android:textColor="@color/black"
-                        android:textSize="15dp"
+                        android:textSize="20dp"
                         tools:ignore="TextSizeCheck"/>
                     <RadioGroup
                         android:id="@+id/rdg"
@@ -255,9 +210,30 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/poppins_medium"
+                    android:text="Denda"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    tools:ignore="TextSizeCheck" />
+                <EditText
+                    android:textColor="@color/black"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:minHeight="50dp"
+                    android:hint="Isi alasan, jika diterima isi -"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/denda"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="Alasan Penolakan"
                     android:textColor="@color/black"
-                    android:textSize="15dp"
+                    android:textSize="20dp"
                     tools:ignore="TextSizeCheck" />
                 <EditText
                     android:textColor="@color/black"

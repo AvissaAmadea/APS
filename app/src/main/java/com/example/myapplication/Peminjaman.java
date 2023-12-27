@@ -14,9 +14,7 @@ public class Peminjaman extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peminjaman);
-        down = findViewById(R.id.surat);
-        permohonan = findViewById(R.id.Peminjaman);
-        riwayat = findViewById(R.id.Riw);
+
 
         permohonan.setOnClickListener(new View.OnClickListener() {
             @Override

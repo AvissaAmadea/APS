@@ -5,12 +5,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -18,9 +15,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myapplication.Adapter.verifAdapter;
+import com.example.myapplication.Adapter.LaporanAdapter;
 import com.example.myapplication.Db;
+import com.example.myapplication.Model.LaporanModel;
 import com.example.myapplication.Model.verifModel;
+import com.example.myapplication.Opd.ListPelaporan;
 import com.example.myapplication.R;
 
 import org.json.JSONArray;
@@ -30,73 +29,53 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListVerifikasi extends AppCompatActivity {
+public class ListPengembalian extends AppCompatActivity {
+    List<LaporanModel> laporanModelList;
+    LaporanAdapter adapter;
     ProgressBar progressBar;
-    RecyclerView recyclerView;
 
-    TextView blm, kem;
-    private List<verifModel> verifModelList;
-    verifAdapter adapter;
-    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_verifikasi);
-        back = findViewById(R.id.backToMenu1);
-        progressBar = findViewById(R.id.pga);
-        recyclerView = findViewById(R.id.verifList);
-        blm = findViewById(R.id.blm);
-        kem = findViewById(R.id.dft_kem);
-
-        kem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ListVerifikasi.this,ListPengembalian.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        setContentView(R.layout.activity_list_pengembalian);
+        progressBar = findViewById(R.id.pgL);
 
         fetchData();
-        verifModelList = new ArrayList<>();
-        RecyclerView recyclerView1 = findViewById(R.id.verifList);
+        laporanModelList = new ArrayList<>();
+        RecyclerView recyclerView1 = findViewById(R.id.rcl);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new verifAdapter(ListVerifikasi.this, verifModelList);
+        adapter = new LaporanAdapter(ListPengembalian.this, laporanModelList);
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(adapter);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView1.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-
+        RecyclerView.ItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
     }
 
     private void fetchData() {
-        progressBar.setVisibility(View.VISIBLE);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Db.getVerif,
+        StringRequest stringRequest = new StringRequest(Db.getPengembalian,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             progressBar.setVisibility(View.GONE);
                             JSONObject jsonResponse = new JSONObject(response);
-                            JSONArray array = jsonResponse.getJSONArray("peminjaman_aset");
-                            for (int i = 0; i<array.length();i++){
+                            JSONArray array = jsonResponse.getJSONArray("kembali");
+                            for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
-                                verifModelList.add(new verifModel(
+                                laporanModelList.add(new LaporanModel(
+                                        object.getString("kode"),
                                         object.getString("nama"),
                                         object.getString("nama_aset"),
-                                        object.getString("tgl_pinjam"),
-                                        object.getString("tgl_kembali"),
+                                        object.getString("keadaan"),
                                         object.getString("status"),
-                                        object.getString("kode"),
-                                        object.getString("tujuan")
+                                        object.getInt("id_kembali")
                                 ));
                             }
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            blm.setVisibility(View.VISIBLE);
-                            Toast.makeText(ListVerifikasi.this, "Belum Ada Pengajuan", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListPengembalian.this, "Belum Ada Pengajuan" +response, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -104,11 +83,9 @@ public class ListVerifikasi extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                Toast.makeText(ListVerifikasi.this, "Belum Ada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListPengembalian.this, "error", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(stringRequest);
     }
-
-
 }
