@@ -48,21 +48,49 @@ class PeminjamanController extends Controller
         $nama_aset = [];
         $nama_dinas_aset = [];
 
+        $tgl_pinjam_date = [];
+        $tgl_pinjam_time = [];
+        $tgl_kembali_date = [];
+        $tgl_kembali_time = [];
+
         foreach ($pinjams as $peminjaman) {
-            // Menggunakan kondisi jika data tidak ada, maka tampilkan null
+            // Deklarasi variabel baru untuk setiap iterasi agar nilai sebelumnya tidak tertimpa
+            $tgl_pinjam_date_item = null;
+            $tgl_pinjam_time_item = null;
+            $tgl_kembali_date_item = null;
+            $tgl_kembali_time_item = null;
+
+            // Mengurai tanggal pinjam
+            if ($peminjaman->tgl_pinjam) {
+                $tgl_pinjam = Carbon::parse($peminjaman->tgl_pinjam);
+                $tgl_pinjam_date_item = $tgl_pinjam->format('d-m-Y');
+                $tgl_pinjam_time_item = $tgl_pinjam->format('H:i:s');
+            }
+
+            // Mengurai tanggal kembali
+            if ($peminjaman->tgl_kembali) {
+                $tgl_kembali = Carbon::parse($peminjaman->tgl_kembali);
+                $tgl_kembali_date_item = $tgl_kembali->format('d-m-Y');
+                $tgl_kembali_time_item = $tgl_kembali->format('H:i:s');
+            }
+
+            // Menambahkan nilai ke dalam array sesuai dengan variabel yang telah diuraikan
             $nama[] = $peminjaman->users ? $peminjaman->users->nama : null;
             $asal_peminjam[] = $peminjaman->users && $peminjaman->users->dinas ? $peminjaman->users->dinas->nama_dinas : null;
-
             $nama_aset[] = $peminjaman->asets ? $peminjaman->asets->nama_aset : null;
-
-            // Pastikan properti yang mungkin null diakses dengan aman
             $nama_dinas_aset[] = $peminjaman->asets && $peminjaman->asets->dinas ? $peminjaman->asets->dinas->nama_dinas : null;
+
+            $tgl_pinjam_date[] = $tgl_pinjam_date_item;
+            $tgl_pinjam_time[] = $tgl_pinjam_time_item;
+            $tgl_kembali_date[] = $tgl_kembali_date_item;
+            $tgl_kembali_time[] = $tgl_kembali_time_item;
         }
 
+
         if ($role === 1) { // Role ID Superadmin
-            return view('peminjaman.superadmin.index', compact('pinjams', 'nama', 'asal_peminjam', 'nama_aset', 'nama_dinas_aset'));
+            return view('peminjaman.superadmin.index', compact('pinjams', 'nama', 'asal_peminjam', 'nama_aset', 'nama_dinas_aset', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
         } elseif ($role === 2) { // Role ID Sekda
-            return view('peminjaman.sekda.index', compact('pinjams', 'nama', 'asal_peminjam', 'nama_aset', 'nama_dinas_aset'));
+            return view('peminjaman.sekda.index', compact('pinjams', 'nama', 'asal_peminjam', 'nama_aset', 'nama_dinas_aset', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
         } else {
 
         // Return halaman default untuk role selain Superadmin dan Sekda
@@ -86,7 +114,6 @@ class PeminjamanController extends Controller
         } else {
             return back()->with('error','Anda tidak memiliki akses untuk mengajukan peminjaman aset.');
         }
-
     }
 
     // fungsi menyimpan data dari insert peminjaman
@@ -163,22 +190,41 @@ class PeminjamanController extends Controller
         return back()->with('error', 'Anda tidak memiliki akses untuk mengajukan peminjaman aset.');
     }
 
-    // fungsi menampilkan daftar peminjaman dalam tabel peminjaman
-
-
     // Fungsi menampilkan data peminjaman yang dilakukan oleh semua user
     protected function getPeminjamanData($role, $id)
     {
         $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id);
+
+        // Mengurai tanggal pinjam
+        $tgl_pinjam_date = null;
+        $tgl_pinjam_time = null;
+
+        if ($pinjams->tgl_pinjam) {
+            $tgl_pinjam = Carbon::parse($pinjams->tgl_pinjam);
+            $tgl_pinjam_date = $tgl_pinjam->format('d-m-Y');
+            $tgl_pinjam_time = $tgl_pinjam->format('H:i:s');
+        }
+
+        // Mengurai tanggal kembali
+        $tgl_kembali_date = null;
+        $tgl_kembali_time = null;
+
+        if ($pinjams->tgl_kembali) {
+            $tgl_kembali = Carbon::parse($pinjams->tgl_kembali);
+            $tgl_kembali_date = $tgl_kembali->format('d-m-Y');
+            $tgl_kembali_time = $tgl_kembali->format('H:i:s');
+        }
+
 
         // Mengambil data dari objek tunggal $pinjaman, bukan dari array $pinjams
         $nama = $pinjams->users ? $pinjams->users->nama : null;
         $nama_aset = $pinjams->asets ? $pinjams->asets->nama_aset : null;
         $jenis = $pinjams->asets->kategoris ? $pinjams->asets->kategoris->jenis : null;
         $nama_dinas_aset = $pinjams->asets && $pinjams->asets->dinas ? $pinjams->asets->dinas->nama_dinas : null;
+        $timestamps = $this->showTimestamp($pinjams);
 
         $view = 'peminjaman.' . $role . '.show';
-        return view($view, compact('pinjams','nama', 'nama_aset', 'jenis', 'nama_dinas_aset'));
+        return view($view, compact('pinjams','nama', 'nama_aset', 'jenis', 'nama_dinas_aset', 'timestamps', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
     }
 
     public function superadminShow($id)
@@ -236,16 +282,44 @@ class PeminjamanController extends Controller
         $nama_aset = [];
         $nama_dinas_aset = [];
 
+        $tgl_pinjam_date = [];
+        $tgl_pinjam_time = [];
+        $tgl_kembali_date = [];
+        $tgl_kembali_time = [];
+
         foreach ($pinjams as $peminjaman) {
-            // Menggunakan kondisi jika data tidak ada, maka tampilkan null
+            // Deklarasi variabel baru untuk setiap iterasi agar nilai sebelumnya tidak tertimpa
+            $tgl_pinjam_date_item = null;
+            $tgl_pinjam_time_item = null;
+            $tgl_kembali_date_item = null;
+            $tgl_kembali_time_item = null;
+
+            // Mengurai tanggal pinjam
+            if ($peminjaman->tgl_pinjam) {
+                $tgl_pinjam = Carbon::parse($peminjaman->tgl_pinjam);
+                $tgl_pinjam_date_item = $tgl_pinjam->format('d-m-Y');
+                $tgl_pinjam_time_item = $tgl_pinjam->format('H:i:s');
+            }
+
+            // Mengurai tanggal kembali
+            if ($peminjaman->tgl_kembali) {
+                $tgl_kembali = Carbon::parse($peminjaman->tgl_kembali);
+                $tgl_kembali_date_item = $tgl_kembali->format('d-m-Y');
+                $tgl_kembali_time_item = $tgl_kembali->format('H:i:s');
+            }
+
+            // Menambahkan nilai ke dalam array sesuai dengan variabel yang telah diuraikan
             $nama[] = $peminjaman->users ? $peminjaman->users->nama : null;
             $nama_aset[] = $peminjaman->asets ? $peminjaman->asets->nama_aset : null;
-
-            // Pastikan properti yang mungkin null diakses dengan aman
             $nama_dinas_aset[] = $peminjaman->asets && $peminjaman->asets->dinas ? $peminjaman->asets->dinas->nama_dinas : null;
+
+            $tgl_pinjam_date[] = $tgl_pinjam_date_item;
+            $tgl_pinjam_time[] = $tgl_pinjam_time_item;
+            $tgl_kembali_date[] = $tgl_kembali_date_item;
+            $tgl_kembali_time[] = $tgl_kembali_time_item;
         }
 
-        return view($viewName, compact('pinjams', 'nama', 'nama_aset', 'nama_dinas_aset'));
+        return view($viewName, compact('pinjams', 'nama', 'nama_aset', 'nama_dinas_aset', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
     }
 
     public function riwayatPinjamSuperadmin()
@@ -268,14 +342,35 @@ class PeminjamanController extends Controller
     {
         $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id);
 
+        // Mengurai tanggal pinjam
+        $tgl_pinjam_date = null;
+        $tgl_pinjam_time = null;
+
+        if ($pinjams->tgl_pinjam) {
+            $tgl_pinjam = Carbon::parse($pinjams->tgl_pinjam);
+            $tgl_pinjam_date = $tgl_pinjam->format('d-m-Y');
+            $tgl_pinjam_time = $tgl_pinjam->format('H:i:s');
+        }
+
+        // Mengurai tanggal kembali
+        $tgl_kembali_date = null;
+        $tgl_kembali_time = null;
+
+        if ($pinjams->tgl_kembali) {
+            $tgl_kembali = Carbon::parse($pinjams->tgl_kembali);
+            $tgl_kembali_date = $tgl_kembali->format('d-m-Y');
+            $tgl_kembali_time = $tgl_kembali->format('H:i:s');
+        }
+
         // Mengambil data dari objek tunggal $pinjaman, bukan dari array $pinjams
         $nama = $pinjams->users ? $pinjams->users->nama : null;
         $nama_aset = $pinjams->asets ? $pinjams->asets->nama_aset : null;
         $jenis = $pinjams->asets->kategoris ? $pinjams->asets->kategoris->jenis : null;
         $nama_dinas_aset = $pinjams->asets && $pinjams->asets->dinas ? $pinjams->asets->dinas->nama_dinas : null;
+        $timestamps = $this->showTimestamp($pinjams);
 
         $view = 'peminjaman.' . $role . '.showRiwayat';
-        return view($view, compact('pinjams','nama', 'nama_aset', 'jenis', 'nama_dinas_aset'));
+        return view($view, compact('pinjams','nama', 'nama_aset', 'jenis', 'nama_dinas_aset', 'timestamps', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
     }
 
     public function superadminShowRiwayat($id)
@@ -393,7 +488,7 @@ class PeminjamanController extends Controller
                     $nama_dinas_aset[] = null;
                 }
             }
-            return view('peminjaman.superadmin.list', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+            return view('peminjaman.superadmin.index', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
             } else {
                 return back()->with('error', 'Gagal menyimpan data.');
             }
@@ -436,7 +531,7 @@ class PeminjamanController extends Controller
                     $aset->save();
                 }
             }
-            return redirect()->route('peminjaman.sekda.list')->with('status', 'Status peminjaman berhasil diperbarui.');
+            return redirect()->route('peminjaman.sekda.index')->with('status', 'Status peminjaman berhasil diperbarui.');
         } else {
             return back()->with('error', 'Gagal menyimpan perubahan status peminjaman.');
         }
@@ -451,17 +546,13 @@ class PeminjamanController extends Controller
 
         // Hanya bisa menghapus jika status pinjam adalah "Menunggu Verifikasi"
         if ($pinjams->status_pinjam === 'Menunggu Verifikasi') {
-            // Mendapatkan waktu pinjam dari data peminjaman
-            $waktuPinjam = Carbon::createFromFormat('Y-m-d', $pinjams->tgl_pinjam)->startOfDay();
+            $aset = Aset::find($pinjams->aset_id);
 
-            // Menghitung H-1 dari waktu pinjam
-            $batasWaktuCancel = Carbon::now()->subDays(1)->startOfDay();
+            // Mencari batas waktu cancel peminjaman (6 jam sebelum waktu pinjam)
+            $waktuPinjam = Carbon::createFromTimestamp($pinjams->tgl_pinjam)->subHours(6);
 
-            // Memeriksa apakah masih dalam batas H-1 dari waktu pinjam
-            if (Carbon::now()->lessThanOrEqualTo($waktuPinjam) && Carbon::now()->greaterThanOrEqualTo($batasWaktuCancel)) {
-                $aset = Aset::find($pinjams->aset_id);
-
-                // Jika status pinjam adalah "Menunggu Verifikasi", hapus peminjaman
+            // Jika waktu sekarang masih sebelum batas waktu cancel
+            if (Carbon::now()->greaterThanOrEqualTo($waktuPinjam)) {
                 if ($pinjams->delete()) {
                     // Ubah status aset menjadi "Tersedia" setelah penghapusan berhasil
                     if ($aset) {
@@ -482,10 +573,19 @@ class PeminjamanController extends Controller
                     return redirect()->back()->with('error', 'Gagal menghapus data peminjaman.');
                 }
             } else {
-                return redirect()->back()->with('error', 'Hanya bisa melakukan pembatalan peminjaman H-1 dari waktu pinjam.');
+                return redirect()->back()->with('error', 'Batas waktu pembatalan peminjaman telah berakhir.');
             }
         } else {
             return redirect()->back()->with('error', 'Hanya peminjaman dengan status "Menunggu Verifikasi" yang dapat dihapus.');
         }
+    }
+
+    public function showTimestamp($user)
+    {
+        $createdTimestamp = $user->created_at ? $user->created_at->isoFormat('DD-MM-YYYY HH:mm:ss') : null;
+        $updatedTimestamp = $user->updated_at ? $user->updated_at->isoFormat('DD-MM-YYYY HH:mm:ss') : null;
+        $deletedTimestamp = $user->deleted_at ? $user->deleted_at->isoFormat('DD-MM-YYYY HH:mm:ss') : null;
+
+        return compact('createdTimestamp', 'updatedTimestamp', 'deletedTimestamp');
     }
 }

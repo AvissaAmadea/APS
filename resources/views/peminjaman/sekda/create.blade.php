@@ -103,6 +103,7 @@
                         <label for="surat_pinjam" class="col-sm-2 col-form-label">Surat Peminjaman</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control @error('surat_pinjam') is-invalid @enderror" id="surat_pinjam" name="surat_pinjam" accept=".jpg,.jpeg,.png,.doc,.docx,.pdf" value="{{ old('surat_pinjam') }}" required autofocus>
+                            <div class="form-text text-start">File format jpg, jpeg, png, doc, atau pdf ukuran max. 2 MB</div>
                         </div>
                         @error('surat_pinjam')
                             <span class="invalid-feedback" role="alert">

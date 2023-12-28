@@ -7,23 +7,44 @@ sidebarToggle.addEventListener("click", function() {
 
 // pada form pengembalian untuk melaporkan rusak/hilang
 function showKeteranganRusakBukti() {
-    showKeteranganRusak();
-    showBukti();
+    if (document.getElementById('rusakYa').checked || document.getElementById('hilangYa').checked) {
+        showKeteranganRusak();
+        showBukti();
+    } else {
+        hideKeteranganRusak();
+        hideBukti();
+    }
 }
 
 function hideKeteranganRusakBukti() {
-    hideKeteranganRusak();
-    hideBukti();
+    if (!document.getElementById('rusakYa').checked && !document.getElementById('hilangYa').checked) {
+        hideKeteranganRusak();
+        hideBukti();
+    } else if (!document.getElementById('rusakYa').checked && document.getElementById('hilangYa').checked) {
+        hideKeteranganRusak();
+    } else if (document.getElementById('rusakYa').checked && !document.getElementById('hilangYa').checked) {
+        hideBukti();
+    }
 }
 
 function showKeteranganHilangBukti() {
-    showKeteranganHilang();
-    showBukti();
+    if (document.getElementById('hilangYa').checked) {
+        showKeteranganHilang();
+        showBukti();
+    } else {
+        hideKeteranganHilang();
+    }
 }
 
 function hideKeteranganHilangBukti() {
-    hideKeteranganHilang();
-    hideBukti();
+    if (!document.getElementById('hilangYa').checked && !document.getElementById('rusakYa').checked) {
+        hideKeteranganHilang();
+        hideBukti();
+    } else if (!document.getElementById('hilangYa').checked && document.getElementById('rusakYa').checked) {
+        hideKeteranganHilang();
+    } else if (document.getElementById('hilangYa').checked && !document.getElementById('rusakYa').checked) {
+        hideBukti();
+    }
 }
 
 function showKeteranganRusak() {

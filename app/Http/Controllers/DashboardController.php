@@ -40,25 +40,6 @@ class DashboardController extends Controller
         return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
     }
 
-    // public function index(): Renderable|RedirectResponse
-    // {
-    //     $pinjams = [];
-
-    //     if (Auth::check()) {
-    //         $role_id = Auth::user()->role_id;
-
-    //         if ($role_id == 1) {
-    //             return $this->superadmin();
-    //         } elseif ($role_id == 2) {
-    //             return $this->sekda();
-    //         } elseif ($role_id == 3) {
-    //             return $this->opd();
-    //         }
-    //     }
-
-    //     return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
-    // }
-
     protected function superadmin()
     {
         // Lakukan pengecekan apakah pengguna memiliki peran superadmin

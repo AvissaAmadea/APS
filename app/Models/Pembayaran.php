@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Pengembalian extends Model
+class Pembayaran extends Model
 {
     use HasFactory;
 
@@ -46,20 +46,13 @@ class Pengembalian extends Model
     }
 
     protected $fillable = [
-        'kode_pinjam',
-        'rusak',
-        'hilang',
-        'ket_rusak',
-        'ket_hilang',
-        'bukti',
-        'status_kembali',
         'sanksi',
         'bukti_pelunasan',
         'status_pelunasan',
     ];
 
     protected $casts = [
-        'status_kembali' => 'string', // Tipe data enum diubah menjadi string
+        'status_pelunasan' => 'string', // Tipe data enum diubah menjadi string
     ];
 
     public function peminjaman() {
@@ -69,12 +62,4 @@ class Pengembalian extends Model
     public function users() {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-    // public function asets() {
-    //     return $this->belongsTo(Aset::class, 'aset_id', 'id');
-    // }
-
-    // public function dinas() {
-    //     return $this->belongsTo(Dinas::class, 'dinas_id');
-    // }
 }

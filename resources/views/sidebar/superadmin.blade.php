@@ -74,7 +74,7 @@
                                     <i class="fa-solid fa-file-circle-plus pe-2"></i>{{ __('Peminjaman') }}
                                 </a> --}}
                                 <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#peminjaman" aria-expanded="false">
-                                    <i class="fa-solid fa-file-signature pe-2"></i>{{ __('Peminjaman') }}
+                                    <i class="fa-solid fa-file-circle-plus pe-2"></i>{{ __('Peminjaman') }}
                                 </a>
                                 <ul id="peminjaman" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
@@ -91,7 +91,7 @@
                                     <i class="fa-solid fa-file-export pe-2"></i>{{ __('Pengembalian') }}
                                 </a> --}}
                                 <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#pengembalian" aria-expanded="false">
-                                    <i class="fa-solid fa-file-signature pe-2"></i>{{ __('Pengembalian') }}
+                                    <i class="fa-solid fa-file-export pe-2"></i>{{ __('Pengembalian') }}
                                 </a>
                                 <ul id="pengembalian" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
@@ -125,7 +125,7 @@
 
                             <li class="sidebar-item">
                                 <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#riwayat" aria-expanded="false">
-                                    <i class="fa-solid fa-file-signature pe-2"></i>{{ __('Riwayat') }}
+                                    <i class="fa-solid fa-file-lines pe-2"></i>{{ __('  Riwayat') }}
                                 </a>
                                 <ul id="riwayat" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">

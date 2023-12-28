@@ -89,23 +89,23 @@
                             </div>
 
                             <div class="form-group mb-2 row">
-                                <label for="email" class="col-md-4 col-form-label">Created_at :</label>
+                                <label for="created_at" class="col-md-4 col-form-label">Created_at :</label>
                                 <div class="col-md-8">
-                                    <input type="email" readonly class="form-control-plaintext fw-bold" id="email" name="email" value="{{ $user->created_at }}">
+                                    <input type="created_at" readonly class="form-control-plaintext fw-bold" id="created_at" name="created_at" value="{{ $timestamps['createdTimestamp'] ?? '-' }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
-                                <label for="email" class="col-md-4 col-form-label">Updated_at :</label>
+                                <label for="updated_at" class="col-md-4 col-form-label">Updated_at :</label>
                                 <div class="col-md-8">
-                                    <input type="email" readonly class="form-control-plaintext fw-bold" id="email" name="email" value="{{ $user->updated_at }}">
+                                    <input type="updated_at" readonly class="form-control-plaintext fw-bold" id="updated_at" name="updated_at" value="{{ $timestamps['updatedTimestamp'] ?? '-' }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
-                                <label for="email" class="col-md-4 col-form-label">Deleted_at :</label>
+                                <label for="deleted_at" class="col-md-4 col-form-label">Deleted_at :</label>
                                 <div class="col-md-8">
-                                    <input type="email" readonly class="form-control-plaintext fw-bold" id="email" name="email" value="{{ $user->deleted_at }}">
+                                    <input type="deleted_at" readonly class="form-control-plaintext fw-bold" id="deleted_at" name="deleted_at" value="{{ $timestamps['deletedTimestamp'] ?? '-' }}">
                                 </div>
                             </div>
 

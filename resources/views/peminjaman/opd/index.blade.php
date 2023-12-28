@@ -62,8 +62,8 @@
                                         <td>-</td>
                                     @endif
 
-                                    <td>{{ ( $item->tgl_pinjam ) }}</td>
-                                    <td>{{ ( $item->tgl_kembali ) }}</td>
+                                    <td style="width: 8rem">{{ $tgl_pinjam_date[$key] ?? '' }} {{ $tgl_pinjam_time[$key] ?? '' }}</td>
+                                    <td style="width: 8rem">{{ $tgl_kembali_date[$key] ?? '' }} {{ $tgl_kembali_time[$key] ?? '' }}</td>
                                     {{-- <td>{{ ( $item->status_pinjam ) }}</td> --}}
                                     <td style="width: 5rem">
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>

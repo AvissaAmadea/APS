@@ -18,8 +18,8 @@
                 </div>
             </h6>
             <div class="card-body mx-2">
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-9">
+                <div class="row justify-content-center float-center">
+                    <div class="col-lg-10">
                         <div class="form text-end">
                             <div class="form-group mb-2 row">
                                 <label for="kode_pinjam" class="col-md-4 col-form-label">Kode Peminjaman :</label>
@@ -66,14 +66,14 @@
                             <div class="form-group mb-2 row">
                                 <label for="tgl_pinjam" class="col-md-4 col-form-label">Waktu Pinjam :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $kembali->peminjaman->tgl_pinjam }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $tgl_pinjam_date }} {{ $tgl_pinjam_time }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
                                 <label for="tgl_kembali" class="col-md-4 col-form-label">Waktu Kembali :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $kembali->peminjaman->tgl_kembali }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $tgl_kembali_date }} {{ $tgl_kembali_time }}">
                                 </div>
                             </div>
 
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 
-                            @if($kembali->rusak === 'Ya' || $kembali->hilang === 'Ya')
+                            @if($kembali->rusak === 'Ya' && $kembali->hilang === 'Tidak')
                                 <div class="form-group mb-2 row">
                                     <label for="ket_rusak" class="col-md-4 col-form-label">Keterangan Rusak :</label>
                                     <div class="col-md-8">
@@ -108,7 +108,20 @@
                                 <div class="form-group mb-2 row">
                                     <label for="ket_hilang" class="col-md-4 col-form-label">Keterangan Hilang :</label>
                                     <div class="col-md-8">
-                                        <textarea readonly class="form-control-plaintext fw-bold" id="ket_hilang" name="ket_hilang" style="text-align: justify; height: auto; min-height: 30px;">{{ $kembali->ket_hilang }}</textarea>
+                                        <input type="text" readonly class="form-control-plaintext fw-bold" id="ket_hilang" name="ket_hilang" value="-">
+                                    </div>
+                                </div>
+                            @elseif($kembali->rusak === 'Tidak' && $kembali->hilang === 'Tidak')
+                                <div class="form-group mb-2 row">
+                                    <label for="ket_rusak" class="col-md-4 col-form-label">Keterangan Rusak :</label>
+                                    <div class="col-md-8">
+                                        <input type="text" readonly class="form-control-plaintext fw-bold" id="ket_rusak" name="ket_rusak" value="-">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 row">
+                                    <label for="ket_hilang" class="col-md-4 col-form-label">Keterangan Hilang :</label>
+                                    <div class="col-md-8">
+                                        <input type="text" readonly class="form-control-plaintext fw-bold" id="ket_hilang" name="ket_hilang" value="-">
                                     </div>
                                 </div>
                             @else
@@ -126,6 +139,7 @@
                                 </div>
                             @endif
 
+
                             <div class="form-group mb-2 row">
                                 <label for="bukti" class="col-sm-4 col-form-label">Bukti Rusak/Hilang : </label>
                                 <div class="col-sm-8 text-start mt-2">
@@ -141,62 +155,86 @@
                                         @if($isPDF)
                                             <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }} (PDF)</a>
                                         @elseif($isImage)
-                                            <a href="{{ asset($filePath) }}" target="_blank">
+                                            {{-- <a href="{{ asset($filePath) }}" target="_blank">
                                                 <img src="{{ asset($filePath) }}" alt="Surat Peminjaman" style="max-width: 100%">
+                                            </a> --}}
+                                            <a href="{{ asset($filePath) }}" target="_blank">
+                                                {{ $fileName }} (Lihat gambar)
                                             </a>
                                         @else
                                             <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }}</a>
                                         @endif
                                     @else
-                                        <p>Tidak ada file surat peminjaman terlampir.</p>
+                                        <strong><p>Tidak ada file bukti rusak/hilang terlampir.</p></strong>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="form-group mb-2 row">
+                            <div class="form-group mb-3 row">
                                 <label for="status_kembali" class="col-md-4 col-form-label">Status :</label>
                                 <div class="col-auto mt-1">
                                     <span class="status-badge @if ($kembali->status_kembali === 'Menunggu Verifikasi') text-black bg-warning @elseif ($kembali->status_kembali === 'Diterima') text-white bg-success @elseif ($kembali->status_kembali === 'Menunggu Pembayaran') text-white bg-primary @else text-white bg-danger @endif">{{ $kembali->status_kembali }}</span>
                                 </div>
                             </div>
+
+                            @if($kembali->rusak === 'Ya' || $kembali->hilang === 'Ya')
+                                <div class="form-group mb-3 row">
+                                    <label for="sanksi" class="col-md-4 col-form-label">Nominal Sanksi</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control @error('sanksi') is-invalid @enderror" id="sanksi" name="sanksi" value="{{ old('sanksi') }}" autofocus>
+                                        @error('sanksi')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @else
+                                <div class="form-group mb-3 row">
+                                    <label for="sanksi" class="col-md-4 col-form-label">Nominal Sanksi</label>
+                                    <div class="col-md-8">
+                                        <input type="text" readonly class="form-control-plaintext fw-bold" id="sanksi" name="sanksi" value="-">
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if ($kembali->rusak === 'Ya' || $kembali->hilang === 'Ya')
+                                <div class="form-group mb-2 row">
+                                    <label for="status_kembali" class="col-md-4 col-form-label">Verifikasi :</label>
+                                    <div class="col-md-8 text-start">
+                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $kembali->id]) }}" method="POST">
+                                            @csrf
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-md-12">
+                                                    {{-- <button type="submit" name="status_kembali" value="Diterima" class="btn btn-sm btn-success">Diterima</button> --}}
+                                                    <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                    <button type="submit" name="status_kembali" value="Menunggu Pembayaran" class="btn btn-sm btn-primary">Menunggu Pembayaran</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="form-group mb-2 row">
+                                    <label for="status_kembali" class="col-md-4 col-form-label">Verifikasi :</label>
+                                    <div class="col-md-8 text-start">
+                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $kembali->id]) }}" method="POST">
+                                            @csrf
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-md-12">
+                                                    <button type="submit" name="status_kembali" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
+                                                    <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                    {{-- <button type="submit" name="status_kembali" value="Menunggu Verifikasi" class="btn btn-sm btn-warning">Menunggu Verifikasi</button> --}}
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
-
-                    {{-- <div class="col-md-8 offset-md-2">
-                        <table class="table table-bordered table-striped-columns">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 35%">Nama Pengguna</td>
-                                    <th>{{ $user->nama }}</th>
-                                </tr>
-                                <tr>
-                                    <td>NIP</td>
-                                    <th>{{ $user->nip }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Dinas</td>
-                                    <th>{{ $user->dinas->nama_dinas }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Jabatan</td>
-                                    <th>{{ $user->jabatan }}</th>
-                                </tr>
-                                <tr>
-                                    <td>No. Telepon</td>
-                                    <th>{{ $user->telp }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <th>{{ $user->email }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Role</td>
-                                    <th>{{ $user->roles->name }}</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> --}}
             </div>
         </div>
     </div>

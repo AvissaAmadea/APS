@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('pengembalian/superadmin/riwayat', [App\Http\Controllers\PengembalianController::class, 'riwayatKembaliSuperadmin'])->name('pengembalian.superadmin.riwayat');
         Route::get('pengembalian/superadmin/showRiwayat/{id}', [App\Http\Controllers\PengembalianController::class, 'superadminShowRiwayat'])->name('pengembalian.superadmin.showRiwayat');
 
+        Route::post('/pengembalian/set_sanksi/{id}', [App\Http\Controllers\PengembalianController::class, 'setSanksi'])->name('pengembalian.set_sanksi');
 
         Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
             'destroy',
@@ -117,6 +118,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('pengembalian/sekda/riwayat', [App\Http\Controllers\PengembalianController::class, 'riwayatKembaliSekda'])->name('pengembalian.sekda.riwayat');
         Route::get('pengembalian/sekda/showRiwayat/{id}', [App\Http\Controllers\PengembalianController::class, 'sekdaShowRiwayat'])->name('pengembalian.sekda.showRiwayat');
 
+        Route::post('/pengembalian/set_sanksi/{id}', [App\Http\Controllers\PengembalianController::class, 'setSanksi'])->name('pengembalian.set_sanksi');
+
         Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
             'destroy',
         ]);
@@ -140,6 +143,8 @@ Route::middleware(['auth'])->group(function () {
          Route::post('/peminjaman/opd', [App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.opd.store');
          Route::get('peminjaman/opd/show/{id}', [App\Http\Controllers\PeminjamanController::class, 'opdShow'])->name('peminjaman.opd.show');
          Route::get('peminjaman/opd/riwayat', [App\Http\Controllers\PeminjamanController::class, 'riwayatPinjamOpd'])->name('peminjaman.opd.riwayat');
+         Route::get('peminjaman/opd/showRiwayat/{id}', [App\Http\Controllers\PeminjamanController::class, 'opdShowRiwayat'])->name('peminjaman.opd.showRiwayat');
+
 
          Route::resource('peminjaman', App\Http\Controllers\PeminjamanController::class)->except([
              'destroy',

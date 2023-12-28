@@ -66,14 +66,14 @@
                             <div class="form-group mb-2 row">
                                 <label for="tgl_pinjam" class="col-md-4 col-form-label">Waktu Pinjam :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $pinjams->tgl_pinjam }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $tgl_pinjam_date }} {{ $tgl_pinjam_time }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
                                 <label for="tgl_kembali" class="col-md-4 col-form-label">Waktu Kembali :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $pinjams->tgl_kembali }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $tgl_kembali_date }} {{ $tgl_kembali_time }}">
                                 </div>
                             </div>
 
@@ -134,6 +134,28 @@
                                     </div>
                                 </div>
                             @endif
+
+                            <div class="form-group mb-2 row">
+                                <label for="created_at" class="col-md-4 col-form-label">Created_at :</label>
+                                <div class="col-md-8">
+                                    <input type="created_at" readonly class="form-control-plaintext fw-bold" id="created_at" name="created_at" value="{{ $timestamps['createdTimestamp'] ?? '-' }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="updated_at" class="col-md-4 col-form-label">Updated_at :</label>
+                                <div class="col-md-8">
+                                    <input type="updated_at" readonly class="form-control-plaintext fw-bold" id="updated_at" name="updated_at" value="{{ $timestamps['updatedTimestamp'] ?? '-' }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-2 row">
+                                <label for="deleted_at" class="col-md-4 col-form-label">Deleted_at :</label>
+                                <div class="col-md-8">
+                                    <input type="deleted_at" readonly class="form-control-plaintext fw-bold" id="deleted_at" name="deleted_at" value="{{ $timestamps['deletedTimestamp'] ?? '-' }}">
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>

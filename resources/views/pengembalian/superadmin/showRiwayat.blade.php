@@ -66,14 +66,14 @@
                             <div class="form-group mb-2 row">
                                 <label for="tgl_pinjam" class="col-md-4 col-form-label">Waktu Pinjam :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $kembali->peminjaman->tgl_pinjam }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $tgl_pinjam_date }} {{ $tgl_pinjam_time }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
                                 <label for="tgl_kembali" class="col-md-4 col-form-label">Waktu Kembali :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $kembali->peminjaman->tgl_kembali }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $tgl_kembali_date }} {{ $tgl_kembali_time }}">
                                 </div>
                             </div>
 
@@ -141,14 +141,17 @@
                                         @if($isPDF)
                                             <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }} (PDF)</a>
                                         @elseif($isImage)
-                                            <a href="{{ asset($filePath) }}" target="_blank">
+                                            {{-- <a href="{{ asset($filePath) }}" target="_blank">
                                                 <img src="{{ asset($filePath) }}" alt="Surat Peminjaman" style="max-width: 100%">
+                                            </a> --}}
+                                            <a href="{{ asset($filePath) }}" target="_blank">
+                                                {{ $fileName }} (Lihat gambar)
                                             </a>
                                         @else
                                             <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }}</a>
                                         @endif
                                     @else
-                                        <p>Tidak ada file surat peminjaman terlampir.</p>
+                                        <strong><p>Tidak ada file bukti rusak/hilang terlampir.</p></strong>
                                     @endif
                                 </div>
                             </div>

@@ -67,13 +67,16 @@
                                         <td>-</td>
                                     @endif
 
-                                    @if(isset($tglPinjam[$key]) && isset($tglKembali[$key]))
+                                    <td style="width: 8rem">{{ $tgl_pinjam_date[$key] ?? '' }} {{ $tgl_pinjam_time[$key] ?? '' }}</td>
+                                    <td style="width: 8rem">{{ $tgl_kembali_date[$key] ?? '' }} {{ $tgl_kembali_time[$key] ?? '' }}</td>
+
+                                    {{-- @if(isset($tglPinjam[$key]) && isset($tglKembali[$key]))
                                         <td style="width: 8rem">{{ ( $tglPinjam[$key] ) }}</td>
                                         <td style="width: 8rem">{{ ( $tglKembali[$key] ) }}</td>
                                     @else
                                         <td>-</td>
                                         <td>-</td>
-                                    @endif
+                                    @endif --}}
 
                                     {{-- <td>{{ ( $item->status_pinjam ) }}</td> --}}
                                     <td style="width: 6rem">

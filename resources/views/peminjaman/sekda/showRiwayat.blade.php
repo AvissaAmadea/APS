@@ -59,14 +59,14 @@
                             <div class="form-group mb-2 row">
                                 <label for="tgl_pinjam" class="col-md-4 col-form-label">Waktu Pinjam :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $pinjams->tgl_pinjam }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_pinjam" name="tgl_pinjam" value="{{ $tgl_pinjam_date }} {{ $tgl_pinjam_time }}">
                                 </div>
                             </div>
 
                             <div class="form-group mb-2 row">
                                 <label for="tgl_kembali" class="col-md-4 col-form-label">Waktu Kembali :</label>
                                 <div class="col-md-8">
-                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $pinjams->tgl_kembali }}">
+                                    <input type="text" readonly class="form-control-plaintext fw-bold" id="tgl_kembali" name="tgl_kembali" value="{{ $tgl_kembali_date }} {{ $tgl_kembali_time }}">
                                 </div>
                             </div>
 
@@ -83,6 +83,35 @@
                                     <span class="status-badge @if ($pinjams->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($pinjams->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $pinjams->status_pinjam }}</span>
                                 </div>
                             </div>
+
+                            <!-- Tampilan untuk tombol Hapus jika status peminjaman adalah "Menunggu Verifikasi" -->
+                            @if($pinjams->status_pinjam === 'Menunggu Verifikasi')
+                                @php
+                                    $waktuPinjam = \Carbon\Carbon::createFromTimestamp($pinjams->tgl_pinjam)->subHours(6);
+                                    $batasWaktuCancel = \Carbon\Carbon::now()->startOfDay();
+                                @endphp
+
+                                @if(\Carbon\Carbon::now()->greaterThanOrEqualTo($waktuPinjam))
+                                    <form action="{{ route('peminjaman.destroy', $pinjams->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="form-group mb-2 row">
+                                            <label for="hapus" class="col-md-4 col-form-label">Batalkan Peminjaman :</label>
+                                            <div class="col-auto mt-1">
+                                                <button type="submit" class="btn btn-sm btn-danger float-start">Batal</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @else
+                                    <div class="form-group mb-2 row">
+                                        <label class="col-md-4 col-form-label"></label>
+                                        <div class="col-md-8">
+                                            <p class="text-start text-danger">Batas waktu pembatalan peminjaman telah berakhir.</p>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+
                         </div>
                     </div>
                 </div>

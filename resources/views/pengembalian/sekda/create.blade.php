@@ -101,7 +101,7 @@
                         <label for="bukti" class="col-sm-2 col-form-label">Bukti Rusak/Hilang</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control @error('bukti') is-invalid @enderror" id="bukti" name="bukti" accept=".jpg,.jpeg,.png,.doc,.docx,.pdf" value="{{ old('bukti') }}" autofocus>
-                            <div class="form-text text-start">Dapat berupa foto bagian kerusakan atau surat kehilangan</div>
+                            <div class="form-text text-start">Dapat berupa foto bagian kerusakan atau surat kehilangan ukuran max. 2 MB</div>
                             @error('bukti')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -174,6 +174,34 @@
                         </div>
                     </div>
 
+                    <!-- Tampilan untuk tombol Hapus jika status peminjaman adalah "Menunggu Verifikasi" -->
+                    @if($peminjaman->status_pinjam === 'Menunggu Verifikasi')
+                        @php
+                            $waktuPinjam = \Carbon\Carbon::createFromTimestamp($peminjaman->tgl_pinjam)->subHours(6);
+                            $batasWaktuCancel = \Carbon\Carbon::now()->startOfDay();
+                        @endphp
+
+                        @if(\Carbon\Carbon::now()->greaterThanOrEqualTo($waktuPinjam))
+                            <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="form-group mb-2 row">
+                                    <label for="hapus" class="col-sm-3 col-form-label text-end">Batalkan Peminjaman</label>
+                                    <div class="col-sm-9">
+                                        <button type="submit" class="btn btn-sm btn-danger float-start">Batal</button>
+                                    </div>
+                                </div>
+                            </form>
+                        @else
+                            <div class="form-group mb-2 row">
+                                <label class="col-sm-3 col-form-label"></label>
+                                <div class="col-sm-9">
+                                    <p class="text-start text-danger">Batas waktu pembatalan peminjaman telah berakhir.</p>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+
                     <button type="submit" class="btn btn-success btn-sm float-end mb-0 mt-2" name="submit">Update</button>
 
                 </form>
