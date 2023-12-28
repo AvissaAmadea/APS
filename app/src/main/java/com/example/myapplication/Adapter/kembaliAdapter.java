@@ -1,6 +1,7 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.DetailDenda;
 import com.example.myapplication.Model.LaporanModel;
 import com.example.myapplication.Model.kembaliModel;
 import com.example.myapplication.R;
@@ -39,6 +41,16 @@ public class kembaliAdapter extends RecyclerView.Adapter<kembaliAdapter.kembali>
         holder.kode.setText(model.getKode());
         holder.nama.setText(model.getNama());
         holder.aset.setText(model.getAset());
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, DetailDenda.class);
+//                intent.putExtra("aset",model.getAset());
+//                intent.putExtra("keadaan",model.getKeadaan());
+//                intent.putExtra("kode",model.getKode());
+//                intent.putExtra("nama",model.getNama());
+//            }
+//        });
 
     }
 

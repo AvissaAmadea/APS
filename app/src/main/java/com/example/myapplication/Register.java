@@ -77,11 +77,11 @@ public class Register extends AppCompatActivity {
                     if (motionEvent.getRawX()>=etPass.getRight()-etPass.getCompoundDrawables()[Right].getBounds().width()){
                         int selection = etPass.getSelectionEnd();
                         if (passwordVisible){
-                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_visibility_off_24, 0);
+                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.baseline_password_24, 0, R.drawable.outline_visibility_off_24, 0);
                             etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                             passwordVisible=false;
                         }else{
-                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_visibility_24, 0);
+                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.baseline_password_24, 0, R.drawable.outline_visibility_24, 0);
                             etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                             passwordVisible=true;
                         }

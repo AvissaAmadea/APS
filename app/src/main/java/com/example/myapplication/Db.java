@@ -1,11 +1,14 @@
 package com.example.myapplication;
 
 public class Db {
-    public static String ip = "192.168.1.7";
+    public static String ip = "192.168.22.12";
+
+    public static final String addDinas = "http://"+ip+"/aps1/addDinas.php";
+    public static final String updateDinas = "http://"+ip+"/aps1/updateDinas.php";
 
     public static final String batal = "http://"+ip+"/aps1/Peminjaman/pembatalan.php";
-    public static final String pelaporan = "http://"+ip+"/aps1/Pengembalian/pelaporan.php";
-
+    //public static final String pelaporan = "http://"+ip+"/aps1/Pengembalian/pelaporan.php";
+    public static final String getDenda = "http://"+ip+"/aps1/Pengembalian/getDenda.php";
     public static final String updateUser = "http://"+ip+"/aps1/User/updateUser.php";
     public static final String delKat = "http://"+ip+"/aps1/kategori/deleteKat.php";
     public static final String getPinjam = "http://"+ip+"/aps1/Peminjaman/getPeminjaman.php";

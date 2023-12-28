@@ -7,34 +7,15 @@
     tools:context=".Sekre.ListVerifikasi"
     android:orientation="vertical"
     android:background="@color/grey">
-
-    <LinearLayout
-        android:background="@color/white"
-        android:id="@+id/judul"
+    <androidx.appcompat.widget.Toolbar
+        android:theme="@style/Theme.MyApplication"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:background="@color/green_pea"
+        app:title="Laporan Peminjaman"
+        app:titleTextColor="@color/white"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_back_24"
-            android:id="@+id/backToMenu1"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"/>
 
-        <TextView
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Laporan Peminjaman"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/next"
         android:background="@color/white"
@@ -58,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:layout_gravity="center_vertical"
-                android:text="Verifikasi Pengembalian"
+                android:text="Laporan Pengembalian"
                 android:textColor="@color/black"
                 android:drawableRight="@drawable/baseline_arrow_forward_24"/>
         </GridLayout>

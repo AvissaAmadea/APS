@@ -64,9 +64,11 @@ public class detailPeminjaman extends AppCompatActivity {
         if (status.getText().equals("Menunggu Verifikasi")){
             batal.setVisibility(View.VISIBLE);
 
-        }else if (status.getText().equals("Diterima")){
+        }else if (status.getText().equals("Peminjaman Diterima")){
             kembali.setVisibility(View.VISIBLE);
+
         }
+
 
         kembali.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,7 @@ public class detailPeminjaman extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String kodeP = kode.getText().toString();
                         Batal(kodeP);
+                        finish();
                     }
                 });
                 builder.create().show();

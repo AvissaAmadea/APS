@@ -8,34 +8,14 @@
     android:background="@color/grey"
     tools:context=".PelaporanKerusakanKehilangan">
 
-    <LinearLayout
-        android:background="@color/white"
-        android:id="@+id/judul"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:src="@drawable/baseline_arrow_back_24"
-            android:id="@+id/backToMenu1"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Riwayat Pengembalian"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-    </LinearLayout>
+        app:title="Riwayat Pengembalian"
+        android:id="@+id/tool"
+        app:titleTextColor="@color/white"
+        style="@style/Theme.MyApplication"
+        android:background="@color/green_pea"/>
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,10 +26,12 @@
         android:layout_marginTop="20dp"
         android:textAlignment="center"
         android:textSize="25dp"
+        android:id="@+id/blmAda"
         android:fontFamily="@font/poppins_bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="BELUM ADA PENGEMBALIAN"/>
+
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"

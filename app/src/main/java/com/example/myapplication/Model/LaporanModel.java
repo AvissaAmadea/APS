@@ -1,16 +1,26 @@
 package com.example.myapplication.Model;
 
 public class LaporanModel {
-    String kode, nama, aset, keadaan, status;
+    String kode, nama, aset, keadaan, status, detail;
     int id;
 
-    public LaporanModel(String kode, String nama, String aset, String keadaan, String status, int id) {
+    public LaporanModel(String kode, String nama, String aset, String keadaan, String status, int id, String detail) {
         this.kode = kode;
         this.nama = nama;
         this.aset = aset;
         this.keadaan = keadaan;
         this.status = status;
         this.id = id;
+        this.detail = detail;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public LaporanModel setDetail(String detail) {
+        this.detail = detail;
+        return this;
     }
 
     public int getId() {

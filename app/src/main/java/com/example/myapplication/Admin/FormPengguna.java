@@ -9,8 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,6 +46,7 @@ import java.util.Map;
 public class FormPengguna extends AppCompatActivity {
 
     TextView tvPass;
+    boolean passwordVisible;
 
     EditText ETnama, ETusername, ETemail, ETnip, etPass;
     Spinner SpinDinas,status, SpinRole;
@@ -73,6 +77,29 @@ public class FormPengguna extends AppCompatActivity {
         tvPass = findViewById(R.id.tvPass);
         etPass = findViewById(R.id.etPasswordUser);
 
+        etPass.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int Right =2;
+                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    if (motionEvent.getRawX()>=etPass.getRight()-etPass.getCompoundDrawables()[Right].getBounds().width()){
+                        int selection = etPass.getSelectionEnd();
+                        if (passwordVisible){
+                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_visibility_off_24, 0);
+                            etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible=false;
+                        }else{
+                            etPass.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_visibility_24, 0);
+                            etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible=true;
+                        }
+                        etPass.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
         String[] data = {"Pilih Role", "Admin", "Sekda", "OPD"};
 
@@ -95,6 +122,7 @@ public class FormPengguna extends AppCompatActivity {
         // Apply the adapter to the spinner
         status.setAdapter(adapterStatus);
 
+
         fetchDinas(SpinDinas);
 
         Intent intent = getIntent();
@@ -104,7 +132,11 @@ public class FormPengguna extends AppCompatActivity {
             ETnip.setText(intent.getStringExtra("nip"));
             ETemail.setText(intent.getStringExtra("email"));
             ETusername.setText(intent.getStringExtra("username"));
+            String dinas = intent.getStringExtra("dinas");
+            String status1 = intent.getStringExtra("status");
 
+            int StatusPos = adapterStatus.getPosition(status1);
+            status.setSelection(StatusPos);
             if (id >= 0) {
                 simpan1.setVisibility(View.VISIBLE);
                 simpan1.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +149,7 @@ public class FormPengguna extends AppCompatActivity {
                         String dinas = SpinDinas.getSelectedItem().toString();
                         String role = SpinRole.getSelectedItem().toString();
                         String status1 = status.getSelectedItem().toString();
+
 
                         if (!(nama.isEmpty() || username.isEmpty() || email.isEmpty() || nip.isEmpty()) || dinas.equals("Pilih Dinas") || role.equals("Pilih Role")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(FormPengguna.this);
@@ -270,6 +303,7 @@ public class FormPengguna extends AppCompatActivity {
                                 SpinDinas.setAdapter(dinasAdapter);
 
                             }
+//                            int dinasPos = dinasAdapter.getPosition(dinas);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

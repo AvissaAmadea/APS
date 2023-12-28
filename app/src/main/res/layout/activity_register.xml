@@ -23,12 +23,13 @@
             android:id="@+id/judul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
+            android:textStyle="bold"
             android:gravity="center"
             android:text="APS.jepara.co.id"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
         <androidx.cardview.widget.CardView
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -177,6 +178,7 @@
                     app:cornerRadius="20dp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="DAFTAR"
+                    android:padding="10dp"
                     android:textSize="20dp"
                     android:textColor="@color/white"/>
                 <TextView

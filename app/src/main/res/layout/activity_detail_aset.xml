@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".DetailAset"
     android:background="@color/grey">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Detail Aset"
+        android:id="@+id/tool"
+        app:titleTextColor="@color/white"
+        style="@style/Theme.MyApplication"
+        android:background="@color/green_pea"/>
     <TextView
+        android:layout_below="@id/tool"
         android:layout_marginTop="20dp"
         android:id="@+id/det"
         android:layout_width="match_parent"

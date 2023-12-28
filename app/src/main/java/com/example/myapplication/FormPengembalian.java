@@ -121,6 +121,7 @@ public class FormPengembalian extends AppCompatActivity {
             tahun = calendar.get(Calendar.YEAR);
             bulan = calendar.get(Calendar.MONTH);
             tanggal = calendar.get(Calendar.DAY_OF_MONTH);
+
             DatePickerDialog dialog;
             dialog = new DatePickerDialog(FormPengembalian.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -128,6 +129,7 @@ public class FormPengembalian extends AppCompatActivity {
                     tahun = year;
                     bulan = month;
                     tanggal = dayOfMonth;
+
 
                     tgl.setText(tahun + " / " + (bulan+1) + " / " + tanggal);
                 }

@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -33,12 +35,19 @@ public class ListPengembalian extends AppCompatActivity {
     List<LaporanModel> laporanModelList;
     LaporanAdapter adapter;
     ProgressBar progressBar;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pengembalian);
         progressBar = findViewById(R.id.pgL);
+        textView = findViewById(R.id.verifPinjam);
+
+        textView.setOnClickListener(view -> {
+            startActivity(new Intent(ListPengembalian.this, ListVerifikasi.class));
+            finish();
+        });
 
         fetchData();
         laporanModelList = new ArrayList<>();
@@ -69,7 +78,8 @@ public class ListPengembalian extends AppCompatActivity {
                                         object.getString("nama_aset"),
                                         object.getString("keadaan"),
                                         object.getString("status"),
-                                        object.getInt("id_kembali")
+                                        object.getInt("id_kembali"),
+                                        object.getString("detail")
                                 ));
                             }
                             adapter.notifyDataSetChanged();

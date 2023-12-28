@@ -50,6 +50,8 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.allLapor
                 intent.putExtra("nama", model.getNama());
                 intent.putExtra("aset", model.getAset());
                 intent.putExtra("id", model.getId());
+                intent.putExtra("detail", model.getDetail());
+
                 context.startActivity(intent);
             }
         });

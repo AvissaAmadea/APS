@@ -56,19 +56,44 @@ int position;
         upload = findViewById(R.id.surat);
 
         Intent intent2 = getIntent();
-        position = intent2.getExtras().getInt("position");
-        aset.setText(intent2.getStringExtra("nama_aset"));
-
-        upload.setOnClickListener(view -> {
-
-
-        });
+        if (intent2!=null){
+            position = intent2.getExtras().getInt("position");
+            aset.setText(intent2.getStringExtra("nama_aset"));
+            simpan.setOnClickListener(view -> {
+                String nama = namaPeminjam.getText().toString();
+                String tujuan = tujuanPinjam.getText().toString();
+                String tglPin = tglPinjam.getText().toString();
+                String tglKem = tglPinjam.getText().toString();
+                String namaAset = aset.getText().toString();
+                if (nama.isEmpty()||tujuan.isEmpty()||tglPin.isEmpty()||tglKem.isEmpty()||namaAset.isEmpty()){
+                    Toast.makeText(FormPeminjaman.this, "Harap diisi dengan benar", Toast.LENGTH_SHORT).show();
+                }else {
+                    loadDialog.ShowDialog("Menyimpan....");
+                    simpanFormPeminjaman(nama, tujuan, tglPin, tglKem, namaAset);
+                }
+            });
+        }else {
+            simpan.setOnClickListener(view -> {
+                String nama = namaPeminjam.getText().toString();
+                String tujuan = tujuanPinjam.getText().toString();
+                String tglPin = tglPinjam.getText().toString();
+                String tglKem = tglPinjam.getText().toString();
+                String namaAset = aset.getText().toString();
+                if (nama.equals(null)||tujuan.equals(null)||tglPin.equals(null)||tglKem.equals(null)||namaAset.equals(null)){
+                    Toast.makeText(FormPeminjaman.this, "Harap diisi dengan benar", Toast.LENGTH_SHORT).show();
+                }else {
+                    loadDialog.ShowDialog("Menyimpan....");
+                    simpanFormPeminjaman(nama, tujuan, tglPin, tglKem, namaAset);
+                }
+            });
+        }
 
         tglPinjam.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
             tahun = calendar.get(Calendar.YEAR);
             bulan = calendar.get(Calendar.MONTH);
             tanggal = calendar.get(Calendar.DAY_OF_MONTH);
+            calendar.add(Calendar.DAY_OF_MONTH,3);
             DatePickerDialog dialog;
             dialog = new DatePickerDialog(FormPeminjaman.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -78,7 +103,7 @@ int position;
                     tanggal = dayOfMonth;
 
 
-                    tglPinjam.setText(String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth));
+                    tglPinjam.setText(tahun + "/" + (bulan+1) + "/" + tanggal);
                 }
             },tahun,bulan,tanggal);
             dialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-1000);
@@ -89,6 +114,7 @@ int position;
             tahun2 = calendar.get(Calendar.YEAR);
             bulan2 = calendar.get(Calendar.MONTH);
             tanggal2 = calendar.get(Calendar.DAY_OF_MONTH);
+            calendar.add(Calendar.DAY_OF_MONTH,3);
             DatePickerDialog dialog;
             dialog = new DatePickerDialog(FormPeminjaman.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -96,7 +122,7 @@ int position;
                     tahun2 = year;
                     bulan2 = month;
                     tanggal2 = dayOfMonth;
-                    String tgl1 = String.format("%04d-%02d-%02d", tahun2, bulan2 + 1, tanggal2);
+                    String tgl1 = (tahun2 + "/" + (bulan2+1) + "/" + tanggal2);
                     tglKembali.setText(tgl1);
 
                 }
@@ -106,19 +132,7 @@ int position;
 
         });
 
-        simpan.setOnClickListener(view -> {
-            String nama = namaPeminjam.getText().toString();
-            String tujuan = tujuanPinjam.getText().toString();
-            String tglPin = tglPinjam.getText().toString();
-            String tglKem = tglPinjam.getText().toString();
-            String namaAset = aset.getText().toString();
-           if (nama.equals(null)||tujuan.equals(null)||tglPin.equals(null)||tglKem.equals(null)||namaAset.equals(null)){
-               Toast.makeText(FormPeminjaman.this, "Harap diisi dengan benar", Toast.LENGTH_SHORT).show();
-           }else {
-               loadDialog.ShowDialog("Menyimpan....");
-               simpanFormPeminjaman(nama, tujuan, tglPin, tglKem, namaAset);
-           }
-        });
+
 
 
     }
@@ -131,8 +145,9 @@ int position;
                     @Override
                     public void onResponse(String response) {
                         loadDialog.HideDialog();
-                        Toast.makeText(FormPeminjaman.this, "response"+response, Toast.LENGTH_LONG).show();
                         showSuccessDialog();
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override

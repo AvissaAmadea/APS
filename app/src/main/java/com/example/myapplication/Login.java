@@ -41,6 +41,7 @@ public class Login extends AppCompatActivity {
 
     Button login;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,40 +121,50 @@ public class Login extends AppCompatActivity {
                                 String email = jsonResponse.getString("email");
                                 String username = jsonResponse.getString("username");
                                 String dinas = jsonResponse.getString("nama_dinas");
+                                Intent intent = new Intent(Login.this, MainActivity.class);
+                                    intent.putExtra("id_user",id_user);
+                                    intent.putExtra("nama", nama);
+                                    intent.putExtra("nip", nip);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("dinas", dinas);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("id_role", id_role);
+                                    startActivity(intent);
+//                                  UserManage.UserSessionManage(nama, nip, email, username,dinas);
 //                                loginModelList.add(new LoginModel(id_user, id_role, nama,username, email, nip, dinas));
-                                if (id_role == 1) {
-                                    Intent intent = new Intent(Login.this, AdminActivity.class);
-                                    intent.putExtra("id_user",id_user);
-                                    intent.putExtra("nama", nama);
-                                    intent.putExtra("nip", nip);
-                                    intent.putExtra("email", email);
-                                    intent.putExtra("dinas", dinas);
-                                    intent.putExtra("username", username);
-                                    intent.putExtra("id_role", id_role);
-                                    startActivity(intent);
-                                } else if (id_role == 2) {
-                                    Intent intent = new Intent(Login.this, OpdActivity.class);
-                                    intent.putExtra("id_user",id_user);
-                                    intent.putExtra("nama", nama);
-                                    intent.putExtra("nip", nip);
-                                    intent.putExtra("email", email);
-                                    intent.putExtra("dinas", dinas);
-                                    intent.putExtra("username", username);
-                                    intent.putExtra("id_role", id_role);
-                                    startActivity(intent);
-                                } else if (id_role == 3) {
-                                    Intent intent = new Intent(Login.this, SekreActivity.class);
-                                    intent.putExtra("id_user",id_user);
-                                    intent.putExtra("nama", nama);
-                                    intent.putExtra("nip", nip);
-                                    intent.putExtra("email", email);
-                                    intent.putExtra("dinas", dinas);
-                                    intent.putExtra("username", username);
-                                    intent.putExtra("id_role", id_role);
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(Login.this, "Unvalid Roles", Toast.LENGTH_SHORT).show();
-                                }
+//                                if (id_role == 1) {
+//                                    Intent intent = new Intent(Login.this, AdminActivity.class);
+//                                    intent.putExtra("id_user",id_user);
+//                                    intent.putExtra("nama", nama);
+//                                    intent.putExtra("nip", nip);
+//                                    intent.putExtra("email", email);
+//                                    intent.putExtra("dinas", dinas);
+//                                    intent.putExtra("username", username);
+//                                    intent.putExtra("id_role", id_role);
+//                                    startActivity(intent);
+//                                } else if (id_role == 2) {
+//                                    Intent intent = new Intent(Login.this, OpdActivity.class);
+//                                    intent.putExtra("id_user",id_user);
+//                                    intent.putExtra("nama", nama);
+//                                    intent.putExtra("nip", nip);
+//                                    intent.putExtra("email", email);
+//                                    intent.putExtra("dinas", dinas);
+//                                    intent.putExtra("username", username);
+//                                    intent.putExtra("id_role", id_role);
+//                                    startActivity(intent);
+//                                } else if (id_role == 3) {
+//                                    Intent intent = new Intent(Login.this, SekreActivity.class);
+//                                    intent.putExtra("id_user",id_user);
+//                                    intent.putExtra("nama", nama);
+//                                    intent.putExtra("nip", nip);
+//                                    intent.putExtra("email", email);
+//                                    intent.putExtra("dinas", dinas);
+//                                    intent.putExtra("username", username);
+//                                    intent.putExtra("id_role", id_role);
+//                                    startActivity(intent);
+//                                } else {
+//                                    Toast.makeText(Login.this, "Unvalid Roles", Toast.LENGTH_SHORT).show();
+//                                }
                             }
 
                         } catch (JSONException e) {

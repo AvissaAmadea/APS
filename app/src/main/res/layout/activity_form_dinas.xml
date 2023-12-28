@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FormDinas">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Form Dinas"
+        android:id="@+id/tool"
+        app:titleTextColor="@color/white"
+        style="@style/Theme.MyApplication"
+        android:background="@color/green_pea"/>
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp">
+        <LinearLayout
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:textSize="30dp"
+                android:layout_marginBottom="30dp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Form Dinas"/>
+            <TextView
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama Dinas"/>
+            <EditText
+                android:id="@+id/namaDinas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Dinas"/>
+            <TextView
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alamat Dinas"/>
+            <EditText
+
+                android:id="@+id/alamatDinas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alamat Dinas"/>
+            <Button
+                android:id="@+id/simpanDinas"
+                android:layout_marginTop="100dp"
+                android:padding="10dp"
+                android:text="SIMPAN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

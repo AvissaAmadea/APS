@@ -7,29 +7,19 @@
     tools:context=".Sekre.ListPengembalian"
     android:orientation="vertical"
     android:background="@color/grey">
-    <LinearLayout
-        android:background="@color/white"
-        android:id="@+id/judul"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Laporan Pengembalian"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
-    </LinearLayout>
+        app:title="Laporan Pengembalian"
+        android:id="@+id/tool"
+        app:titleTextColor="@color/white"
+        style="@style/Theme.MyApplication"
+        android:background="@color/green_pea"/>
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:id="@+id/next"
         android:background="@color/white"
-        android:layout_below="@+id/judul"
+        android:layout_below="@+id/tool"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="bottom"

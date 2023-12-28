@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,14 +28,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Db;
+import com.example.myapplication.FormPeminjaman;
 import com.example.myapplication.LoadDialog;
 import com.example.myapplication.R;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FormVerif extends AppCompatActivity {
     int id;
+    private int tahun,bulan,tanggal;
+    private int tahun2,bulan2,tanggal2;
     TextView nama, aset, tuju, kode;
     EditText tglP, tglK, alasan;
     RadioGroup verif;
@@ -82,6 +88,50 @@ public class FormVerif extends AppCompatActivity {
             tglK.setText(intent2.getStringExtra("tglKembali"));
             tglP.setText(intent2.getStringExtra("tglPinjam"));
             kode.setText(intent2.getStringExtra("kode"));
+
+            tglK.setOnClickListener(view -> {
+                Calendar calendar = Calendar.getInstance();
+                tahun = calendar.get(Calendar.YEAR);
+                bulan = calendar.get(Calendar.MONTH);
+                tanggal = calendar.get(Calendar.DAY_OF_MONTH);
+                calendar.add(Calendar.DAY_OF_MONTH,3);
+                DatePickerDialog dialog;
+                dialog = new DatePickerDialog(FormVerif.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        tahun = year;
+                        bulan = month;
+                        tanggal = dayOfMonth;
+
+
+                        tglP.setText(tahun + "/" + (bulan+1) + "/" + tanggal);
+                    }
+                },tahun,bulan,tanggal);
+                dialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-1000);
+                dialog.show();
+            });
+            tglP.setOnClickListener(view -> {
+                Calendar calendar = Calendar.getInstance();
+                tahun2 = calendar.get(Calendar.YEAR);
+                bulan2 = calendar.get(Calendar.MONTH);
+                tanggal2 = calendar.get(Calendar.DAY_OF_MONTH);
+                calendar.add(Calendar.DAY_OF_MONTH,3);
+                DatePickerDialog dialog;
+                dialog = new DatePickerDialog(FormVerif.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        tahun2 = year;
+                        bulan2 = month;
+                        tanggal2 = dayOfMonth;
+                        String tgl1 = (tahun2 + "/" + (bulan2+1) + "/" + tanggal2);
+                        tglK.setText(tgl1);
+
+                    }
+                },tahun2,bulan2,tanggal2);
+                dialog.getDatePicker().setMinDate(calendar.getTimeInMillis()-1000);
+                dialog.show();
+
+            });
         }
 
     }
@@ -101,6 +151,7 @@ public class FormVerif extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 showFailedDialog();
                 Toast.makeText(FormVerif.this, "error" +error, Toast.LENGTH_SHORT).show();
+                Log.d("response", "response" +error);
             }
         }){
             @Nullable

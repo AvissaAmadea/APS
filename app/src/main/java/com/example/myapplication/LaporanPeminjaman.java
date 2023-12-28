@@ -18,7 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.Adapter.RiwayatAdapter;
 import com.example.myapplication.Adapter.verifAdapter;
+import com.example.myapplication.Model.RiwayatModel;
 import com.example.myapplication.Model.verifModel;
 import com.example.myapplication.Sekre.ListPengembalian;
 import com.example.myapplication.Sekre.ListVerifikasi;
@@ -35,8 +37,8 @@ public class LaporanPeminjaman extends AppCompatActivity {
     RecyclerView recyclerView;
 
     TextView blm, kem;
-    private List<verifModel> verifModelList;
-    verifAdapter adapter;
+    private List<RiwayatModel> riwayatModelList;
+    RiwayatAdapter adapter;
     ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +54,17 @@ public class LaporanPeminjaman extends AppCompatActivity {
         kem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LaporanPeminjaman.this, ListPengembalian.class);
+                Intent intent = new Intent(LaporanPeminjaman.this, LaporanPengembalian.class);
                 startActivity(intent);
                 finish();
             }
         });
 
         fetchData();
-        verifModelList = new ArrayList<>();
+        riwayatModelList = new ArrayList<>();
         RecyclerView recyclerView1 = findViewById(R.id.listpinjam);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new verifAdapter(LaporanPeminjaman.this, verifModelList);
+        adapter = new RiwayatAdapter(LaporanPeminjaman.this, riwayatModelList);
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(adapter);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
@@ -83,14 +85,15 @@ public class LaporanPeminjaman extends AppCompatActivity {
                             JSONArray array = jsonResponse.getJSONArray("peminjaman_aset");
                             for (int i = 0; i<array.length();i++){
                                 JSONObject object = array.getJSONObject(i);
-                                verifModelList.add(new verifModel(
+                                riwayatModelList.add(new RiwayatModel(
                                         object.getString("nama"),
                                         object.getString("nama_aset"),
                                         object.getString("tgl_pinjam"),
                                         object.getString("tgl_kembali"),
-                                        object.getString("status"),
                                         object.getString("kode"),
-                                        object.getString("tujuan")
+                                        object.getString("status"),
+                                        object.getString("tujuan"),
+                                        object.getInt("id_pinjam")
                                 ));
                             }
                             adapter.notifyDataSetChanged();

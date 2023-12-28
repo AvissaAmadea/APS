@@ -34,8 +34,6 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
 
     private DrawerLayout drawerLayout;
 
-    TextView nm, np;
-    CardView prof, card, cardView;
 
 
     @Override
@@ -47,7 +45,7 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
         Toolbar toolbar = findViewById(R.id.toolbar2); //Ignore red line errors
         setSupportActionBar(toolbar);
 
-        drawerLayout = findViewById(R.id.drawer_layout2);
+        drawerLayout = findViewById(R.id.drawer_layout3);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -105,7 +103,6 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
                 break;
 
             case R.id.setting:
-                card.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingFragment()).commit();
                 break;
 

@@ -10,6 +10,7 @@
     android:layout_marginRight="10dp"
     android:orientation="vertical">
     <androidx.cardview.widget.CardView
+        android:background="@color/grey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -33,7 +34,8 @@
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
         <LinearLayout
             android:background="@drawable/squaretop"
             android:layout_width="match_parent"

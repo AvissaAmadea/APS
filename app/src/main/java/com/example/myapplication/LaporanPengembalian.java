@@ -76,7 +76,8 @@ public class LaporanPengembalian extends AppCompatActivity {
                                         object.getString("nama_aset"),
                                         object.getString("keadaan"),
                                         object.getString("status"),
-                                        object.getInt("id_kembali")
+                                        object.getInt("id_kembali"),
+                                        object.getString("detail")
                                 ));
                             }
                             adapter.notifyDataSetChanged();

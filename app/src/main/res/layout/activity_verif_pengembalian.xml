@@ -12,33 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:background="@color/white"
-            android:id="@+id/judul"
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_back_24"
-                android:id="@+id/backToMenu1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Detail Peminjaman"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
-        </LinearLayout>
+            app:title="Verifikasi Pengembalian"
+            android:id="@+id/tool"
+            app:titleTextColor="@color/white"
+            style="@style/Theme.MyApplication"
+            android:background="@color/green_pea"/>
         <androidx.cardview.widget.CardView
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
@@ -50,16 +33,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:padding="10dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Kode Peminjaman"/>
                 <TextView
+                    android:background="@drawable/squarea"
+                    android:padding="10dp"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
-                    android:textSize="15dp"
+                    android:textSize="18dp"
                     android:id="@+id/kod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -67,6 +53,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -86,11 +73,13 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="Nama"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     tools:ignore="TextSizeCheck" />
                 <TextView
+                    android:background="@drawable/squarea"
+                    android:padding="10dp"
                     android:fontFamily="@font/poppins"
-                    android:textSize="15dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:text="Nama Peminjam"
@@ -109,13 +98,15 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="Aset"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     tools:ignore="TextSizeCheck" />
                 <TextView
+                    android:background="@drawable/squarea"
+                    android:padding="10dp"
                     android:textColor="@color/black"
                     android:text="Nama Aset"
                     android:fontFamily="@font/poppins"
-                    android:textSize="15dp"
+                    android:textSize="18dp"
                     android:id="@+id/nama_aset_pinjam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,13 +123,15 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="Keadaan Aset"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     tools:ignore="TextSizeCheck" />
 
                 <TextView
+                    android:background="@drawable/squarea"
+                    android:padding="10dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins"
-                    android:textSize="15dp"
+                    android:textSize="18dp"
                     android:text="Tujuan Peminjaman"
                     android:id="@+id/Keadaan"
                     android:layout_marginTop="5dp"
@@ -146,7 +139,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -154,19 +146,25 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Bukti Kerusakan"
+                    android:text="Detail"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     tools:ignore="TextSizeCheck" />
+
                 <TextView
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:minHeight="50dp"
-                    android:clickable="true"
+                    android:background="@drawable/squarea"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="18dp"
+                    android:text="Tujuan Peminjaman"
+                    android:id="@+id/detail"
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/surat"
-                    android:drawableRight="@drawable/baseline_file_download_24"/>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -204,6 +202,7 @@
                 </LinearLayout>
 
                 <TextView
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -212,13 +211,14 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="Denda"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     tools:ignore="TextSizeCheck" />
                 <EditText
                     android:textColor="@color/black"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:minHeight="50dp"
+                    android:textSize="18dp"
                     android:hint="Isi alasan, jika diterima isi -"
                     android:clickable="true"
                     android:layout_width="match_parent"
@@ -233,13 +233,14 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="Alasan Penolakan"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     tools:ignore="TextSizeCheck" />
                 <EditText
                     android:textColor="@color/black"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:minHeight="50dp"
+                    android:textSize="18dp"
                     android:hint="Isi alasan, jika diterima isi -"
                     android:clickable="true"
                     android:layout_width="match_parent"

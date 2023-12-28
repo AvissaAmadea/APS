@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,14 +41,18 @@ public class ListPelaporan extends AppCompatActivity {
     LaporanAdapter adapter;
     ProgressBar progressBar;
     FloatingActionButton floatingActionButton;
+    TextView txt;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pelaporan);
+        txt = findViewById(R.id.txt);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id",0);
+        Toast.makeText(this, "id"+id, Toast.LENGTH_SHORT).show();
         floatingActionButton = findViewById(R.id.btn_add_laporan);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +84,7 @@ public class ListPelaporan extends AppCompatActivity {
                         try {
 //                            progressBar.setVisibility(View.GONE);
                             JSONObject jsonResponse = new JSONObject(response);
-                            JSONArray array = jsonResponse.getJSONArray("kembali");
+                            JSONArray array = jsonResponse.getJSONArray("report");
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 laporanModelList.add(new LaporanModel(
@@ -88,13 +93,15 @@ public class ListPelaporan extends AppCompatActivity {
                                         object.getString("nama_aset"),
                                         object.getString("keadaan"),
                                         object.getString("status"),
-                                        object.getInt("id_kembali")
+                                        object.getInt("id_kembali"),
+                                        object.getString("detail")
                                 ));
                             }
                             adapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(ListPelaporan.this, response, Toast.LENGTH_SHORT).show();
+                            txt.setVisibility(View.VISIBLE);
+                            Toast.makeText(ListPelaporan.this, "Belum Ada", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {

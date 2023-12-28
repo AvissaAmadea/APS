@@ -21,6 +21,7 @@ import com.example.myapplication.Adapter.kategoriAdapter;
 import com.example.myapplication.Admin.ListAsetAdmin;
 import com.example.myapplication.Admin.ListPengguna;
 import com.example.myapplication.Model.kategoriModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,6 +37,7 @@ public class kategori extends AppCompatActivity {
 
     private List<kategoriModel> kategoriModelList;
     kategoriAdapter adapter;
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,14 @@ public class kategori extends AppCompatActivity {
         progressBar  = findViewById(R.id.pgKat);
         user = findViewById(R.id.dft_user);
         aset = findViewById(R.id.dft_ast);
+        floatingActionButton = findViewById(R.id.btnAddKat);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(kategori.this, FormKategori.class);
+                startActivity(intent);
+            }
+        });
         user.setOnClickListener(view -> {
             startActivity(new Intent(this, ListPengguna.class));
         });

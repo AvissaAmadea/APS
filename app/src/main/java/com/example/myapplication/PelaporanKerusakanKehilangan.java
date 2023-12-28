@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +33,7 @@ import com.example.myapplication.Sekre.ListPengembalian;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +44,8 @@ import java.util.function.LongFunction;
 public class PelaporanKerusakanKehilangan extends AppCompatActivity {
 
     List<kembaliModel> kembaliModelList;
+
+    TextView blmAda;
     kembaliAdapter adapter;
     ProgressBar progressBar;
 
@@ -50,6 +54,7 @@ public class PelaporanKerusakanKehilangan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pelaporan_kerusakan_kehilangan);
         progressBar = findViewById(R.id.pb);
+        blmAda = findViewById(R.id.blmAda);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id",0);
         fetchData(id);
@@ -72,7 +77,7 @@ public class PelaporanKerusakanKehilangan extends AppCompatActivity {
                         try {
                             progressBar.setVisibility(View.GONE);
                             JSONObject jsonResponse = new JSONObject(response);
-                            JSONArray array = jsonResponse.getJSONArray("kembali");
+                            JSONArray array = jsonResponse.getJSONArray("report");
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 kembaliModelList.add(new kembaliModel(
@@ -86,15 +91,13 @@ public class PelaporanKerusakanKehilangan extends AppCompatActivity {
                             adapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(PelaporanKerusakanKehilangan.this, response, Toast.LENGTH_SHORT).show();
-                            Log.d("response", "response"+response);
+                            blmAda.setVisibility(View.VISIBLE);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
-                progressBar.setVisibility(View.VISIBLE);
                 Toast.makeText(PelaporanKerusakanKehilangan.this, "error", Toast.LENGTH_SHORT).show();
             }
         }){

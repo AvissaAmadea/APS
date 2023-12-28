@@ -11,32 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:background="@drawable/square"
-            android:id="@+id/judul"
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_back_24"
-                android:id="@+id/backToMenu1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Form Pengembalian"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
-        </LinearLayout>
+            app:title="Form Pengembalian"
+            android:id="@+id/tool"
+            app:titleTextColor="@color/white"
+            style="@style/Theme.MyApplication"
+            android:background="@color/green_pea"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

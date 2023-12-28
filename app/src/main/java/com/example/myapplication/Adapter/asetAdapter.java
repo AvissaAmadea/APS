@@ -41,13 +41,6 @@ public class asetAdapter extends RecyclerView.Adapter<asetAdapter.allAset> {
         holder.namaAset.setText(asetModelList.get(position).getNamaAset());
         holder.detail.setText(asetModelList.get(position).getDetail());
         holder.status.setText(asetModelList.get(position).getStats());
-        if ("Tersedia".equals(asetModel.getStats())){
-            holder.status.setTextColor(Color.GREEN);
-        }else if ("Tidak Tersedia".equals(asetModel.getStats())){
-            holder.status.setTextColor(Color.RED);
-        }else {
-            holder.status.setTextColor(Color.YELLOW);
-        }
         holder.kategori.setText(asetModelList.get(position).getKat());
         holder.add.setOnClickListener(view -> {
             Intent intent = new Intent(contextAset, FormPeminjaman.class);

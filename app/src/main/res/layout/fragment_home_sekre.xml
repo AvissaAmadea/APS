@@ -152,7 +152,7 @@
                                 android:layout_gravity="center_horizontal|center_vertical"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@drawable/baseline_assignment_turned_in_24"/>
+                                android:src="@drawable/baseline_account_balance_wallet_24"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -254,7 +254,7 @@
                                 android:layout_gravity="center_horizontal|center_vertical"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@drawable/baseline_people_24"/>
+                                android:src="@drawable/baseline_verified_24"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -349,13 +349,13 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="15dp"/>
+                android:textStyle="bold"
+                android:textSize="18dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_peminjamanOPD"
+                android:id="@+id/list_peminjaman"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 tools:listitem="@layout/ui_list_peminjaman">

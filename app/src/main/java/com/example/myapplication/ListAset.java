@@ -47,7 +47,7 @@ public class ListAset extends AppCompatActivity {
         progressBar = findViewById(R.id.loadAset);
         recyclerView = findViewById(R.id.list_aset_user);
         floatingActionButton = findViewById(R.id.btnAddPinjam);
-        back = findViewById(R.id.backToMenu2);
+
         fetchData();
         asetModelList = new ArrayList<>();
         RecyclerView recyclerView1 = findViewById(R.id.list_aset_user);

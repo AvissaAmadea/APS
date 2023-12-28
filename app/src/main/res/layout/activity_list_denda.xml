@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListDenda"
+    android:orientation="vertical"
+    android:background="@color/grey">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="List Denda"
+        android:id="@+id/tool"
+        app:titleTextColor="@color/white"
+        style="@style/Theme.MyApplication"
+        android:background="@color/green_pea"/>
+    <TextView
+        android:id="@+id/textv"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Belum Ada"/>
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/loaddenda"
+        android:visibility="gone"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/ui_bayar"
+        android:id="@+id/bayar"/>
+
+</LinearLayout>

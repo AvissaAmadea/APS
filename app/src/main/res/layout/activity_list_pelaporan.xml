@@ -7,34 +7,37 @@
     tools:context=".Opd.ListPelaporan"
     android:orientation="vertical"
     android:backgroundTint="@color/grey">
-    <LinearLayout
-        android:backgroundTint="@color/white"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/judul">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Riwayat Pelaporan"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/black"/>
-
-    </LinearLayout>
+        app:title="Pelaporan"
+        android:id="@+id/tool"
+        app:titleTextColor="@color/white"
+        style="@style/Theme.MyApplication"
+        android:background="@color/green_pea"/>
     <ProgressBar
         android:visibility="gone"
-        android:layout_below="@id/judul"
+        android:layout_below="@id/tool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pg"/>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/txt"
+        android:text="BELUM ADA"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pg"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lapor"
         tools:listitem="@layout/ui_lapor"
-        android:layout_below="@+id/pg"/>
+        android:layout_below="@+id/txt"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_laporan"
         android:layout_width="wrap_content"

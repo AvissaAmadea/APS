@@ -20,16 +20,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myapplication.Admin.FormPengguna;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProfilFragment extends Fragment {
 
-
+    userManage userManage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +38,7 @@ public class ProfilFragment extends Fragment {
 
 
 
+
         // Retrieve the data from the arguments
         if (getArguments() != null) {
             String receivedValue = getArguments().getString("nama");
@@ -48,6 +46,7 @@ public class ProfilFragment extends Fragment {
             String mail = getArguments().getString("email");
             String dinas = getArguments().getString("dinas");
             String username = getArguments().getString("username");
+            int id = getArguments().getInt("id");
 
             TextView textView = view.findViewById(R.id.etNama_profile);
             TextView nipUs = view.findViewById(R.id.etNIP_profile);
@@ -62,13 +61,14 @@ public class ProfilFragment extends Fragment {
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    editData(receivedValue, nip, mail, dinas, username);
+                    editData(receivedValue, nip, mail, dinas, username, id);
                 }
             });
             out.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     startActivity(new Intent(getContext(), Login.class));
+                    getActivity().finish();
                 }
             });
         }
@@ -77,7 +77,7 @@ public class ProfilFragment extends Fragment {
         return view;
     }
 
-    private void editData(String receivedValue, String nip, String mail, String dinas, String username) {
+    private void editData(String receivedValue, String nip, String mail, String dinas, String username, int id) {
         StringRequest request = new StringRequest(Request.Method.POST, Db.editProfil,
                 new Response.Listener<String>() {
                     @Override
@@ -99,6 +99,8 @@ public class ProfilFragment extends Fragment {
                 map.put("username", username);
                 map.put("nama", receivedValue);
                 map.put("email", mail);
+                map.put("dinas", dinas);
+                map.put("id", String.valueOf(id));
                 return map;
             }
         };

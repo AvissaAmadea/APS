@@ -60,7 +60,7 @@ public class ListAsetAdmin extends AppCompatActivity {
         progressBar = findViewById(R.id.load_aset_admin);
         recyclerView1 = findViewById(R.id.list_aset_Admin);
         floatingActionButton = findViewById(R.id.btn_tambah_aset);
-        back = findViewById(R.id.backToMenu2);
+
         daftarUser = findViewById(R.id.dft_user);
 
         daftarUser.setOnClickListener(view -> {
@@ -91,11 +91,7 @@ public class ListAsetAdmin extends AppCompatActivity {
             startActivity(new Intent(ListAsetAdmin.this, FormAset.class));
         });
 
-        back.setOnClickListener(view -> {
-           Intent intent = new Intent(this, AdminActivity.class);
-           startActivity(intent);
-           finish();
-        });
+
 
 
 

@@ -11,36 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:background="@color/white"
-            android:id="@+id/judul"
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_back_24"
-                android:id="@+id/backToMenu1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Form Peminjaman"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
-        </LinearLayout>
+            app:title="Form Peminjaman"
+            android:id="@+id/tool"
+            app:titleTextColor="@color/white"
+            style="@style/Theme.MyApplication"
+            android:background="@color/green_pea"/>
         <androidx.cardview.widget.CardView
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             app:cardCornerRadius="15dp">
@@ -107,7 +90,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:minHeight="50dp"
-                    android:hint="DD/MM/YYYY"
+                    android:hint="YYYY/MM/DD"
                     android:id="@+id/tglPinjam"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
@@ -129,7 +112,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:minHeight="50dp"
-                    android:hint="DD/MM/YYYY"
+                    android:hint="YYYY/MM/DD"
                     android:id="@+id/tglKembali"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
@@ -184,6 +167,7 @@
                     android:drawableRight="@drawable/baseline_upload_24"/>
 
                 <Button
+                    android:layout_marginBottom="15dp"
                     android:id="@+id/simpanPinjam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

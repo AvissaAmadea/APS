@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,7 @@ import java.util.Map;
 
 public class VerifPengembalian extends AppCompatActivity {
     int id;
-    TextView nama, aset, keadaan, kode;
+    TextView nama, aset, keadaan, kode, detail;
     EditText  denda,alasan;
     RadioGroup verif;
     RadioButton radioButton;
@@ -51,17 +52,22 @@ public class VerifPengembalian extends AppCompatActivity {
         alasan = findViewById(R.id.alasan);
         verif = findViewById(R.id.rdg);
         simpan = findViewById(R.id.simpanVerif);
+        detail = findViewById(R.id.detail);
+
 
         Intent intent = getIntent();
         String ikode = intent.getStringExtra("kode");
         String inama = intent.getStringExtra("nama");
         String ikeadaan = intent.getStringExtra("keadaan");
         String iaset = intent.getStringExtra("aset");
+        String idetail = intent.getStringExtra("detail");
         int id = intent.getIntExtra("id",0);
         nama.setText(inama);
         kode.setText(ikode);
         keadaan.setText(ikeadaan);
         aset.setText(iaset);
+        detail.setText(idetail);
+
 
         simpan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,12 +96,14 @@ public class VerifPengembalian extends AppCompatActivity {
                         showSuccessDialog();
                         Toast.makeText(VerifPengembalian.this, response, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(VerifPengembalian.this, ListPengembalian.class));
+                        Log.d("response","response" +response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 showFailedDialog();
                 Toast.makeText(VerifPengembalian.this, "error", Toast.LENGTH_SHORT).show();
+                Log.d("response", "response"+error);
             }
         }){
             @Nullable

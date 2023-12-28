@@ -261,6 +261,7 @@ public class FormAset extends AppCompatActivity {
                         public void onResponse(String response) {
                             Toast.makeText(FormAset.this, "Berhasil Menyimpan", Toast.LENGTH_LONG).show();
                             showSuccessDialog();
+                            finish();
                         }
                     }, new Response.ErrorListener() {
                 @Override
