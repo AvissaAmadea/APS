@@ -220,21 +220,24 @@
                             <div class="form-group mb-2 row">
                                 <label for="status_kembali" class="col-md-4 col-form-label">Verifikasi :</label>
                                 <div class="col-md-8 text-start">
-                                    <form action="{{ route('peminjaman.verifikasi', ['id' => $kembali->id]) }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="sanksi" value="{{ $kembali->peminjaman->sanksi }}">
-                                        <div class="form-group mb-2 row">
-                                            <div class="col-md-12">
-                                                @if($kembali->rusak === 'Ya' || $kembali->hilang === 'Ya')
-                                                    <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
-                                                    <button type="submit" name="status_kembali" value="Menunggu Pembayaran" class="btn btn-sm btn-primary">Menunggu Pembayaran</button>
-                                                @else
-                                                    <button type="submit" name="status_kembali" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
-                                                    <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
-                                                @endif
+                                    @if ($kembali->status_kembali === 'Menunggu Verifikasi' && 'Menunggu Pembayaran')
+                                        <form action="{{ route('pengembalian.verifikasi', ['id' => $kembali->kode_pinjam]) }}" method="POST">
+                                            @csrf
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-md-12">
+                                                    @if($kembali->rusak === 'Ya' || $kembali->hilang === 'Ya')
+                                                        <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                        <button type="submit" name="status_kembali" value="Menunggu Pembayaran" class="btn btn-sm btn-primary">Menunggu Pembayaran</button>
+                                                    @else
+                                                        <button type="submit" name="status_kembali" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
+                                                        <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    @else
+                                        <span class="badge bg-success"><i class="fa-solid fa-check"></i></span>
+                                    @endif
                                 </div>
                             </div>
 

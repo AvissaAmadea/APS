@@ -5,7 +5,7 @@
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.sekda') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active fw-bold" aria-current="page">Daftar Pengajuan Peminjaman</li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Laporan Peminjaman Aset</li>
         </ol>
     </div>
     <div class="row">
@@ -21,7 +21,7 @@
 
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header d-flex justify-content-between align-items-center">
-                Daftar Pengajuan Peminjaman
+                Laporan Peminjaman Aset
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a class="btn btn-success btn-sm" href="#" role="button" style="width: fit-content"><i class="fa-solid fa-file-pdf pe-1"></i>{{ __('Cetak') }}</a>
                     <form class="form-search d-flex" method="GET" action="#">
@@ -44,7 +44,7 @@
                               <th scope="col">Waktu Pinjam</th>
                               <th scope="col">Waktu Kembali</th>
                               <th scope="col">Status</th>
-                              <th scope="col">Aksi</th>
+                              {{-- <th scope="col">Aksi</th> --}}
                           </tr>
                       </thead>
                       <tbody>
@@ -76,11 +76,11 @@
                                     <td style="width: 5rem">
                                         <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
                                     </td>
-                                    <td class="text-center" style="width: 8rem">
-                                        <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.sekda.show', $item->kode_pinjam) }}" role="button"><i class="fa-solid fa-file-signature pe-1"></i>Verifikasi</a>
-                                        {{-- <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/seePinjam', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a> --}}
-                                        {{-- <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a> --}}
-                                    </td>
+                                    {{-- <td class="text-center" style="width: 3rem">
+                                        <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-file-signature pe-1"></i>Verifikasi</a>
+                                        <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/seePinjam', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         @else

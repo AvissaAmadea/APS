@@ -28,7 +28,7 @@
                         </div>
                         <ul class="sidebar-nav">
                             <li class="sidebar-header">
-                                {{ __('Sekretaris Daerah') }}
+                                {{ __('Sekretariat Daerah') }}
                             </li>
 
                             <li class="sidebar-item">
@@ -74,7 +74,7 @@
                             </li> --}}
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ route('pembayaran.sekda.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-money-bill-transfer pe-2"></i>{{ __('Pembayaran') }}
                                 </a>
                             </li>
@@ -99,10 +99,10 @@
                                 </a>
                                 <ul id="lihatLaporan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Peminjaman') }}</a>
+                                        <a href="{{ route('laporan.peminjaman.sekda.index') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        <a href="{{ route('laporan.pengembalian.sekda.index') }}" class="sidebar-link">{{ __('Pengembalian') }}</a>
                                     </li>
                                 </ul>
                             </li>

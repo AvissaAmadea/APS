@@ -82,9 +82,9 @@
                                     <td style="width: 6rem">
                                         <span class="status-badge @if ($item->status_kembali === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_kembali === 'Diterima') text-white bg-success @elseif ($item->status_kembali === 'Menunggu Pembayaran') text-white bg-primary @else text-white bg-danger @endif">{{ $item->status_kembali }}</span>
                                     </td>
-                                    <td class="text-center" style="width: 6rem">
-                                        <a class="btn btn-info btn-sm" href="{{ route('pengembalian.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
-                                        <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
+                                    <td class="text-center" style="width: 8rem">
+                                        <a class="btn btn-primary btn-sm" href="{{ route('pengembalian.sekda.show', $item->kode_pinjam) }}" role="button"><i class="fa-solid fa-file-signature pe-1"></i>Verifikasi</a>
+                                        {{-- <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a> --}}
                                         {{-- <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a> --}}
                                     </td>
                                 </tr>

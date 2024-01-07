@@ -68,7 +68,7 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ route('pembayaran.opd.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-money-bill-transfer pe-2"></i>{{ __('Pembayaran') }}
                                 </a>
                             </li>

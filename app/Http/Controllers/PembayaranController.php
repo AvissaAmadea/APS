@@ -72,9 +72,28 @@ class PembayaranController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = Auth::user();
+        $kode_pinjam = $request->input('kode_pinjam');
+
+        // Pastikan kode_pinjam tersedia sebelum mencari sanksi
+        if ($kode_pinjam) {
+            $sanksi = Pengembalian::where('kode_pinjam', $kode_pinjam)->first();
+        } else {
+            $sanksi = null; // Atau nilai default jika kode_pinjam tidak ada
+        }
+
+
+        if ($user->role_id == 1) {
+            return view('pembayaran.superadmin.create', compact('user', 'sanksi'));
+        } elseif ($user->role_id == 2) {
+            return view('pembayaran.sekda.create', compact('user', 'sanksi'));
+        } elseif ($user->role_id == 3) {
+            return view('pembayaran.opd.create', compact('user', 'sanksi'));
+        } else {
+            return back()->with('error','Anda tidak memiliki akses untuk mengajukan pengembalian aset.');
+        }
     }
 
     /**

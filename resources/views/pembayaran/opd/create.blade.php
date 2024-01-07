@@ -1,10 +1,10 @@
-@extends('sidebar.sekda')
+@extends('sidebar.opd')
 
 @section('content')
 <div class="container-fluid">
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard.sekda') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.opd') }}">Dashboard</a></li>
             {{-- <li class="breadcrumb-item"><a href="{{ route('peminjaman.superadmin.index') }}">Riwayat Peminjaman</a></li> --}}
             <li class="breadcrumb-item active fw-bold" aria-current="page">Form Unggah Bukti Pembayaran</li>
         </ol>

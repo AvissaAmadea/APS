@@ -12,6 +12,8 @@
         <!-- Scripts -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/d0c04e8934.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <link rel="stylesheet" href="{{ asset('js/app.js') }}" />
@@ -104,7 +106,7 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ route('pembayaran.superadmin.create') }}" class="sidebar-link">
                                     <i class="fa-solid fa-money-bill-transfer pe-2"></i>{{ __('Pembayaran') }}
                                 </a>
                             </li>
@@ -115,10 +117,10 @@
                                 </a>
                                 <ul id="kelolaLaporan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Peminjaman') }}</a>
+                                        <a href="{{ route('laporan.peminjaman.superadmin.index') }}" class="sidebar-link">{{ __('Peminjaman') }}</a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a href="#" class="sidebar-link">{{ __('Pengembalian') }}</a>
+                                        <a href="{{ route('laporan.pengembalian.superadmin.index') }}" class="sidebar-link">{{ __('Pengembalian') }}</a>
                                     </li>
                                 </ul>
                             </li>

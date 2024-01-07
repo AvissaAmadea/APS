@@ -81,6 +81,17 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
             'destroy',
         ]);
+
+        // Routing Pembayaran Aset
+        Route::get('pembayaran/superadmin/index', [App\Http\Controllers\PembayaranController::class, 'index'])->name('pembayaran.superadmin.index');
+        Route::get('pembayaran/superadmin/create', [App\Http\Controllers\PembayaranController::class, 'create'])->name('pembayaran.superadmin.create');
+
+        // Routing Kelola Laporan
+        Route::get('laporan/peminjaman/superadmin/index', [App\Http\Controllers\LaporanPeminjamanController::class, 'index'])->name('laporan.peminjaman.superadmin.index');
+        Route::get('laporan/pengembalian/superadmin/index', [App\Http\Controllers\LaporanPengembalianController::class, 'index'])->name('laporan.pengembalian.superadmin.index');
+
+
+
     });
 
 
@@ -123,6 +134,15 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
             'destroy',
         ]);
+
+        // Routing Pembayaran
+        Route::get('pembayaran/sekda/index', [App\Http\Controllers\PembayaranController::class, 'index'])->name('pembayaran.sekda.create');
+        Route::get('pembayaran/sekda/create', [App\Http\Controllers\PembayaranController::class, 'create'])->name('pembayaran.sekda.create');
+
+        // Routing Laporan
+        Route::get('laporan/peminjaman/sekda/index', [App\Http\Controllers\LaporanPeminjamanController::class, 'index'])->name('laporan.peminjaman.sekda.index');
+        Route::get('laporan/pengembalian/sekda/index', [App\Http\Controllers\LaporanPengembalianController::class, 'index'])->name('laporan.pengembalian.sekda.index');
+
     });
 
 
@@ -160,6 +180,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('pengembalian', App\Http\Controllers\PengembalianController::class)->except([
             'destroy',
         ]);
+
+        // Routing Pembayaran
+        Route::get('pembayaran/opd/index', [App\Http\Controllers\PembayaranController::class, 'index'])->name('pembayaran.opd.index');
+        Route::get('pembayaran/opd/create', [App\Http\Controllers\PembayaranController::class, 'create'])->name('pembayaran.opd.create');
     });
 });
 

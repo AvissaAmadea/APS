@@ -28,7 +28,7 @@ class PeminjamanController extends Controller
         $role = $this->getUserRole();
 
         if ($role === 1) { // Role ID Superadmin
-            $pinjams = Peminjaman::with(['asets.dinas', 'users'])->paginate(5);
+            $pinjams = Peminjaman::with(['asets.dinas', 'users'])->orderBy('tgl_pinjam', 'asc')->paginate(5);
         } elseif ($role === 2) { // Role ID Sekda
             // Ambil id dinas yang terkait dengan user yang login
             $dinasId = Auth::user()->dinas_id;
@@ -36,7 +36,9 @@ class PeminjamanController extends Controller
             $pinjams = Peminjaman::whereHas('asets.dinas', function ($query) use ($dinasId) {
                     $query->where('id', $dinasId);
                 })
+                ->where('status_pinjam', 'Menunggu Verifikasi') // Menambahkan kondisi status 'Menunggu Verifikasi'
                 ->with(['asets.dinas', 'users'])
+                ->orderBy('tgl_pinjam', 'asc')
                 ->paginate(5);
         } else {
             // Return halaman default untuk role selain Superadmin dan Sekda
@@ -191,43 +193,52 @@ class PeminjamanController extends Controller
     }
 
     // Fungsi menampilkan data peminjaman yang dilakukan oleh semua user
-    protected function getPeminjamanData($role, $id)
+    protected function getPeminjamanData($role, $kode_pinjam)
     {
-        $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id);
+        $user = Auth::user(); // Mendapatkan informasi user yang sedang login
 
-        // Mengurai tanggal pinjam
-        $tgl_pinjam_date = null;
-        $tgl_pinjam_time = null;
+        $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])
+            ->where('kode_pinjam', $kode_pinjam) // Menggunakan kode_pinjam untuk mencari detail peminjaman
+            ->firstOrFail();
 
-        if ($pinjams->tgl_pinjam) {
-            $tgl_pinjam = Carbon::parse($pinjams->tgl_pinjam);
-            $tgl_pinjam_date = $tgl_pinjam->format('d-m-Y');
-            $tgl_pinjam_time = $tgl_pinjam->format('H:i:s');
+        if ($pinjams) {
+            // Mengurai tanggal pinjam
+            $tgl_pinjam_date = null;
+            $tgl_pinjam_time = null;
+
+            if ($pinjams->tgl_pinjam) {
+                $tgl_pinjam = Carbon::parse($pinjams->tgl_pinjam);
+                $tgl_pinjam_date = $tgl_pinjam->format('d-m-Y');
+                $tgl_pinjam_time = $tgl_pinjam->format('H:i:s');
+            }
+
+            // Mengurai tanggal kembali
+            $tgl_kembali_date = null;
+            $tgl_kembali_time = null;
+
+            if ($pinjams->tgl_kembali) {
+                $tgl_kembali = Carbon::parse($pinjams->tgl_kembali);
+                $tgl_kembali_date = $tgl_kembali->format('d-m-Y');
+                $tgl_kembali_time = $tgl_kembali->format('H:i:s');
+            }
+        } else {
+            return back();
         }
-
-        // Mengurai tanggal kembali
-        $tgl_kembali_date = null;
-        $tgl_kembali_time = null;
-
-        if ($pinjams->tgl_kembali) {
-            $tgl_kembali = Carbon::parse($pinjams->tgl_kembali);
-            $tgl_kembali_date = $tgl_kembali->format('d-m-Y');
-            $tgl_kembali_time = $tgl_kembali->format('H:i:s');
-        }
-
 
         // Mengambil data dari objek tunggal $pinjaman, bukan dari array $pinjams
         $nama = $pinjams->users ? $pinjams->users->nama : null;
         $nama_aset = $pinjams->asets ? $pinjams->asets->nama_aset : null;
         $jenis = $pinjams->asets->kategoris ? $pinjams->asets->kategoris->jenis : null;
         $nama_dinas_aset = $pinjams->asets && $pinjams->asets->dinas ? $pinjams->asets->dinas->nama_dinas : null;
+        $status_pinjam = $pinjams->status_pinjam ?? '-';
+
         $timestamps = $this->showTimestamp($pinjams);
 
         $view = 'peminjaman.' . $role . '.show';
-        return view($view, compact('pinjams','nama', 'nama_aset', 'jenis', 'nama_dinas_aset', 'timestamps', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
+        return view($view, compact('pinjams','nama', 'nama_aset', 'jenis', 'nama_dinas_aset', 'timestamps', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time', 'status_pinjam'));
     }
 
-    public function superadminShow($id)
+    public function superadminShow($kode_pinjam)
     {
         $role = $this->getUserRole();
 
@@ -235,10 +246,10 @@ class PeminjamanController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        return $this->getPeminjamanData('superadmin', $id);
+        return $this->getPeminjamanData('superadmin', $kode_pinjam);
     }
 
-    public function sekdaShow($id)
+    public function sekdaShow($kode_pinjam)
     {
         $role = $this->getUserRole();
 
@@ -246,10 +257,10 @@ class PeminjamanController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        return $this->getPeminjamanData('sekda', $id);
+        return $this->getPeminjamanData('sekda', $kode_pinjam);
     }
 
-    public function opdShow($id)
+    public function opdShow($kode_pinjam)
     {
         $role = $this->getUserRole();
 
@@ -257,7 +268,7 @@ class PeminjamanController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        return $this->getPeminjamanData('opd', $id);
+        return $this->getPeminjamanData('opd', $kode_pinjam);
     }
 
 
@@ -276,7 +287,7 @@ class PeminjamanController extends Controller
 
         $pinjams = Peminjaman::whereHas('users', function ($query) use ($userId) {
             $query->where('id', $userId);
-        })->with(['asets.dinas', 'users'])->paginate(5);
+        })->with(['asets.dinas', 'users'])->orderBy('tgl_pinjam', 'asc')->paginate(5);
 
         $nama = [];
         $nama_aset = [];
@@ -340,7 +351,7 @@ class PeminjamanController extends Controller
     // fungsi mendapatkan semua data peminjaman yang akan ditampilkan di tampilan detail riwayat peminjaman berdasarkan role user dengan id user yang digunakan
     protected function getRiwayatPeminjamanData($role, $id)
     {
-        $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id);
+        $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id)->orderBy('tgl_pinjam', 'asc');
 
         // Mengurai tanggal pinjam
         $tgl_pinjam_date = null;
@@ -588,4 +599,5 @@ class PeminjamanController extends Controller
 
         return compact('createdTimestamp', 'updatedTimestamp', 'deletedTimestamp');
     }
+
 }

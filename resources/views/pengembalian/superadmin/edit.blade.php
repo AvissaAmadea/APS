@@ -102,7 +102,7 @@
                         <div class="col-sm-9 text-start mt-2">
                             @if($pengembalian->bukti)
                                 @php
-                                    $extension = pathinfo($kembali->bukti, PATHINFO_EXTENSION);
+                                    $extension = pathinfo($pengembalian->bukti, PATHINFO_EXTENSION);
                                     $isPDF = $extension === 'pdf';
                                     $isImage = in_array($extension, ['jpg', 'jpeg', 'png', 'gif']);
                                     $fileName = pathinfo($pengembalian->bukti, PATHINFO_FILENAME);
@@ -112,8 +112,11 @@
                                 @if($isPDF)
                                     <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }} (PDF)</a>
                                 @elseif($isImage)
-                                    <a href="{{ asset($filePath) }}" target="_blank">
+                                    {{-- <a href="{{ asset($filePath) }}" target="_blank">
                                         <img src="{{ asset($filePath) }}" alt="Bukti Rusak/Hilang" style="max-width: 100%">
+                                    </a> --}}
+                                    <a href="{{ asset($filePath) }}" target="_blank">
+                                        {{ $fileName }} (Lihat gambar)
                                     </a>
                                 @else
                                     <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }}</a>

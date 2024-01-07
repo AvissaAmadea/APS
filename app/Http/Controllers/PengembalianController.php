@@ -21,16 +21,30 @@ class PengembalianController extends Controller
         $role = $this->getUserRole();
 
         if ($role === 1) { // Role ID Superadmin
-            $kembali = Pengembalian::with(['peminjaman'])->paginate(5);
+            $kembali = Pengembalian::with(['peminjaman' => function ($query) {
+                $query->orderBy('tgl_kembali', 'asc');
+            }])->paginate(5);
         } elseif ($role === 2) { // Role ID Sekda
             // Ambil id dinas yang terkait dengan user yang login
             $dinasId = Auth::user()->dinas_id;
 
-            $kembali = Pengembalian::whereHas('peminjaman.asets.dinas', function ($query) use ($dinasId) {
-                    $query->where('id', $dinasId);
-                })
-                ->with(['peminjaman.users', 'peminjaman.asets.dinas'])
-                ->paginate(5);
+            $kembali = Pengembalian::whereHas('peminjaman', function ($query) use ($dinasId) {
+                $query->where(function ($q) {
+                    $q->whereIn('status_kembali', ['Menunggu Verifikasi', 'Menunggu Pembayaran']);
+                    $q->orWhereIn('status_kembali', ['Menunggu Verifikasi', 'Menunggu Pembayaran']);
+                })->whereHas('asets.dinas', function ($q) use ($dinasId) {
+                    $q->where('id', $dinasId);
+                });
+            })
+            ->with([
+                'peminjaman' => function ($query) {
+                    $query->orderBy('tgl_kembali', 'asc');
+                },
+                'peminjaman.users',
+                'peminjaman.asets.dinas'
+            ])
+            ->paginate(5);
+
         } else {
             // Return halaman default untuk role selain Superadmin dan Sekda
             return back();
@@ -178,46 +192,39 @@ class PengembalianController extends Controller
             return back()->with('error', 'Anda tidak memiliki akses untuk mengajukan pengembalian aset.');
     }
 
-    protected function getPengembalianData($role, $id)
+    protected function getPengembalianData($role, $kode_pinjam)
     {
-        $kembali = Pengembalian::with(['peminjaman'])->findOrFail($id);
+        try {
+            $kembali = Pengembalian::with('peminjaman')
+                ->where('kode_pinjam', $kode_pinjam)
+                ->firstOrFail();
 
-        // Mengurai tanggal pinjam
-        $tgl_pinjam_date = null;
-        $tgl_pinjam_time = null;
+            if ($kembali) {
+                $tgl_pinjam_date = null;
+                $tgl_pinjam_time = null;
+                $tgl_kembali_date = null;
+                $tgl_kembali_time = null;
 
-        if ($kembali->peminjaman->tgl_pinjam) {
-            $tgl_pinjam = Carbon::parse($kembali->peminjaman->tgl_pinjam);
-            $tgl_pinjam_date = $tgl_pinjam->format('d-m-Y');
-            $tgl_pinjam_time = $tgl_pinjam->format('H:i:s');
+                $peminjaman = $kembali->peminjaman;
+
+                if ($peminjaman) {
+                    $tgl_pinjam_date = $peminjaman->tgl_pinjam ? Carbon::parse($peminjaman->tgl_pinjam)->format('d-m-Y') : null;
+                    $tgl_pinjam_time = $peminjaman->tgl_pinjam ? Carbon::parse($peminjaman->tgl_pinjam)->format('H:i:s') : null;
+                    $tgl_kembali_date = $peminjaman->tgl_kembali ? Carbon::parse($peminjaman->tgl_kembali)->format('d-m-Y') : null;
+                    $tgl_kembali_time = $peminjaman->tgl_kembali ? Carbon::parse($peminjaman->tgl_kembali)->format('H:i:s') : null;
+                }
+
+                $timestamps = $this->showTimestamp($kembali);
+
+                $view = 'pengembalian.' . $role . '.show';
+                return view($view, compact('kembali', 'timestamps', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Data pengembalian tidak ditemukan.');
         }
-
-        // Mengurai tanggal kembali
-        $tgl_kembali_date = null;
-        $tgl_kembali_time = null;
-
-        if ($kembali->peminjaman->tgl_kembali) {
-            $tgl_kembali = Carbon::parse($kembali->peminjaman->tgl_kembali);
-            $tgl_kembali_date = $tgl_kembali->format('d-m-Y');
-            $tgl_kembali_time = $tgl_kembali->format('H:i:s');
-        }
-
-        // Mengambil data dari objek tunggal $pinjaman, bukan dari array $pinjams
-        // $nama = $kembali->peminjaman && $kembali->peminjaman->users ? $kembali->peminjaman->users->nama : null;
-        // $asal_peminjam = $kembali->peminjaman && $kembali->peminjaman->users && $kembali->peminjaman->users->dinas  ? $kembali->peminjaman->users->dinas->nama_dinas : null;
-
-        // $nama_aset = $kembali->peminjaman && $kembali->peminjaman->asets ? $kembali->peminjaman->asets->nama_aset : null;
-        // $nama_dinas_aset = $kembali->peminjaman && $kembali->peminjaman->asets && $kembali->peminjaman->asets->dinas ? $kembali->peminjaman->asets->dinas->nama_dinas : null;
-
-        // $tglPinjam = $kembali->peminjaman ? $kembali->peminjaman->tgl_pinjam : null;
-        // $tglKembali = $kembali->peminjaman ? $kembali->peminjaman->tgl_kembali : null;
-        $timestamps = $this->showTimestamp($kembali);
-
-        $view = 'pengembalian.' . $role . '.show';
-        return view($view, compact('kembali','timestamps', 'tgl_pinjam_date', 'tgl_pinjam_time', 'tgl_kembali_date', 'tgl_kembali_time'));
     }
 
-    public function superadminShow($id)
+    public function superadminShow($kode_pinjam)
     {
         $role = $this->getUserRole();
 
@@ -225,10 +232,10 @@ class PengembalianController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        return $this->getPengembalianData('superadmin', $id);
+        return $this->getPengembalianData('superadmin', $kode_pinjam);
     }
 
-    public function sekdaShow($id)
+    public function sekdaShow($kode_pinjam)
     {
         $role = $this->getUserRole();
 
@@ -236,10 +243,10 @@ class PengembalianController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        return $this->getPengembalianData('sekda', $id);
+        return $this->getPengembalianData('sekda', $kode_pinjam);
     }
 
-    public function opdShow($id)
+    public function opdShow($kode_pinjam)
     {
         $role = $this->getUserRole();
 
@@ -247,7 +254,7 @@ class PengembalianController extends Controller
             return redirect()->route('login')->with('error', 'Anda tidak memiliki akses yang sesuai.');
         }
 
-        return $this->getPengembalianData('opd', $id);
+        return $this->getPengembalianData('opd', $kode_pinjam);
     }
 
 
@@ -264,8 +271,9 @@ class PengembalianController extends Controller
         $userId = Auth::id();
 
         $kembali = Pengembalian::whereHas('peminjaman', function ($query) use ($userId) {
-            $query->where('user_id', $userId); // Ganti 'users_id' dengan kolom yang sesuai dalam tabel 'peminjaman'
+            $query->where('user_id', $userId)->orderBy('tgl_kembali', 'asc');
         })->with(['peminjaman', 'users'])->paginate(5);
+
 
         $nama = [];
         $asal_peminjam = [];
@@ -331,7 +339,7 @@ class PengembalianController extends Controller
 
     protected function getRiwayatPengembalianData($role, $id)
     {
-        $kembali = Pengembalian::with(['peminjaman'])->findOrFail($id);
+        $kembali = Pengembalian::with(['peminjaman'])->findOrFail($id)->orderBy('tgl_kembali', 'asc');
 
         // Mengurai tanggal pinjam
         $tgl_pinjam_date = null;
@@ -478,9 +486,9 @@ class PengembalianController extends Controller
     }
 
     // update status pinjam oleh sekda
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request, $kode_pinjam)
     {
-        $pengembalian = Pengembalian::findOrFail($id);
+        $pengembalian = Pengembalian::findOrFail($kode_pinjam);
 
         // Pastikan user yang melakukan verifikasi adalah sekda atau superadmin
         $userRole = $this->getUserRole();

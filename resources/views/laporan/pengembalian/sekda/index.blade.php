@@ -5,7 +5,7 @@
     <div class="row mt-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.sekda') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active fw-bold" aria-current="page">Daftar Pengajuan Peminjaman</li>
+            <li class="breadcrumb-item active fw-bold" aria-current="page">Laporan Pengembalian Aset</li>
         </ol>
     </div>
     <div class="row">
@@ -21,7 +21,7 @@
 
         <div class="card flex-fill border-0 p-2">
             <h6 class="card-header d-flex justify-content-between align-items-center">
-                Daftar Pengajuan Peminjaman
+                Laporan Pengembalian Aset
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a class="btn btn-success btn-sm" href="#" role="button" style="width: fit-content"><i class="fa-solid fa-file-pdf pe-1"></i>{{ __('Cetak') }}</a>
                     <form class="form-search d-flex" method="GET" action="#">
@@ -39,48 +39,55 @@
                           <tr class="text-center table-dark">
                               <th scope="col">No.</th>
                               <th scope="col">Peminjam</th>
-                              <th scope="col">Asal Peminjam</th>
                               <th scope="col">Nama Aset</th>
+                              <th scope="col">Asal Aset</th>
                               <th scope="col">Waktu Pinjam</th>
                               <th scope="col">Waktu Kembali</th>
                               <th scope="col">Status</th>
-                              <th scope="col">Aksi</th>
+                              {{-- <th scope="col">Aksi</th> --}}
                           </tr>
                       </thead>
                       <tbody>
-                        @if ($pinjams->count() > 0)
-                            @foreach ($pinjams as $key => $item)
+                        @if ($kembali->count() > 0)
+                            @foreach ($kembali as $key => $item)
                                 <tr class="text-center">
-                                    <th style="width: 3rem">{{ ( $pinjams->firstItem() + $key ) }}</th>
+                                    <th style="width: 3rem">{{ ( $kembali->firstItem() + $key ) }}</th>
                                     {{-- <td>{{ ( $item->kode_pinjam ) }}</td> --}}
-                                    @if(isset($nama[$key]) && isset($asal_peminjam[$key]))
+                                    @if(isset($nama[$key]))
                                         <td>{{ $nama[$key] }}</td>
-                                        <td>{{ $asal_peminjam[$key] }}</td>
                                     @else
-                                        <td>-</td>
                                         <td>-</td>
                                     @endif
 
                                     {{-- Tampilkan nama aset dan nama dinas aset --}}
                                     @if(isset($nama_aset[$key]) && isset($nama_dinas_aset[$key]))
                                         <td>{{ $nama_aset[$key] }}</td>
-                                        {{-- <td style="width: 13rem">{{ $nama_dinas_aset[$key] }}</td> --}}
+                                        <td style="width: 13rem">{{ $nama_dinas_aset[$key] }}</td>
                                     @else
                                         <td>-</td>
-                                        {{-- <td>-</td> --}}
+                                        <td>-</td>
                                     @endif
 
                                     <td style="width: 8rem">{{ $tgl_pinjam_date[$key] ?? '' }} {{ $tgl_pinjam_time[$key] ?? '' }}</td>
                                     <td style="width: 8rem">{{ $tgl_kembali_date[$key] ?? '' }} {{ $tgl_kembali_time[$key] ?? '' }}</td>
+
+                                    {{-- @if(isset($tglPinjam[$key]) && isset($tglKembali[$key]))
+                                        <td style="width: 8rem">{{ ( $tglPinjam[$key] ) }}</td>
+                                        <td style="width: 8rem">{{ ( $tglKembali[$key] ) }}</td>
+                                    @else
+                                        <td>-</td>
+                                        <td>-</td>
+                                    @endif --}}
+
                                     {{-- <td>{{ ( $item->status_pinjam ) }}</td> --}}
-                                    <td style="width: 5rem">
-                                        <span class="status-badge @if ($item->status_pinjam === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_pinjam === 'Diterima') text-white bg-success @else text-white bg-danger @endif">{{ $item->status_pinjam }}</span>
+                                    <td style="width: 6rem">
+                                        <span class="status-badge @if ($item->status_kembali === 'Menunggu Verifikasi') text-black bg-warning @elseif ($item->status_kembali === 'Diterima') text-white bg-success @elseif ($item->status_kembali === 'Menunggu Pembayaran') text-white bg-primary @else text-white bg-danger @endif">{{ $item->status_kembali }}</span>
                                     </td>
-                                    <td class="text-center" style="width: 8rem">
-                                        <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.sekda.show', $item->kode_pinjam) }}" role="button"><i class="fa-solid fa-file-signature pe-1"></i>Verifikasi</a>
-                                        {{-- <a class="btn btn-info btn-sm" href="{{ url('peminjaman/sekda/seePinjam', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a> --}}
-                                        {{-- <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a> --}}
-                                    </td>
+                                    {{-- <td class="text-center" style="width: 3rem">
+                                        <a class="btn btn-info btn-sm" href="{{ route('pengembalian.sekda.show', $item->id) }}" role="button"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-warning btn-sm" href="#" role="button"><i class="fa-solid fa-file-export"></i></a>
+                                        <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa-solid fa-file-signature"></i></a>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         @else
@@ -93,7 +100,7 @@
                 <!-- </div> -->
             </div>
             <div class="card-footer mb-0 pb-0">
-                {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
+                {{ $kembali->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

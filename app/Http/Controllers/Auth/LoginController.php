@@ -55,7 +55,7 @@ class LoginController extends Controller
             $role = 'Super Admin';
         } elseif ($user->role_id == 2) {
             $redirectTo = 'dashboard.sekda';
-            $role = 'Sekretaris Daerah';
+            $role = 'Sekretariat Daerah';
         } elseif ($user->role_id == 3) {
             $redirectTo = 'dashboard.opd';
             $role = 'OPD';

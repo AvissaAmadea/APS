@@ -118,22 +118,7 @@
                                 </div>
                             </div>
 
-                            @if ($pinjams->status_pinjam === 'Menunggu Verifikasi')
-                                <div class="form-group mb-2 row">
-                                    <label for="status_pinjam" class="col-md-4 col-form-label">Verifikasi :</label>
-                                    <div class="col-md-8 text-start">
-                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $pinjams->id]) }}" method="POST">
-                                            @csrf
-                                            <div class="form-group mb-2 row">
-                                                <div class="col-md-12">
-                                                    <button type="submit" name="status_pinjam" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
-                                                    <button type="submit" name="status_pinjam" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endif
+
 
                             <div class="form-group mb-2 row">
                                 <label for="created_at" class="col-md-4 col-form-label">Created_at :</label>
@@ -156,6 +141,43 @@
                                 </div>
                             </div>
 
+                            <div class="form-group mb-2 row">
+                                <label for="status_kembali" class="col-md-4 col-form-label">Verifikasi :</label>
+                                <div class="col-md-8 text-start">
+                                    @if ($pinjams->status_pinjam === 'Menunggu Verifikasi')
+                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $pinjams->id]) }}" method="POST">
+                                            @csrf
+                                            <div class="form-group mb-2 row">
+                                                <div class="form-group mb-2 row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" name="status_pinjam" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
+                                                        <button type="submit" name="status_pinjam" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    @else
+                                        <span class="badge bg-success"><i class="fa-solid fa-check"></i></span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- @if ($pinjams->status_pinjam === 'Menunggu Verifikasi')
+                                <div class="form-group mb-2 row">
+                                    <label for="status_pinjam" class="col-md-4 col-form-label">Verifikasi :</label>
+                                    <div class="col-md-8 text-start">
+                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $pinjams->id]) }}" method="POST">
+                                            @csrf
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-md-12">
+                                                    <button type="submit" name="status_pinjam" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
+                                                    <button type="submit" name="status_pinjam" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif --}}
 
                         </div>
                     </div>
