@@ -200,8 +200,8 @@
                 <!-- </div> -->
             </div>
             <div class="card-footer mb-0 pb-0">
-                {{-- {{ $pinjams->links('pagination::bootstrap-5') }} --}}
-                {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }}
+                {{-- {{ $pinjams->appends(request()->query())->links('pagination::bootstrap-5') }} --}}
+                {{ $pinjams->appends(['pinjams' => $pinjams->currentPage(), 'kembali' => $kembali->currentPage(), 'asets' => $asets->currentPage()])->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
@@ -234,7 +234,7 @@
                                     {{-- Tampilkan nama aset dan nama dinas aset --}}
                                     @if(isset($nama_aset[$key]) && isset($nama_dinas_aset[$key]))
                                         <td>{{ $nama_aset[$key] }}</td>
-                                        <td style="width: 13rem">{{ $nama_dinas_aset[$key] }}</td>
+                                        <td>{{ $nama_dinas_aset[$key] }}</td>
                                     @else
                                         <td>-</td>
                                         <td>-</td>
@@ -263,7 +263,8 @@
                 <!-- </div> -->
             </div>
             <div class="card-footer mb-0 pb-0">
-                {{ $kembali->appends(request()->query())->links('pagination::bootstrap-5') }}
+                {{-- {{ $kembali->appends(request()->query())->links('pagination::bootstrap-5') }} --}}
+                {{ $kembali->appends(['pinjams' => $pinjams->currentPage(), 'kembali' => $kembali->currentPage(), 'asets' => $asets->currentPage()])->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
@@ -314,8 +315,8 @@
                       </table>
                 </div>
                 <div class="card-footer mb-0 pb-0">
-                    {{ $asets->appends(request()->query())->links('pagination::bootstrap-5') }}
-                </div>
+                    {{-- {{ $asets->appends(request()->query())->links('pagination::bootstrap-5') }} --}}
+                    {{ $asets->appends(['pinjams' => $pinjams->currentPage(), 'kembali' => $kembali->currentPage(), 'asets' => $asets->currentPage()])->links('pagination::bootstrap-5') }}                </div>
             </div>
     </div>
 

@@ -88,7 +88,7 @@ class DashboardController extends Controller
         ->pluck('tahun');
 
         // Mengambil semua peminjaman tanpa batasan
-        $pinjams = Peminjaman::with(['asets.dinas'])->orderBy('tgl_pinjam', 'asc')->paginate(5);
+        $pinjams = Peminjaman::with(['asets.dinas'])->orderBy('tgl_pinjam', 'asc')->paginate(5, ['*'], 'pinjams');
 
         $nama_aset = [];
         $nama_dinas_aset = [];
@@ -166,7 +166,7 @@ class DashboardController extends Controller
         ->with(['peminjaman' => function ($query) {
             $query->orderBy('tgl_kembali', 'asc');
         }, 'peminjaman.asets.dinas'])
-        ->paginate(5);
+        ->paginate(5, ['*'], 'kembali');
 
         foreach ($kembali as $pengembalian) {
             $peminjaman = $pengembalian->peminjaman;
@@ -211,7 +211,7 @@ class DashboardController extends Controller
         }
 
         // aset =
-        $asets = Aset::with(['dinas', 'kategoris'])->paginate(5);
+        $asets = Aset::with(['dinas', 'kategoris'])->paginate(5, ['*'], 'asets');
 
         // Jika pengguna memiliki peran superadmin, tampilkan halaman dashboard superadmin
         return view('dashboard.superadmin', [

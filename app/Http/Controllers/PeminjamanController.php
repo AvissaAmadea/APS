@@ -176,11 +176,11 @@ class PeminjamanController extends Controller
                 }
 
                 if ($role_id == 1) {
-                    return view('dashboard.superadmin', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                    return view('peminjaman.superadmin.riwayat', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 } elseif ($role_id == 2) {
-                    return view('dashboard.sekda', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                    return view('peminjaman.sekda.riwayat', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 } elseif ($role_id == 3) {
-                    return view('dashboard.opd', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                    return view('peminjaman.opd.riwayat', compact('pinjams', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 }
             } else {
                 return back()->with('error', 'Gagal menyimpan data.');

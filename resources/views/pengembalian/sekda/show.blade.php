@@ -142,8 +142,20 @@
 
                             <div class="form-group mb-2 row">
                                 <label for="bukti" class="col-sm-4 col-form-label">Bukti Rusak/Hilang : </label>
-                                <div class="col-sm-8 text-start mt-2">
+                                <div class="col-sm-8 text-start">
                                     @if($kembali->bukti)
+                                        @php
+                                            $filePath = 'uploads/' . $kembali->bukti;
+                                        @endphp
+
+                                        <a href="{{ asset($filePath) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-file-lines pe-2"></i>Lihat</a>
+
+                                    @else
+                                        <strong><p>Tidak ada file bukti rusak/hilang terlampir.</p></strong>
+                                    @endif
+
+
+                                    {{-- @if($kembali->bukti)
                                         @php
                                             $extension = pathinfo($kembali->bukti, PATHINFO_EXTENSION);
                                             $isPDF = $extension === 'pdf';
@@ -155,9 +167,7 @@
                                         @if($isPDF)
                                             <a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }} (PDF)</a>
                                         @elseif($isImage)
-                                            {{-- <a href="{{ asset($filePath) }}" target="_blank">
-                                                <img src="{{ asset($filePath) }}" alt="Surat Peminjaman" style="max-width: 100%">
-                                            </a> --}}
+
                                             <a href="{{ asset($filePath) }}" target="_blank">
                                                 {{ $fileName }} (Lihat gambar)
                                             </a>
@@ -166,7 +176,11 @@
                                         @endif
                                     @else
                                         <strong><p>Tidak ada file bukti rusak/hilang terlampir.</p></strong>
-                                    @endif
+                                    @endif --}}
+
+                                            {{-- <a href="{{ asset($filePath) }}" target="_blank">
+                                                <img src="{{ asset($filePath) }}" alt="Surat Peminjaman" style="max-width: 100%">
+                                            </a> --}}
                                 </div>
                             </div>
 
@@ -224,20 +238,54 @@
                                         <form action="{{ route('pengembalian.verifikasi', ['id' => $kembali->kode_pinjam]) }}" method="POST">
                                             @csrf
                                             <div class="form-group mb-2 row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 mt-1">
                                                     @if($kembali->rusak === 'Ya' || $kembali->hilang === 'Ya')
-                                                        <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
-                                                        <button type="submit" name="status_kembali" value="Menunggu Pembayaran" class="btn btn-sm btn-primary">Menunggu Pembayaran</button>
+                                                        {{-- <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                        <button type="submit" name="status_kembali" value="Menunggu Pembayaran" class="btn btn-sm btn-primary">Menunggu Pembayaran</button> --}}
+
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input border border-secondary" type="radio" name="status_kembali" id="MenungguPembayaran" value="Menungu Pembayaran">
+                                                            <label class="form-check-label fw-bold" for="MenungguPembayaran">Menunggu Pembayaran</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input border border-secondary" type="radio" name="status_kembali" id="Ditolak" value="Ditolak">
+                                                            <label class="form-check-label fw-bold" for="Ditolak">Ditolak</label>
+                                                        </div>
                                                     @else
-                                                        <button type="submit" name="status_kembali" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
-                                                        <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                                        {{-- <button type="submit" name="status_kembali" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
+                                                        <button type="submit" name="status_kembali" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button> --}}
+
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input border border-secondary" type="radio" name="status_kembali" id="Diterima" value="Diterima">
+                                                            <label class="form-check-label fw-bold" for="Diterima">Diterima</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input border border-secondary" type="radio" name="status_kembali" id="Ditolak" value="Ditolak">
+                                                            <label class="form-check-label fw-bold" for="Ditolak">Ditolak</label>
+                                                        </div>
                                                     @endif
+                                                    <div class="form-group col-md-10 mb-2" id="alasanTolakKembali" style="display: none;">
+                                                        <label for="alasan_tolak_kembali" class="col-form-label">Alasan Menolak :</label>
+                                                        <textarea class="form-control @error('alasan_tolak_kembali') is-invalid @enderror" id="alasan_tolak_kembali" name="alasan_tolak_kembali" rows="2" autofocus>{{ old('alasan_tolak_kembali') }}</textarea>
+                                                        @error('alasan_tolak_kembali')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
                                     @else
                                         <span class="badge bg-success"><i class="fa-solid fa-check"></i></span>
                                     @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="button" class="col-md-4 col-form-label"></label>
+                                <div class="col-md-3 text-center">
+                                    <button type="submit" class="btn btn-success btn-sm float-right mb-0 mt-2" name="submit">Submit</button>
                                 </div>
                             </div>
 
@@ -248,4 +296,9 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        toggleAlasanTolakPengembalian(); // Panggil fungsi dari app.js
+    });
+</script>
 @endsection

@@ -61,7 +61,7 @@
                                         <td>-</td>
                                     @endif
 
-                                    <td style="width: 8rem">{{ $tgl_pinjams_date[$key] ?? '' }} {{ $tgl_pinjam_time[$key] ?? '' }}</td>
+                                    <td style="width: 8rem">{{ $tgl_pinjam_date[$key] ?? '' }} {{ $tgl_pinjam_time[$key] ?? '' }}</td>
                                     <td style="width: 8rem">{{ $tgl_kembali_date[$key] ?? '' }} {{ $tgl_kembali_time[$key] ?? '' }}</td>
                                     {{-- <td>{{ ( $item->status_pinjam ) }}</td> --}}
                                     <td style="width: 5rem">

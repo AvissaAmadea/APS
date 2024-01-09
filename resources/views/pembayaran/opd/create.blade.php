@@ -48,7 +48,7 @@
                         <h5 class="fw-bold">1227734117644513</h5>
                     </div>
                 </div>
-                <h6 class=" text-center">Pembayaran dikirim ke rekening di atas atas nama</h6>
+                <h6 class=" text-center">Pembayaran dikirim ke salah satu rekening tersebut atas nama :</h6>
                 <h5 class="fw-bold  text-center">Pembkab Jepara</h5>
             </div>
         </div>
@@ -61,9 +61,11 @@
 
                     <div class="form-group mb-2 row">
                         <label for="user_name" class="col-sm-2 col-form-label">Nama</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control" id="user_name" name="user_name" value="{{ Auth::user()->nama }}" autofocus>
+                        <div class="col-sm-10 text-start mt-2">
+                            {{-- <input type="text" readonly class="form-control" id="user_name" name="user_name" value="{{ Auth::user()->nama }}" autofocus> --}}
+                            <h6 class="form-control-static">{{ Auth::user()->nama }}</h6>
                         </div>
+                        <input type="hidden" class="form-control" id="user_name" name="user_name" value="{{ Auth::user()->nama }}">
                     </div>
 
                     <div class="form-group mb-2 row">

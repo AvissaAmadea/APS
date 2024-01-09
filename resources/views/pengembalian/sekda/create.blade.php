@@ -49,11 +49,11 @@
                         <label for="rusak" class="col-sm-2 col-form-label">Adakah Kerusakan?</label>
                         <div class="col-sm-10 text-start mt-1">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rusak" id="rusakYa" value="Ya" onclick="showKeteranganRusakBukti()">
+                                <input class="form-check-input border border-secondary" type="radio" name="rusak" id="rusakYa" value="Ya" onclick="showKeteranganRusakBukti()">
                                 <label class="form-check-label" for="rusakYa">Ya</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rusak" id="rusakTidak" value="Tidak" onclick="hideKeteranganRusakBukti()">
+                                <input class="form-check-input border border-secondary" type="radio" name="rusak" id="rusakTidak" value="Tidak" onclick="hideKeteranganRusakBukti()">
                                 <label class="form-check-label" for="rusakTidak">Tidak</label>
                             </div>
                         </div>
@@ -63,11 +63,11 @@
                         <label for="hilang" class="col-sm-2 col-form-label">Adakah Kehilangan?</label>
                         <div class="col-sm-10 text-start mt-1">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="hilang" id="hilangYa" value="Ya" onclick="showKeteranganHilangBukti()">
+                                <input class="form-check-input border border-secondary" type="radio" name="hilang" id="hilangYa" value="Ya" onclick="showKeteranganHilangBukti()">
                                 <label class="form-check-label" for="hilangYa">Ya</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="hilang" id="hilangTidak" value="Tidak" onclick="hideKeteranganHilangBukti()">
+                                <input class="form-check-input border border-secondary" type="radio" name="hilang" id="hilangTidak" value="Tidak" onclick="hideKeteranganHilangBukti()">
                                 <label class="form-check-label" for="hilangTidak">Tidak</label>
                             </div>
                         </div>

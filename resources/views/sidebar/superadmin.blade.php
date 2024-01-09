@@ -25,7 +25,7 @@
                     <!-- Content for Sidebar -->
                     <div class="vh-100 overflow-auto pb-2">
                         <div class="sidebar-logo">
-                            <img src="{{ asset('img/logojpr.png') }}" class="logo-responsive" alt="logo">
+                            <img src="{{ asset('img/aps-iju.png') }}" class="logo-responsive mb-1" alt="logo">
                             <a href="#">Jepara APS</a>
                         </div>
                         <ul class="sidebar-nav">

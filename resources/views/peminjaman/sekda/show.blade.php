@@ -86,8 +86,18 @@
 
                             <div class="form-group mb-2 row">
                                 <label for="surat_pinjam" class="col-md-4 col-form-label">Surat Peminjaman :</label>
-                                <div class="col-md-8 text-start mt-2">
+                                <div class="col-md-8 text-start">
                                     @if($pinjams->surat_pinjam)
+                                        @php
+                                            $filePath = 'uploads/' . $pinjams->surat_pinjam;
+                                        @endphp
+
+                                        <a href="{{ asset($filePath) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-file-lines pe-2"></i>Lihat</a>
+                                    @else
+                                        <p>Tidak ada file surat peminjaman terlampir.</p>
+                                    @endif
+
+                                    {{-- @if($pinjams->surat_pinjam)
                                         @php
                                             $extension = pathinfo($pinjams->surat_pinjam, PATHINFO_EXTENSION);
                                             $isPDF = $extension === 'pdf';
@@ -107,7 +117,7 @@
                                         @endif
                                     @else
                                         <p>Tidak ada file surat peminjaman terlampir.</p>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
 
@@ -145,22 +155,38 @@
                                 <label for="status_kembali" class="col-md-4 col-form-label">Verifikasi :</label>
                                 <div class="col-md-8 text-start">
                                     @if ($pinjams->status_pinjam === 'Menunggu Verifikasi')
-                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $pinjams->id]) }}" method="POST">
+                                        <form action="{{ route('peminjaman.verifikasi', ['id' => $pinjams->kode_pinjam]) }}" method="POST">
                                             @csrf
-                                            <div class="form-group mb-2 row">
-                                                <div class="form-group mb-2 row">
-                                                    <div class="col-md-12">
-                                                        <button type="submit" name="status_pinjam" value="Diterima" class="btn btn-sm btn-success">Diterima</button>
-                                                        <button type="submit" name="status_pinjam" value="Ditolak" class="btn btn-sm btn-danger">Ditolak</button>
+                                            <div class="row">
+                                                <div class="col-sm-10 mt-1">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input border border-secondary" type="radio" name="status_pinjam" id="Diterima" value="Diterima">
+                                                        <label class="form-check-label fw-bold" for="Diterima">Diterima</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input border border-secondary" type="radio" name="status_pinjam" id="Ditolak" value="Ditolak">
+                                                        <label class="form-check-label fw-bold" for="Ditolak">Ditolak</label>
                                                     </div>
                                                 </div>
+                                                <div class="form-group col-md-10 mb-2" id="alasanTolakPinjam" style="display: none;">
+                                                    <label for="alasan_tolak_pinjam" class="col-form-label">Alasan Menolak :</label>
+                                                    <textarea class="form-control @error('alasan_tolak_pinjam') is-invalid @enderror" id="alasan_tolak_pinjam" name="alasan_tolak_pinjam" rows="2" autofocus>{{ old('alasan_tolak_pinjam') }}</textarea>
+                                                    @error('alasan_tolak_pinjam')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
                                             </div>
                                         </form>
                                     @else
                                         <span class="badge bg-success"><i class="fa-solid fa-check"></i></span>
                                     @endif
                                 </div>
-                            </div>
+
+
+
 
                             {{-- @if ($pinjams->status_pinjam === 'Menunggu Verifikasi')
                                 <div class="form-group mb-2 row">
@@ -180,45 +206,21 @@
                             @endif --}}
 
                         </div>
+                        <div class="form-group row">
+                            <label for="button" class="col-md-4 col-form-label"></label>
+                            <div class="col-md-3 text-center">
+                                <button type="submit" class="btn btn-success btn-sm float-right mb-0 mt-2" name="submit">Submit</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                    {{-- <div class="col-md-8 offset-md-2">
-                        <table class="table table-bordered table-striped-columns">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 35%">Nama Pengguna</td>
-                                    <th>{{ $user->nama }}</th>
-                                </tr>
-                                <tr>
-                                    <td>NIP</td>
-                                    <th>{{ $user->nip }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Dinas</td>
-                                    <th>{{ $user->dinas->nama_dinas }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Jabatan</td>
-                                    <th>{{ $user->jabatan }}</th>
-                                </tr>
-                                <tr>
-                                    <td>No. Telepon</td>
-                                    <th>{{ $user->telp }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <th>{{ $user->email }}</th>
-                                </tr>
-                                <tr>
-                                    <td>Role</td>
-                                    <th>{{ $user->roles->name }}</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> --}}
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        toggleAlasanTolakPeminjaman(); // Panggil fungsi dari app.js
+    });
+</script>
 @endsection

@@ -23,7 +23,6 @@
             <h6 class="card-header d-flex justify-content-between align-items-center">
                 Daftar Pengajuan Peminjaman
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-success btn-sm" href="#" role="button" style="width: fit-content"><i class="fa-solid fa-file-pdf pe-1"></i>{{ __('Cetak') }}</a>
                     <form class="form-search d-flex" method="GET" action="#">
                         <div class="input-group">
                             <input type="search" id="inputSearch" class="form-control" placeholder="Cari" style="max-width: 15rem; height: 33px"/>

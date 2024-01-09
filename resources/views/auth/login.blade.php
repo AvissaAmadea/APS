@@ -12,7 +12,7 @@
                         <div class="mb-2">
                             <div class="row">
                                 <div class="col">
-                                    <span class="fs-2 fw-bold"><img src="{{ asset('img/logojpr.png') }}" class="img-fluid profile-image-pic me-2" style="width: 27px;" alt="profile">{{ __('APS') }}</span>
+                                    <span class="fs-2 fw-bold"><img src="{{ asset('img/aps-ijo.jpg') }}" class="img-fluid profile-image-pic me-2 mb-1" style="width: 2rem;" alt="profile">{{ __('APS') }}</span>
                                 </div>
                             </div>
                             <div class="row">

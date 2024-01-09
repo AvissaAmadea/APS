@@ -71,6 +71,44 @@ function hideBukti() {
     document.getElementById('bukti').style.display = 'none';
 }
 
+// form alasan tolak
+function toggleAlasanTolakPeminjaman() {
+    const statusPinjamRadios = document.querySelectorAll('input[name="status_pinjam"]');
+    const alasanTolakPinjam = document.getElementById('alasanTolakPinjam');
+
+    statusPinjamRadios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            if (radio.value === 'Ditolak') {
+                alasanTolakPinjam.style.display = 'block';
+            } else {
+                alasanTolakPinjam.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Panggil fungsi jika DOM sudah dimuat
+document.addEventListener("DOMContentLoaded", toggleAlasanTolakPeminjaman);
+
+function toggleAlasanTolakPengembalian() {
+    const statusPinjamRadios = document.querySelectorAll('input[name="status_kembali"]');
+    const alasanTolakKembali = document.getElementById('alasanTolakKembali');
+
+    statusPinjamRadios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            if (radio.value === 'Ditolak') {
+                alasanTolakKembali.style.display = 'block';
+            } else {
+                alasanTolakKembali.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Panggil fungsi jika DOM sudah dimuat
+document.addEventListener("DOMContentLoaded", toggleAlasanTolakPengembalian);
+
+
     // Dapatkan elemen textarea
     // var textarea1 = document.getElementById('detail');
     // var textarea2 = document.getElementById('tujuan');

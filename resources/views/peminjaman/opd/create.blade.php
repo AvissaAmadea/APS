@@ -28,16 +28,20 @@
 
                     <div class="form-group mb-2 row">
                         <label for="kode_pinjam" class="col-sm-2 col-form-label">Kode Peminjaman</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control" id="kode_pinjam" name="kode_pinjam" value="{{ Str::random(4) }}" autofocus>
+                        <div class="col-sm-10 text-start mt-2">
+                            {{-- <input type="text" readonly class="form-control" id="kode_pinjam" name="kode_pinjam" value="{{ Str::random(4) }}" autofocus> --}}
+                            <h6 class="form-control-static">{{ Str::random(4) }}</h6>
                         </div>
+                        <input type="hidden" class="form-control" id="kode_pinjam" name="kode_pinjam" value="{{ Str::random(4) }}">
                     </div>
 
                     <div class="form-group mb-2 row">
                         <label for="user_name" class="col-sm-2 col-form-label">Nama</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control" id="user_name" name="user_name" value="{{ Auth::user()->nama }}" autofocus>
+                        <div class="col-sm-10 text-start mt-2">
+                            {{-- <input type="text" readonly class="form-control" id="user_name" name="user_name" value="{{ Auth::user()->nama }}" autofocus> --}}
+                            <h6 class="form-control-static">{{ Auth::user()->nama }}</h6>
                         </div>
+                        <input type="hidden" class="form-control" id="user_name" name="user_name" value="{{ Auth::user()->nama }}">
                     </div>
 
                     <div class="form-group mb-2 row">
