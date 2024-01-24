@@ -7,7 +7,7 @@
             <li class="breadcrumb-item active fw-bold" aria-current="page">Dashboard</li>
         </ol>
     </div>
-    <div class="row">
+    <div class="row px-2">
         @if (session('status'))
             <div class="alert alert-primary text-center">
                 {{ session('status') }}

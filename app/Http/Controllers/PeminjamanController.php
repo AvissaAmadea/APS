@@ -351,7 +351,8 @@ class PeminjamanController extends Controller
     // fungsi mendapatkan semua data peminjaman yang akan ditampilkan di tampilan detail riwayat peminjaman berdasarkan role user dengan id user yang digunakan
     protected function getRiwayatPeminjamanData($role, $id)
     {
-        $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id)->orderBy('tgl_pinjam', 'asc');
+        $pinjams = Peminjaman::with(['users', 'asets.kategoris', 'asets.dinas'])->findOrFail($id);
+        $pinjaman = $pinjams->orderBy('tgl_pinjam', 'asc')->first();
 
         // Mengurai tanggal pinjam
         $tgl_pinjam_date = null;

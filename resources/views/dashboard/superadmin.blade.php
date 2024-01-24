@@ -15,7 +15,7 @@
         </ol>
     </div>
 
-    <div class="row">
+    <div class="row px-2">
         @if (session('status'))
             <div class="alert alert-primary text-center">
                 {{ session('status') }}

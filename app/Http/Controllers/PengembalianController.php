@@ -180,11 +180,11 @@ class PengembalianController extends Controller
                 }
 
                 if ($role_id == 1) {
-                    return view('pengembalian.superadmin.index', compact('pengembalian', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                    return view('pengembalian.superadmin.riwayat', compact('pengembalian', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 } elseif ($role_id == 2) {
-                    return view('pengembalian.sekda.index', compact('pengembalian', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                    return view('pengembalian.sekda.riwayat', compact('pengembalian', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 } elseif ($role_id == 3) {
-                    return view('pengembalian.opd.index', compact('pengembalian', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
+                    return view('pengembalian.opd.riwayat', compact('pengembalian', 'nama_aset', 'nama_dinas_aset'))->with('status', $message);
                 }
             } else {
                 return back()->with('error', 'Gagal menyimpan data.');
@@ -339,13 +339,16 @@ class PengembalianController extends Controller
 
     protected function getRiwayatPengembalianData($role, $id)
     {
-        $kembali = Pengembalian::with(['peminjaman'])->findOrFail($id)->orderBy('tgl_kembali', 'asc');
+        $kembali = Pengembalian::with(['peminjaman'])->findOrFail($id);
+        // $kembalian = $kembali->orderBy('tgl_kembali', 'asc')->first();
+
+        $peminjaman = $kembali->peminjaman;
 
         // Mengurai tanggal pinjam
         $tgl_pinjam_date = null;
         $tgl_pinjam_time = null;
 
-        if ($kembali->peminjaman->tgl_pinjam) {
+        if ($peminjaman->tgl_pinjam) {
             $tgl_pinjam = Carbon::parse($kembali->peminjaman->tgl_pinjam);
             $tgl_pinjam_date = $tgl_pinjam->format('d-m-Y');
             $tgl_pinjam_time = $tgl_pinjam->format('H:i:s');
@@ -355,7 +358,7 @@ class PengembalianController extends Controller
         $tgl_kembali_date = null;
         $tgl_kembali_time = null;
 
-        if ($kembali->peminjaman->tgl_kembali) {
+        if ($peminjaman->tgl_kembali) {
             $tgl_kembali = Carbon::parse($kembali->peminjaman->tgl_kembali);
             $tgl_kembali_date = $tgl_kembali->format('d-m-Y');
             $tgl_kembali_time = $tgl_kembali->format('H:i:s');
