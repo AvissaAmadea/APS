@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
@@ -34,11 +35,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FormPeminjaman extends AppCompatActivity {
-int position;
+    int position;
     private int tahun,bulan,tanggal;
     private int tahun2,bulan2,tanggal2;
     EditText namaPeminjam, aset, tujuanPinjam, tglPinjam, tglKembali, upload;
     Button simpan;
+
+    Toolbar toolbar;
 
     LoadDialog loadDialog = new LoadDialog(this);
 
@@ -54,6 +57,14 @@ int position;
         tglKembali = findViewById(R.id.tglKembali);
         simpan = findViewById(R.id.simpanPinjam);
         upload = findViewById(R.id.surat);
+        toolbar = findViewById(R.id.tool);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FormPeminjaman.this, ListAset.class));
+            }
+        });
 
         Intent intent2 = getIntent();
         if (intent2!=null){
@@ -139,7 +150,6 @@ int position;
 
     private void simpanFormPeminjaman(String nama, String tujuan, String tglPin, String tglKem, String namaAset) {
         RequestQueue queue = Volley.newRequestQueue(this);
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Db.addPinjam,
                 new Response.Listener<String>() {
                     @Override

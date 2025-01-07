@@ -91,6 +91,7 @@ public class Login extends AppCompatActivity {
                 String password = etPassword.getText().toString();
 
                 if (username.isEmpty() || password.isEmpty()) {
+                    loadDialog.HideDialog();
                     Toast.makeText(Login.this, "Masukkan Data dengan Benar", Toast.LENGTH_SHORT).show();
                 } else {
 

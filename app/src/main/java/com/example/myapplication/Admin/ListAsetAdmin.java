@@ -2,6 +2,7 @@ package com.example.myapplication.Admin;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +30,8 @@ import com.example.myapplication.Db;
 import com.example.myapplication.DetailAset;
 import com.example.myapplication.FormPeminjaman;
 import com.example.myapplication.LoadDialog;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.Model.asetAdminModel;
-import com.example.myapplication.Peminjaman;
 import com.example.myapplication.R;
 import com.example.myapplication.kategori;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,6 +53,7 @@ public class ListAsetAdmin extends AppCompatActivity {
     ImageView back;
 
     TextView daftarUser, daftarKat;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class ListAsetAdmin extends AppCompatActivity {
         progressBar = findViewById(R.id.load_aset_admin);
         recyclerView1 = findViewById(R.id.list_aset_Admin);
         floatingActionButton = findViewById(R.id.btn_tambah_aset);
+        toolbar = findViewById(R.id.tool);
 
         daftarUser = findViewById(R.id.dft_user);
 
@@ -73,6 +76,26 @@ public class ListAsetAdmin extends AppCompatActivity {
             Intent intent = new Intent(ListAsetAdmin.this, kategori.class);
             startActivity(intent);
             finish();
+        });
+
+        Intent intent = getIntent();
+        int role = intent.getIntExtra("role",0);
+        int id = intent.getIntExtra("id",0);
+        String nama = intent.getStringExtra("nama");
+        String nip = intent.getStringExtra("nip");
+
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(ListAsetAdmin.this, MainActivity.class);
+                intent1.putExtra("id_role",role);
+                intent1.putExtra("id", id);
+                intent1.putExtra("nama", nama);
+                intent.putExtra("nip",nip);
+                startActivity(intent1);
+            }
         });
 
         fetchDataAset();
@@ -97,25 +120,6 @@ public class ListAsetAdmin extends AppCompatActivity {
 
     }
 
-    private void DeleteDataAset(int idAset) {
-        loadDialog.ShowDialog("Menghapus Data....");
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, Db.delAset,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        loadDialog.HideDialog();
-                        Toast.makeText(ListAsetAdmin.this, "Berhasil Dihapus", Toast.LENGTH_SHORT).show();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                loadDialog.HideDialog();
-                Toast.makeText(ListAsetAdmin.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-        queue.add(request);
-    }
 
     private void fetchDataAset() {
       progressBar.setVisibility(View.VISIBLE);

@@ -89,6 +89,9 @@ public class HomeFragmentSekre extends Fragment {
             transaksi.setOnClickListener(view1 -> {
                 startActivity(new Intent(getContext(), ListDenda.class));
             });
+            lapor.setOnClickListener(view1 -> {
+                startActivity(new Intent(getContext(), ListDenda.class));
+            });
             fetchData(id);
             riwayatModelList = new ArrayList<>();
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

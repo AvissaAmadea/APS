@@ -68,6 +68,7 @@ public class HomeFragmentAdmin extends Fragment {
 
         if (getArguments() != null) {
             int id = getArguments().getInt("id");
+            int idR = getArguments().getInt("role");
             String receivedValue = getArguments().getString("nama");
             String nip = getArguments().getString("nip");
             TextView textView = view.findViewById(R.id.NamaUser);
@@ -75,7 +76,12 @@ public class HomeFragmentAdmin extends Fragment {
             textView.setText(receivedValue);
             textView1.setText(nip);
             daftar.setOnClickListener(view1 -> {
-                startActivity(new Intent(requireContext(), ListAsetAdmin.class));
+                Intent intent = new Intent(requireContext(), ListAsetAdmin.class);
+                intent.putExtra("role", idR);
+                intent.putExtra("id", id);
+                intent.putExtra("nama", receivedValue);
+                intent.putExtra("nip", nip);
+                startActivity(intent);
             });
             transaksi.setOnClickListener(view1 -> {
                 Intent intent = new Intent(requireContext(), ListDenda.class);

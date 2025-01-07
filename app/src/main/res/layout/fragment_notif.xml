@@ -6,6 +6,7 @@
     tools:context=".NotifFragment">
 
     <TextView
+        android:visibility="gone"
         android:textSize="30dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_bold"

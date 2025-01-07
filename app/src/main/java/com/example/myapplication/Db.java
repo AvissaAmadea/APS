@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
 public class Db {
-    public static String ip = "192.168.22.12";
+    public static String ip = "192.168.33.7";
 
     public static final String addDinas = "http://"+ip+"/aps1/addDinas.php";
     public static final String updateDinas = "http://"+ip+"/aps1/updateDinas.php";

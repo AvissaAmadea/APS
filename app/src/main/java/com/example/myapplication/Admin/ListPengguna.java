@@ -44,7 +44,7 @@ public class ListPengguna extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pengguna);
 
-        back = findViewById(R.id.backToMenu1);
+
         progressBar = findViewById(R.id.load_pengguna);
         fab = findViewById(R.id.btn_tambah);
         recyclerView2 = findViewById(R.id.list_pengguna);

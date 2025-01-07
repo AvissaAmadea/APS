@@ -4,136 +4,166 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfilFragment">
+    tools:context=".ProfilFragment"
+    android:background="@color/grey">
 
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
-       <LinearLayout
+       <androidx.cardview.widget.CardView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:orientation="vertical">
-           <ImageView
-               android:id="@+id/imageView2"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="141dp"
-               android:layout_marginTop="36dp"
-               android:layout_marginEnd="142dp"
-               tools:srcCompat="@tools:sample/avatars" />
-
-           <TextView
-               android:id="@+id/textView3"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="26dp"
-               android:layout_marginTop="30dp"
-               android:text="Username"/>
-
-           <EditText
-               android:id="@+id/etUsername_profile"
+           app:cardCornerRadius="20dp"
+           android:layout_margin="15dp">
+           <LinearLayout
+               android:layout_marginBottom="20dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:layout_marginEnd="30dp"
-               android:ems="10"
-               android:inputType="textPersonName" />
+               android:orientation="vertical">
+               <TextView
+                   android:background="@drawable/squarea"
+                   android:layout_margin="15dp"
+                   android:padding="10dp"
+                   android:textColor="@color/green_pea"
+                   android:textAlignment="center"
+                   android:textStyle="bold"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="PROFIL"
+                   android:textSize="30dp"
+                   android:layout_marginTop="10dp"/>
 
-           <TextView
-               android:id="@+id/textView4"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="10dp"
-               android:layout_marginStart="28dp"
-               android:text="Nama"
-               tools:layout_editor_absoluteX="27dp" />
+               <TextView
+                   android:textSize="15dp"
+                   android:textColor="@color/black"
+                   android:id="@+id/textView3"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="26dp"
+                   android:layout_marginTop="30dp"
+                   android:text="Username"/>
 
-           <EditText
-               android:id="@+id/etNama_profile"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:layout_marginEnd="30dp"
-               android:ems="10"
-               android:inputType="textPersonName"/>
-           <TextView
-               android:id="@+id/email"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:text="Email"/>
+               <EditText
+                   android:minHeight="60dp"
+                   android:padding="10dp"
+                   android:id="@+id/etUsername_profile"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginEnd="30dp"
+                   android:ems="10"
+                   android:inputType="textPersonName" />
 
-           <EditText
-               android:id="@+id/etEmail_prof"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:layout_marginEnd="30dp"
-               android:ems="10"
-               android:inputType="textPersonName"/>
+               <TextView
+                   android:textSize="15dp"
+                   android:textColor="@color/black"
+                   android:id="@+id/textView4"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginStart="28dp"
+                   android:text="Nama"
+                   tools:layout_editor_absoluteX="27dp" />
 
-           <TextView
-               android:id="@+id/textView5"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:text="Asal Dinas"/>
+               <EditText
+                   android:minHeight="60dp"
+                   android:padding="10dp"
+                   android:id="@+id/etNama_profile"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginEnd="30dp"
+                   android:ems="10"
+                   android:inputType="textPersonName"/>
+               <TextView
+                   android:textSize="15dp"
+                   android:textColor="@color/black"
+                   android:id="@+id/email"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:text="Email"/>
 
-           <EditText
-               android:id="@+id/etDinas_profile"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:layout_marginEnd="30dp"
-               android:ems="10"
-               android:inputType="textPersonName"/>
+               <EditText
+                   android:minHeight="60dp"
+                   android:padding="10dp"
+                   android:id="@+id/etEmail_prof"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginEnd="30dp"
+                   android:ems="10"
+                   android:inputType="textPersonName"/>
 
-           <TextView
-               android:id="@+id/textView6"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:text="NIP"/>
+               <TextView
+                   android:textSize="15dp"
+                   android:textColor="@color/black"
+                   android:id="@+id/textView5"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:text="Asal Dinas"/>
 
-           <EditText
-               android:id="@+id/etNIP_profile"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginStart="28dp"
-               android:layout_marginTop="10dp"
-               android:layout_marginEnd="30dp"
-               android:ems="10"
-               android:inputType="textPersonName"/>
+               <EditText
+                   android:id="@+id/etDinas_profile"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginEnd="30dp"
+                   android:ems="10"
+                   android:inputType="textPersonName"
+                   android:minHeight="60dp"
+                   android:padding="10dp" />
 
-           <Button
-               android:id="@+id/button"
-               android:layout_width="318dp"
-               android:layout_height="54dp"
-               android:layout_marginStart="46dp"
-               android:layout_marginTop="67dp"
-               android:layout_marginEnd="47dp"
-               android:fontFamily="@font/poppins_bold"
-               android:text="Edit Profil"
-               android:textColor="@color/white"/>
+               <TextView
+                   android:textSize="15dp"
+                   android:textColor="@color/black"
+                   android:id="@+id/textView6"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:text="NIP"/>
 
-           <Button
-               android:id="@+id/button2"
-               android:layout_width="318dp"
-               android:layout_height="54dp"
-               android:layout_marginStart="46dp"
-               android:layout_marginTop="19dp"
-               android:layout_marginEnd="47dp"
-               android:fontFamily="@font/poppins_bold"
-               android:text="LogOut"
-               android:textColor="@color/white"/>
-       </LinearLayout>
+               <EditText
+                   android:minHeight="60dp"
+                   android:padding="10dp"
+                   android:id="@+id/etNIP_profile"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="28dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginEnd="30dp"
+                   android:ems="10"
+                   android:inputType="textPersonName"/>
+
+               <Button
+                   android:id="@+id/button"
+                   android:layout_width="318dp"
+                   android:layout_height="54dp"
+                   android:layout_marginTop="67dp"
+                   android:layout_gravity="center"
+                   android:fontFamily="@font/poppins_bold"
+                   android:text="Edit Profil"
+                   android:textColor="@color/white"/>
+
+               <Button
+                   android:id="@+id/button2"
+                   android:layout_width="318dp"
+                   android:layout_height="54dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="19dp"
+                   android:fontFamily="@font/poppins_bold"
+                   android:text="LogOut"
+                   android:textColor="@color/white"/>
+           </LinearLayout>
+       </androidx.cardview.widget.CardView>
    </ScrollView>
 
 </FrameLayout>

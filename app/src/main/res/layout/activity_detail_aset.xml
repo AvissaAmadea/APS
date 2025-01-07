@@ -7,6 +7,7 @@
     tools:context=".DetailAset"
     android:background="@color/grey">
     <androidx.appcompat.widget.Toolbar
+        app:navigationIcon="@drawable/baseline_arrow_back_24_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Detail Aset"

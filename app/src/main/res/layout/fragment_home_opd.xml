@@ -134,6 +134,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="100dp"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
                         android:backgroundTint="@color/eden"
                         android:layout_height="100dp"
                         android:id="@+id/imgTransMain"
@@ -237,6 +238,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:id="@+id/settingMain"
+                        android:layout_marginLeft="20dp"
                         app:cardCornerRadius="20dp"
                         android:elevation="10dp"
                         android:backgroundTint="#454242"

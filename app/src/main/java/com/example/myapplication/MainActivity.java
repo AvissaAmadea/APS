@@ -130,9 +130,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String nama = nama1;
                     String nip = nip1;
                     int id = id1;
+                    int idr = idR;
                     bundle.putString("nama", nama);
                     bundle.putString("nip", nip);
                     bundle.putInt("id",id);
+                    bundle.putInt("id_role", idr);
                     fragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
@@ -147,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     b.putString("nama", namap);
                     b.putString("nip", nipp);
                     b.putInt("id", id);
-                    b.putInt("idR", id);
+                    b.putInt("idR", idrole);
                     fragmentProf.setArguments(b);
 
                     getSupportFragmentManager().beginTransaction()

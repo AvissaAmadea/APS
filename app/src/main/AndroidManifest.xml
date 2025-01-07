@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".DetailPelaporan"
+            android:exported="false" />
+        <activity
+            android:name=".upEmail"
+            android:exported="false" />
+        <activity
             android:name=".FormDinas"
             android:exported="false" />
         <activity

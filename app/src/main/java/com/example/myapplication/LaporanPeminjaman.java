@@ -44,7 +44,6 @@ public class LaporanPeminjaman extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laporan_peminjaman);
-        back = findViewById(R.id.backToMenu1);
         progressBar = findViewById(R.id.pga);
         recyclerView = findViewById(R.id.listpinjam);
         blm = findViewById(R.id.blm);

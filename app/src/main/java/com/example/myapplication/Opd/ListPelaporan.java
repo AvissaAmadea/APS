@@ -21,9 +21,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Adapter.LaporanAdapter;
+import com.example.myapplication.Adapter.PelaporanAdapter;
 import com.example.myapplication.Db;
 import com.example.myapplication.FormPengembalian;
 import com.example.myapplication.Model.LaporanModel;
+import com.example.myapplication.Model.PelaporanModel;
 import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,8 +39,8 @@ import java.util.Map;
 
 public class ListPelaporan extends AppCompatActivity {
 
-    List<LaporanModel> laporanModelList;
-    LaporanAdapter adapter;
+   List<PelaporanModel> pelaporanModelList;
+   PelaporanAdapter adapter;
     ProgressBar progressBar;
     FloatingActionButton floatingActionButton;
     TextView txt;
@@ -52,7 +54,6 @@ public class ListPelaporan extends AppCompatActivity {
         txt = findViewById(R.id.txt);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id",0);
-        Toast.makeText(this, "id"+id, Toast.LENGTH_SHORT).show();
         floatingActionButton = findViewById(R.id.btn_add_laporan);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,10 +65,10 @@ public class ListPelaporan extends AppCompatActivity {
 
         fetchData(id);
         progressBar = findViewById(R.id.pg);
-        laporanModelList = new ArrayList<>();
+        pelaporanModelList = new ArrayList<>();
         RecyclerView recyclerView1 = findViewById(R.id.lapor);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new LaporanAdapter(ListPelaporan.this, laporanModelList);
+        adapter = new PelaporanAdapter(ListPelaporan.this, pelaporanModelList);
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(adapter);
         RecyclerView.ItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
@@ -87,14 +88,14 @@ public class ListPelaporan extends AppCompatActivity {
                             JSONArray array = jsonResponse.getJSONArray("report");
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
-                                laporanModelList.add(new LaporanModel(
-                                        object.getString("kodePeminjaman"),
-                                        object.getString("nama"),
+                                pelaporanModelList.add(new PelaporanModel(
                                         object.getString("nama_aset"),
-                                        object.getString("keadaan"),
+                                        object.getString("nama"),
                                         object.getString("status"),
-                                        object.getInt("id_kembali"),
-                                        object.getString("detail")
+                                        object.getString("keadaan"),
+                                        object.getString("kode"),
+                                        object.getInt("id_pinjam"),
+                                        object.getString("denda")
                                 ));
                             }
                             adapter.notifyDataSetChanged();

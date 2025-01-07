@@ -1,16 +1,19 @@
 package com.example.myapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -48,11 +51,11 @@ public class ProfilFragment extends Fragment {
             String username = getArguments().getString("username");
             int id = getArguments().getInt("id");
 
-            TextView textView = view.findViewById(R.id.etNama_profile);
-            TextView nipUs = view.findViewById(R.id.etNIP_profile);
-            TextView email = view.findViewById(R.id.etEmail_prof);
-            TextView tvdinas = view.findViewById(R.id.etDinas_profile);
-            TextView tvusername = view.findViewById(R.id.etUsername_profile);
+            EditText textView = view.findViewById(R.id.etNama_profile);
+            EditText nipUs = view.findViewById(R.id.etNIP_profile);
+            EditText email = view.findViewById(R.id.etEmail_prof);
+            EditText tvdinas = view.findViewById(R.id.etDinas_profile);
+            EditText tvusername = view.findViewById(R.id.etUsername_profile);
             textView.setText(receivedValue);
             nipUs.setText(nip);
             email.setText(mail);
@@ -61,7 +64,28 @@ public class ProfilFragment extends Fragment {
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    editData(receivedValue, nip, mail, dinas, username, id);
+                    String nama = textView.getText().toString();
+                    String snip = nipUs.getText().toString();
+                    String semail = email.getText().toString();
+                    String sdinas = tvdinas.getText().toString();
+                    String susername = tvusername.getText().toString();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Simpan Data");
+                    builder.setMessage("Yakin Simpan Data?");
+                    builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            editData(nama, snip, semail, sdinas, susername, id);
+                        }
+                    });
+                    builder.create().show();
                 }
             });
             out.setOnClickListener(new View.OnClickListener() {
@@ -77,34 +101,34 @@ public class ProfilFragment extends Fragment {
         return view;
     }
 
-    private void editData(String receivedValue, String nip, String mail, String dinas, String username, int id) {
+    private void editData(String nama, String snip, String semail, String sdinas, String susername, int id) {
         StringRequest request = new StringRequest(Request.Method.POST, Db.editProfil,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "success"+response, Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "error" +error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),  ""+error, Toast.LENGTH_SHORT).show();
+                Log.d("error","error"+error);
             }
         }){
-            @Nullable
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
-                map.put("nama_dinas", dinas);
-                map.put("nip",nip);
-                map.put("username", username);
-                map.put("nama", receivedValue);
-                map.put("email", mail);
-                map.put("dinas", dinas);
+                map.put("nama_dinas", sdinas);
+                map.put("nip",snip);
+                map.put("username", susername);
+                map.put("nama", nama);
+                map.put("email", semail);
                 map.put("id", String.valueOf(id));
                 return map;
             }
         };
-        RequestQueue q = Volley.newRequestQueue(getContext());
+        RequestQueue q = Volley.newRequestQueue(requireContext());
         q.add(request);
     }
 }

@@ -42,7 +42,6 @@ public class ListVerifikasi extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_verifikasi);
-        back = findViewById(R.id.backToMenu1);
         progressBar = findViewById(R.id.pga);
         recyclerView = findViewById(R.id.verifList);
         blm = findViewById(R.id.blm);

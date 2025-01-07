@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Adapter.RiwayatAdapter;
 import com.example.myapplication.Admin.ListAsetAdmin;
 import com.example.myapplication.Db;
+import com.example.myapplication.ListAset;
 import com.example.myapplication.ListDenda;
 import com.example.myapplication.Model.RiwayatModel;
 import com.example.myapplication.R;
@@ -72,7 +73,7 @@ public class HomeFragmentOPD extends Fragment {
             textView.setText(receivedValue);
             textView1.setText(nip);
             daftar.setOnClickListener(view1 -> {
-                Intent intent = new Intent(requireContext(), ListAsetAdmin.class);
+                Intent intent = new Intent(requireContext(), ListAset.class);
                 startActivity(intent);
             });
             transaksi.setOnClickListener(view1 -> {
