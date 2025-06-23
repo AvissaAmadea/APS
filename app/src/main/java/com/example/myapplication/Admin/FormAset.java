@@ -266,8 +266,8 @@ public class FormAset extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(FormAset.this, "Error during insert data", Toast.LENGTH_SHORT).show();
-                    Log.e("FormAsetActivity", "Error during insert data: " + error.toString());
+                    Toast.makeText(FormAset.this, "Error saat memasukkan data", Toast.LENGTH_SHORT).show();
+                    Log.e("FormAsetActivity", "Error saat memasukkan data: " + error.toString());
                     showFailedDialog();
 
                 }
